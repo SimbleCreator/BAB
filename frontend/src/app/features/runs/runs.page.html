@@ -1,0 +1,60 @@
+<section class="bab-page">
+  <div class="head">
+    <h1 class="bab-page-title">Runs</h1>
+    <a mat-flat-button routerLink="/runs/new">
+      <mat-icon>add</mat-icon>
+      Add run
+    </a>
+  </div>
+
+  @if (error()) {
+    <p class="bab-form-error">{{ error() }}</p>
+    <button mat-button type="button" (click)="load()">Try again</button>
+  }
+
+  @if (!loading() && !error() && runs().length === 0) {
+    <div class="empty">
+      <mat-icon>directions_run</mat-icon>
+      <p>No runs yet.</p>
+      <p class="bab-muted">Add one by hand, or upload a GPX file from your watch or running app.</p>
+    </div>
+  }
+
+  @for (run of runs(); track run.id) {
+    <a class="run" [routerLink]="['/runs', run.id]">
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <div class="top">
+            <span class="date">{{ dateLabel(run.day) }}</span>
+            @if (run.has_track) {
+              <mat-icon class="map" aria-label="Has a route map">map</mat-icon>
+            }
+          </div>
+          <div class="stats">
+            <div>
+              <div class="num">{{ run.distance_m | km }}</div>
+              <div class="bab-muted">distance</div>
+            </div>
+            <div>
+              <div class="num">{{ run.duration_s | duration }}</div>
+              <div class="bab-muted">time</div>
+            </div>
+            <div>
+              <div class="num">{{ run.pace_s_per_km | pace }}</div>
+              <div class="bab-muted">pace</div>
+            </div>
+          </div>
+          @if (run.note) {
+            <p class="note">{{ run.note }}</p>
+          }
+        </mat-card-content>
+      </mat-card>
+    </a>
+  }
+
+  @if (loading()) {
+    <div class="center"><mat-spinner diameter="36" /></div>
+  } @else if (hasMore()) {
+    <button mat-button type="button" class="more" (click)="load()">Show older runs</button>
+  }
+</section>

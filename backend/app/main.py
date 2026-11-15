@@ -11,7 +11,7 @@ from app.content import load_all as load_content
 from app.core.config import get_settings
 from app.core.database import engine
 from app.core.errors import AppError
-from app.routers import activity, auth, health, profile, today
+from app.routers import activity, auth, health, profile, runs, today
 
 
 @asynccontextmanager
@@ -46,7 +46,14 @@ def create_app() -> FastAPI:
         allow_headers=["Authorization", "Content-Type"],
     )
     app.add_exception_handler(AppError, _app_error_handler)
-    for r in (health.router, auth.router, profile.router, today.router, activity.router):
+    for r in (
+        health.router,
+        auth.router,
+        profile.router,
+        today.router,
+        activity.router,
+        runs.router,
+    ):
         app.include_router(r, prefix=settings.api_prefix)
     return app
 

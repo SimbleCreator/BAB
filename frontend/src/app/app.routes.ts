@@ -104,12 +104,22 @@ export const routes: Routes = [
       {
         path: 'runs',
         title: 'Runs - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Runs',
-          icon: 'directions_run',
-          blurb: 'Add runs by hand or from a GPX file, with a route map.',
-        },
+        loadComponent: () => import('./features/runs/runs.page').then((m) => m.RunsPage),
+      },
+      {
+        path: 'runs/new',
+        title: 'Add run - B.A.B',
+        loadComponent: () => import('./features/runs/run-new.page').then((m) => m.RunNewPage),
+      },
+      {
+        path: 'runs/:id',
+        title: 'Run - B.A.B',
+        loadComponent: () => import('./features/runs/run-detail.page').then((m) => m.RunDetailPage),
+      },
+      {
+        path: 'runs/:id/edit',
+        title: 'Edit run - B.A.B',
+        loadComponent: () => import('./features/runs/run-edit.page').then((m) => m.RunEditPage),
       },
       {
         path: 'checkin',

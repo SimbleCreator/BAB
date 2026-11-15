@@ -1,0 +1,97 @@
+<section class="bab-page">
+  <a mat-button routerLink="/runs" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Runs
+  </a>
+
+  @if (run.isLoading() && !run.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (run.error()) {
+    <p class="bab-form-error">Could not load this run. It may have been deleted.</p>
+    <button mat-button type="button" (click)="run.reload()">Try again</button>
+  } @else if (run.value(); as r) {
+    <h1 class="bab-page-title">{{ title() }}</h1>
+    <p class="bab-muted sub">
+      @if (startTime()) {
+        Started {{ startTime() }} &middot;
+      }
+      {{ r.source === 'gpx' ? 'From GPX' : 'Added by hand' }}
+    </p>
+
+    <div class="stats">
+      <div>
+        <div class="bab-stat">{{ r.distance_m | km }}</div>
+        <div class="bab-muted">distance</div>
+      </div>
+      <div>
+        <div class="num">{{ r.duration_s | duration }}</div>
+        <div class="bab-muted">time</div>
+      </div>
+      <div>
+        <div class="num">{{ r.pace_s_per_km | pace }}</div>
+        <div class="bab-muted">average pace</div>
+      </div>
+      <div>
+        <div class="num">{{ r.calories_kcal | int }} kcal</div>
+        <div class="bab-muted">calories <app-estimate /></div>
+      </div>
+    </div>
+
+    @if (r.track.length > 1) {
+      <app-route-map [track]="r.track" />
+    }
+
+    @if (r.splits.length) {
+      <mat-card appearance="outlined" class="splits">
+        <mat-card-header>
+          <mat-card-title>Splits</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table>
+            <thead>
+              <tr>
+                <th>Km</th>
+                <th class="num-col">Time</th>
+                <th class="num-col">Pace</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (s of r.splits; track s.km) {
+                <tr [class.fast]="s.pace_s_per_km === fastestKm()">
+                  <td>
+                    {{ s.km }}
+                    @if (s.distance_m !== 1000) {
+                      <span class="bab-muted">({{ s.distance_m | km }})</span>
+                    }
+                  </td>
+                  <td class="num-col">{{ s.duration_s | duration }}</td>
+                  <td class="num-col">{{ s.pace_s_per_km | pace }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    @if (r.note) {
+      <p class="note">{{ r.note }}</p>
+    }
+
+    @if (error()) {
+      <p class="bab-form-error" role="alert">{{ error() }}</p>
+    }
+    <div class="actions">
+      <a mat-stroked-button [routerLink]="['/runs', r.id, 'edit']">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </a>
+      <button mat-button type="button" class="danger" (click)="remove()" [disabled]="deleting()">
+        {{ confirmDelete() ? 'Tap again to delete' : 'Delete run' }}
+      </button>
+    </div>
+    <p class="bab-disclaimer">
+      Calories = weight x distance x 1.036. Estimates only, not medical advice.
+    </p>
+  }
+</section>

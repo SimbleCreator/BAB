@@ -70,3 +70,20 @@ medical advice" note.
 
 Index = (date ordinal x 7 + user id) mod number of lines in `content/lines.json`.
 Same line all day for a user; changes every day.
+
+## Runs (`app/engines/run_engine.py`, `app/services/gpx.py`)
+
+| Rule | Value |
+| --- | --- |
+| Calories | weight_kg x distance_km x 1.036, rounded; always labelled "estimate"; uses profile weight when the run is saved or its distance edited |
+| Pace | duration_s / (distance_m / 1000), seconds per km |
+| Manual limits | distance 10 m to 300 km; duration 30 s to 48 h; note 500 chars; no future days |
+| GPX file | at most 5 MB; parsed with defusedxml (DTDs and entities refused); GPX 1.0 and 1.1; not stored |
+| GPX points | `trk/trkseg/trkpt`; points outside valid lat/lon skipped; at most 200,000 read |
+| GPX needs | at least two points with times; at least 10 m and 30 s |
+| Track distance | sum of great-circle (haversine, R = 6,371 km) distances between consecutive points; not counted across segment breaks |
+| Duration | elapsed time from first to last timestamp |
+| Day | local date of the first timestamp in the profile timezone |
+| Stored track | downsampled to at most 2,000 evenly spaced points, first and last always kept; distance is measured on the full track first |
+| Splits | per km; the time at each km mark is interpolated between points; a last partial split is shown if 10 m or more |
+| Splits after edits | track distances are scaled to the run's stored distance, so splits always add up to the distance and time shown |

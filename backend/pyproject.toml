@@ -14,6 +14,7 @@ dependencies = [
     "argon2-cffi>=25.1.0",
     "pyjwt>=2.15.1",
     "python-multipart>=0.0.32",
+    "defusedxml>=0.7.1",
 ]
 
 [project.optional-dependencies]

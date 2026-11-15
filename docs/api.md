@@ -45,6 +45,13 @@ endpoints.
 | PUT | `/activity/{day}` | bearer | Create or replace a day (`source` becomes `manual`); future days rejected |
 | DELETE | `/activity/{day}` | bearer | Remove a day |
 
+| GET | `/runs?limit=50&offset=0` | bearer | Runs newest first, with `total` |
+| POST | `/runs` | bearer | Add a run by hand (`day`, `distance_m`, `duration_s`, `note`) |
+| POST | `/runs/gpx` | bearer | Multipart `file` (GPX, 5 MB) and optional `note`; file is not kept |
+| GET | `/runs/{id}` | bearer | Run with `splits` and `track` (empty for manual runs) |
+| PATCH | `/runs/{id}` | bearer | Change any of `day`, `distance_m`, `duration_s`, `note` |
+| DELETE | `/runs/{id}` | bearer | Delete the run and its track |
+
 Activity responses return the value to show. When `distance_estimated` or
 `active_kcal_estimated` is true, that field was blank and the value is an estimate;
 send it back as `null` when editing so it stays estimated.

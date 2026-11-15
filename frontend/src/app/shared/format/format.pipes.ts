@@ -28,3 +28,28 @@ export class DayLabelPipe implements PipeTransform {
     return dayLabel(day, today);
   }
 }
+
+export function formatDuration(totalSeconds: number): string {
+  const s = Math.max(0, Math.round(totalSeconds));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  return `${h ? `${h}:` : ''}${mm}:${String(sec).padStart(2, '0')}`;
+}
+
+/** Seconds -> "1:02:03" or "45:07". */
+@Pipe({ name: 'duration' })
+export class DurationPipe implements PipeTransform {
+  transform(seconds: number | null | undefined): string {
+    return seconds === null || seconds === undefined ? '-' : formatDuration(seconds);
+  }
+}
+
+/** Seconds per km -> "5:30 /km". */
+@Pipe({ name: 'pace' })
+export class PacePipe implements PipeTransform {
+  transform(secondsPerKm: number | null | undefined): string {
+    return secondsPerKm ? `${formatDuration(secondsPerKm)} /km` : '-';
+  }
+}

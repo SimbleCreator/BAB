@@ -152,3 +152,55 @@ export interface TodayOut {
   current_streak: number;
   activity: ActivityOut | null;
 }
+
+// runs router ---------------------------------------------------------------
+
+export interface RunIn {
+  day: string;
+  /** Metres. */
+  distance_m: number;
+  /** Seconds. */
+  duration_s: number;
+  note: string | null;
+}
+
+export type RunPatch = Partial<RunIn>;
+
+export interface RunOut {
+  id: number;
+  day: string;
+  started_at: string | null;
+  distance_m: number;
+  duration_s: number;
+  /** Seconds per km. */
+  pace_s_per_km: number | null;
+  calories_kcal: number;
+  calories_estimated: true;
+  source: Source;
+  note: string | null;
+  has_track: boolean;
+  created_at: string;
+}
+
+export interface SplitOut {
+  km: number;
+  distance_m: number;
+  duration_s: number;
+  pace_s_per_km: number;
+}
+
+export interface TrackPointOut {
+  lat: number;
+  lng: number;
+  ele_m: number | null;
+}
+
+export interface RunDetailOut extends RunOut {
+  splits: SplitOut[];
+  track: TrackPointOut[];
+}
+
+export interface RunListOut {
+  items: RunOut[];
+  total: number;
+}

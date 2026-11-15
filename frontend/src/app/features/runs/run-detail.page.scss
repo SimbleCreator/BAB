@@ -1,0 +1,86 @@
+.back {
+  margin-left: -8px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.bab-page-title {
+  margin-bottom: 4px;
+}
+
+.sub {
+  margin: 0 0 16px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 12px;
+  margin-bottom: 16px;
+
+  > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .num {
+    font: var(--mat-sys-headline-small);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+app-route-map {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.splits {
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+th,
+td {
+  padding: 8px 4px;
+  text-align: left;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+th {
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.num-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+tr.fast td {
+  color: var(--mat-sys-primary);
+  font-weight: 500;
+}
+
+.note {
+  white-space: pre-line;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.danger {
+  color: var(--mat-sys-error);
+}

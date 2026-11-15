@@ -1,0 +1,72 @@
+<section class="bab-page">
+  <a mat-button routerLink="/runs" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Runs
+  </a>
+  <h1 class="bab-page-title">Add a run</h1>
+
+  <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+    <mat-tab label="Enter by hand">
+      <form [formGroup]="form" (ngSubmit)="saveManual()" novalidate class="tab-body">
+        <app-run-fields [form]="form" [maxDate]="today()" />
+        @if (error()) {
+          <p class="bab-form-error" role="alert">{{ error() }}</p>
+        }
+        <button mat-flat-button type="submit" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save run' }}
+        </button>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Upload GPX">
+      <div class="tab-body">
+        <p class="bab-muted">
+          Export the run as a GPX file from your watch or running app. Distance, time, pace, splits
+          and the route map are worked out from the track. The file itself is not kept.
+        </p>
+        <button mat-stroked-button type="button" (click)="gpxInput.click()" [disabled]="saving()">
+          <mat-icon>upload_file</mat-icon>
+          {{ gpxFile() ? 'Choose a different file' : 'Choose GPX file' }}
+        </button>
+        <input
+          #gpxInput
+          hidden
+          type="file"
+          accept=".gpx,application/gpx+xml"
+          (change)="chooseGpx($event)"
+        />
+        <p class="bab-muted small">Up to 5 MB.</p>
+
+        @if (gpxFile(); as f) {
+          <p class="file"><mat-icon>description</mat-icon> {{ f.name }}</p>
+          <mat-form-field>
+            <mat-label>Note (optional)</mat-label>
+            <textarea
+              matInput
+              rows="2"
+              maxlength="500"
+              [value]="gpxNote()"
+              (input)="gpxNote.set($any($event.target).value)"
+            ></textarea>
+          </mat-form-field>
+        }
+        @if (gpxError()) {
+          <p class="bab-form-error" role="alert">{{ gpxError() }}</p>
+        }
+        @if (saving() && gpxFile()) {
+          <mat-progress-bar mode="indeterminate" />
+        }
+        <button
+          mat-flat-button
+          type="button"
+          (click)="uploadGpx()"
+          [disabled]="!gpxFile() || saving()"
+        >
+          Upload run
+        </button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <p class="bab-disclaimer">Calories for runs are estimates only, not medical advice.</p>
+</section>

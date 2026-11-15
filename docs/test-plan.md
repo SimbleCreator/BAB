@@ -44,3 +44,16 @@
 - Chart: 7 and 30 days, goal days in orange, dashed goal line. Streak and best streak
   match the data.
 - Works at 360 px and on desktop.
+
+### M3
+- Runs with no runs shows an empty state and "Add run".
+- Add by hand: empty submit shows inline errors; 10 km in 1:02:30 shows 6:15 /km and
+  calories = weight x 10 x 1.036 with an "estimate" label. Future dates are disabled.
+- Upload GPX: export a run from your watch or app. Distance, time, pace and splits
+  appear; the map shows the route on OpenStreetMap with start and finish circles.
+  The day is the local date the run started.
+- Splits add up to the total time. The fastest full km is highlighted.
+- A non-GPX file, a GPX without times or a file over 5 MB shows a clear message.
+- Edit a run: change the distance; pace, calories and splits update; the map stays.
+- Delete needs a second tap.
+- The map stays under the top bar and bottom navigation when scrolling.
