@@ -53,6 +53,14 @@ first time: create one at https://github.com/settings/tokens with the `repo` sco
    `postgresql://neondb_owner:...@ep-...-123456.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require`.
    Paste it as is: the app converts it to its async driver form. Use the direct
    (non-pooled) string; the pooled one does not work with the app's driver.
+3. Test it from your computer (it asks for the string without showing it):
+
+```bash
+cd "/home/bharat/Bharaths_Personal/BAB APP/backend" && read -rsp "Neon connection string: " BAB_DATABASE_URL && echo && BAB_DATABASE_URL="$BAB_DATABASE_URL" .venv/bin/python -m app.cli check-db
+```
+
+   `Connected. PostgreSQL ...` means it works. "No B.A.B tables yet" is expected: the
+   API creates them on its first start.
 
 ### Step 3: API on Render
 

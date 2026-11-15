@@ -96,5 +96,10 @@ Version 1 sends no email. Run these from `backend/`:
 ```bash
 .venv/bin/python -m app.cli make-admin user@example.com
 ```
+
+Test the database connection (uses `BAB_DATABASE_URL`):
+```bash
+.venv/bin/python -m app.cli check-db
+```
 `reset-password` prompts for the new password (or prints a random one with
 `--generate`) and signs the user out everywhere.
