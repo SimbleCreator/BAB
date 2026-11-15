@@ -63,3 +63,54 @@ a {
   font: var(--mat-sys-headline-medium);
   margin: 8px 0 16px;
 }
+
+// Sign-in and register pages.
+.bab-auth {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 32px 16px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 24px 0 16px;
+  }
+
+  h2 {
+    font: var(--mat-sys-headline-small);
+    margin: 0 0 12px;
+  }
+
+  button[type='submit'] {
+    margin-top: 12px;
+    height: 48px;
+  }
+}
+
+.bab-auth-brand {
+  font: var(--mat-sys-display-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--mat-sys-primary);
+  margin: 0;
+}
+
+.bab-auth-tagline {
+  margin: 4px 0 0;
+}
+
+.bab-form-error {
+  color: var(--mat-sys-error);
+  margin: 8px 0 0;
+}
+
+.bab-field-error {
+  color: var(--mat-sys-error);
+  font: var(--mat-sys-body-small);
+  margin: 0 0 4px 40px;
+}
+
+.bab-field-error.inline {
+  margin: 0 0 8px;
+}

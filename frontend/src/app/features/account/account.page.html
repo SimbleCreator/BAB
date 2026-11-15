@@ -1,0 +1,72 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Account</h1>
+  <p class="bab-muted">Signed in as {{ auth.user()?.email }}</p>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (profile.isLoading() && !profile.hasValue()) {
+        <div class="loading"><mat-spinner diameter="32" /></div>
+      } @else if (profile.error()) {
+        <p class="bab-form-error" role="alert">Could not load your profile.</p>
+        <button mat-button type="button" (click)="profile.reload()">Try again</button>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="saveProfile()" novalidate>
+          <h3>About you</h3>
+          <app-profile-fields [form]="form" section="about" />
+          <h3>Goal and training</h3>
+          <app-profile-fields [form]="form" section="training" />
+          <h3>Food and daily goal</h3>
+          <app-profile-fields [form]="form" section="daily" />
+          @if (profileError()) {
+            <p class="bab-form-error" role="alert">{{ profileError() }}</p>
+          }
+          <button mat-flat-button type="submit" [disabled]="saving() || form.pristine">
+            {{ saving() ? 'Saving...' : 'Save profile' }}
+          </button>
+        </form>
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Change password</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="pwForm" (ngSubmit)="changePassword()" novalidate class="pw">
+        <mat-form-field>
+          <mat-label>Current password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="current_password"
+            autocomplete="current-password"
+          />
+          <mat-error>Enter your current password.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>New password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="new_password"
+            autocomplete="new-password"
+          />
+          <mat-hint>At least {{ passwordMin }} characters.</mat-hint>
+          <mat-error>At least {{ passwordMin }} characters.</mat-error>
+        </mat-form-field>
+        @if (pwError()) {
+          <p class="bab-form-error" role="alert">{{ pwError() }}</p>
+        }
+        <button mat-flat-button type="submit" [disabled]="pwSaving()">
+          {{ pwSaving() ? 'Changing...' : 'Change password' }}
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <button mat-stroked-button type="button" (click)="logout()">Sign out</button>
+</section>

@@ -68,6 +68,16 @@ npm run lint
 npx ng test --watch=false
 ```
 
-## Password reset
-Version 1 sends no email. The admin resets passwords from the command line
-(available from M1): `python -m app.cli reset-password <email>`.
+## Admin commands
+Version 1 sends no email. Run these from `backend/`:
+```bash
+.venv/bin/python -m app.cli reset-password user@example.com
+```
+```bash
+.venv/bin/python -m app.cli reset-password user@example.com --generate
+```
+```bash
+.venv/bin/python -m app.cli make-admin user@example.com
+```
+`reset-password` prompts for the new password (or prints a random one with
+`--generate`) and signs the user out everywhere.

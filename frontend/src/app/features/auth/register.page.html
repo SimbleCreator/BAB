@@ -1,0 +1,57 @@
+<section class="bab-auth">
+  <h1 class="bab-auth-brand">B.A.B</h1>
+  <p class="bab-muted bab-auth-tagline">Start where you are. Build from there.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <h2>Create your account</h2>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" autocomplete="email" />
+      <mat-error>Enter a valid email.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="showPassword() ? 'text' : 'password'"
+        formControlName="password"
+        autocomplete="new-password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="showPassword.set(!showPassword())"
+        [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+      >
+        <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-hint>At least {{ passwordMin }} characters.</mat-hint>
+      <mat-error>At least {{ passwordMin }} characters.</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="is_adult">I am 18 or older</mat-checkbox>
+    @if (form.controls.is_adult.touched && form.controls.is_adult.invalid) {
+      <p class="bab-field-error">B.A.B is for adults only.</p>
+    }
+
+    <mat-checkbox formControlName="accepts_privacy">
+      I agree to the <a routerLink="/privacy" target="_blank">privacy policy</a>
+    </mat-checkbox>
+    @if (form.controls.accepts_privacy.touched && form.controls.accepts_privacy.invalid) {
+      <p class="bab-field-error">Please accept the privacy policy.</p>
+    }
+
+    @if (error()) {
+      <p class="bab-form-error" role="alert">{{ error() }}</p>
+    }
+
+    <button mat-flat-button type="submit" [disabled]="pending()">
+      {{ pending() ? 'Creating account...' : 'Create account' }}
+    </button>
+  </form>
+
+  <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+</section>

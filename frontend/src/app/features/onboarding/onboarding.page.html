@@ -1,0 +1,51 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Let's set you up</h1>
+  <p class="bab-muted">A few questions so your plan fits you. You can change all of this later.</p>
+
+  <mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <mat-step [stepControl]="form.controls.about" label="About you">
+      <app-profile-fields [form]="form" section="about" />
+      <div class="actions">
+        <button
+          mat-flat-button
+          matStepperNext
+          type="button"
+          (click)="form.controls.about.markAllAsTouched()"
+        >
+          Next
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="form.controls.training" label="Goal and training">
+      <app-profile-fields [form]="form" section="training" />
+      <div class="actions">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button
+          mat-flat-button
+          matStepperNext
+          type="button"
+          (click)="form.controls.training.markAllAsTouched()"
+        >
+          Next
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="form.controls.daily" label="Food and daily goal">
+      <app-profile-fields [form]="form" section="daily" />
+      @if (error()) {
+        <p class="bab-form-error" role="alert">{{ error() }}</p>
+      }
+      <div class="actions">
+        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-flat-button type="button" (click)="finish()" [disabled]="pending()">
+          {{ pending() ? 'Saving...' : 'Finish' }}
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+
+  <p class="bab-disclaimer">Plans and numbers in B.A.B are estimates only, not medical advice.</p>
+  <button mat-button type="button" class="signout" (click)="logout()">Sign out</button>
+</section>

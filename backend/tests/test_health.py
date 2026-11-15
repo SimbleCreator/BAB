@@ -16,7 +16,13 @@ async def test_cors_allows_configured_origin_only(client):
     assert "access-control-allow-origin" not in other.headers
 
 
-async def test_openapi_has_response_model(client):
+async def test_every_route_has_a_response_schema(client):
     schema = (await client.get("/openapi.json")).json()
-    ok = schema["paths"]["/api/v1/health"]["get"]["responses"]["200"]
-    assert ok["content"]["application/json"]["schema"]["$ref"].endswith("/HealthOut")
+    for path, ops in schema["paths"].items():
+        for method, op in ops.items():
+            ok = next(code for code in op["responses"] if code.startswith("2"))
+            if ok == "204":
+                continue
+            content = op["responses"][ok].get("content", {})
+            assert "application/json" in content, f"{method.upper()} {path} has no response model"
+            assert content["application/json"]["schema"], f"{method.upper()} {path}"

@@ -18,6 +18,10 @@ $bottom-nav-height: 64px;
   padding-bottom: calc(#{$bottom-nav-height} + env(safe-area-inset-bottom));
 }
 
+.bare .content {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 .brand {
   font: var(--mat-sys-title-large);
   font-weight: 700;

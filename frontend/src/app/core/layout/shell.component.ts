@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
 
+import { AuthService } from '../auth/auth.service';
 import { MORE_NAV, PRIMARY_NAV } from './nav-items';
 
 @Component({
@@ -16,6 +17,7 @@ import { MORE_NAV, PRIMARY_NAV } from './nav-items';
 })
 export class ShellComponent {
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthService);
 
   protected readonly primaryNav = PRIMARY_NAV;
   protected readonly moreNav = MORE_NAV;
@@ -27,6 +29,12 @@ export class ShellComponent {
     ),
     { initialValue: this.router.url },
   );
+
+  /** Navigation shows only inside the app, not on sign-in or onboarding pages. */
+  protected readonly showNav = computed(() => {
+    const url = this.url();
+    return this.auth.hasProfile() && !/^\/(login|register|onboarding)\b/.test(url);
+  });
 
   /** "More" is highlighted on the More page and on every page it holds. */
   protected readonly moreActive = computed(() => {

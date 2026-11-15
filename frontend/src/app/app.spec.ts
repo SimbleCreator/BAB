@@ -14,12 +14,11 @@ describe('App', () => {
     }).compileComponents();
   });
 
-  it('renders the five bottom navigation tabs', async () => {
+  it('hides the app navigation when signed out', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const tabs = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll('.bottom-nav .tab span'),
-    ).map((el) => el.textContent?.trim());
-    expect(tabs).toEqual(['Today', 'Activity', 'Train', 'Eat', 'More']);
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.bottom-nav')).toBeNull();
+    expect(el.querySelector('.rail')).toBeNull();
   });
 });

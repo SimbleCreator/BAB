@@ -1,0 +1,153 @@
+@switch (section()) {
+  @case ('about') {
+    <div class="fields" [formGroup]="group()">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" autocomplete="given-name" maxlength="60" />
+        @if (group().controls['name'].invalid) {
+          <mat-error>Enter your name.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>Age</mat-label>
+          <input matInput type="number" inputmode="numeric" formControlName="age" />
+          <mat-error>18 to 100.</mat-error>
+        </mat-form-field>
+        <div class="radio-field">
+          <span class="field-label">Sex</span>
+          <mat-radio-group formControlName="sex" aria-label="Sex">
+            @for (s of sexes; track s.value) {
+              <mat-radio-button [value]="s.value">{{ s.label }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          <span class="hint">Used for the calorie formula.</span>
+          @if (group().controls['sex'].touched && group().controls['sex'].invalid) {
+            <p class="bab-field-error inline">Choose one.</p>
+          }
+        </div>
+      </div>
+
+      <div class="row">
+        <mat-form-field>
+          <mat-label>Height</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="decimal"
+            step="0.1"
+            formControlName="height_cm"
+          />
+          <span matTextSuffix>cm</span>
+          <mat-error>120 to 230 cm.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Weight</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="decimal"
+            step="0.1"
+            formControlName="weight_kg"
+          />
+          <span matTextSuffix>kg</span>
+          <mat-error>30 to 300 kg.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  }
+
+  @case ('training') {
+    <div class="fields" [formGroup]="group()">
+      <span class="field-label">Goal</span>
+      <mat-radio-group class="stack" formControlName="goal" aria-label="Goal">
+        @for (g of goals; track g.value) {
+          <mat-radio-button [value]="g.value">
+            <span class="opt">{{ g.label }}</span>
+            <span class="hint">{{ g.hint }}</span>
+          </mat-radio-button>
+        }
+      </mat-radio-group>
+      @if (group().controls['goal'].touched && group().controls['goal'].invalid) {
+        <p class="bab-field-error inline">Choose a goal.</p>
+      }
+
+      <span class="field-label">Level</span>
+      <mat-radio-group class="stack" formControlName="level" aria-label="Level">
+        @for (l of levels; track l.value) {
+          <mat-radio-button [value]="l.value">
+            <span class="opt">{{ l.label }}</span>
+            <span class="hint">{{ l.hint }}</span>
+          </mat-radio-button>
+        }
+      </mat-radio-group>
+      @if (group().controls['level'].touched && group().controls['level'].invalid) {
+        <p class="bab-field-error inline">Choose a level.</p>
+      }
+
+      <span class="field-label">Training days per week</span>
+      <mat-button-toggle-group formControlName="days_per_week" aria-label="Training days per week">
+        @for (d of days; track d) {
+          <mat-button-toggle [value]="d">{{ d }}</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+
+      <mat-form-field class="minutes">
+        <mat-label>Minutes per session</mat-label>
+        <mat-select formControlName="minutes_per_day">
+          @for (m of minutes; track m) {
+            <mat-option [value]="m">{{ m }} minutes</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="has_pullup_bar">I have a pull-up bar</mat-slide-toggle>
+    </div>
+  }
+
+  @case ('daily') {
+    <div class="fields" [formGroup]="group()">
+      <span class="field-label">Diet</span>
+      <mat-button-toggle-group formControlName="diet_type" aria-label="Diet">
+        @for (d of diets; track d.value) {
+          <mat-button-toggle [value]="d.value">{{ d.label }}</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+      @if (group().controls['diet_type'].touched && group().controls['diet_type'].invalid) {
+        <p class="bab-field-error inline">Choose your diet.</p>
+      }
+
+      <mat-form-field>
+        <mat-label>Daily step goal</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="numeric"
+          step="500"
+          formControlName="daily_step_goal"
+        />
+        <span matTextSuffix>steps</span>
+        <mat-error>1,000 to 50,000.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Timezone</mat-label>
+        <input
+          matInput
+          formControlName="timezone"
+          [matAutocomplete]="tz"
+          (input)="tzQuery.set($any($event.target).value)"
+          (focus)="tzQuery.set('')"
+        />
+        <mat-autocomplete #tz="matAutocomplete">
+          @for (z of tzMatches(); track z) {
+            <mat-option [value]="z">{{ z }}</mat-option>
+          }
+        </mat-autocomplete>
+        <mat-hint>Your days start and end in this timezone.</mat-hint>
+        <mat-error>Pick a timezone from the list.</mat-error>
+      </mat-form-field>
+    </div>
+  }
+}

@@ -1,51 +1,57 @@
-<div class="shell">
-  <nav class="rail" aria-label="Main">
-    <a class="brand" routerLink="/today">B.A.B</a>
-    @for (item of primaryNav; track item.path) {
-      <a class="rail-link" [routerLink]="item.path" routerLinkActive="active">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span>{{ item.label }}</span>
-      </a>
-    }
-    <div class="rail-divider" role="separator"></div>
-    @for (item of moreNav; track item.path) {
-      <a class="rail-link" [routerLink]="item.path" routerLinkActive="active">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span>{{ item.label }}</span>
-      </a>
-    }
-  </nav>
+<div class="shell" [class.bare]="!showNav()">
+  @if (showNav()) {
+    <nav class="rail" aria-label="Main">
+      <a class="brand" routerLink="/today">B.A.B</a>
+      @for (item of primaryNav; track item.path) {
+        <a class="rail-link" [routerLink]="item.path" routerLinkActive="active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+      <div class="rail-divider" role="separator"></div>
+      @for (item of moreNav; track item.path) {
+        <a class="rail-link" [routerLink]="item.path" routerLinkActive="active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  }
 
   <div class="main">
-    <mat-toolbar class="topbar">
-      <a class="brand" routerLink="/today">B.A.B</a>
-    </mat-toolbar>
+    @if (showNav()) {
+      <mat-toolbar class="topbar">
+        <a class="brand" routerLink="/today">B.A.B</a>
+      </mat-toolbar>
+    }
     <main class="content">
       <router-outlet />
     </main>
   </div>
 
-  <nav class="bottom-nav" aria-label="Main">
-    @for (item of primaryNav; track item.path) {
+  @if (showNav()) {
+    <nav class="bottom-nav" aria-label="Main">
+      @for (item of primaryNav; track item.path) {
+        <a
+          class="tab"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          #rla="routerLinkActive"
+          [attr.aria-current]="rla.isActive ? 'page' : null"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
       <a
         class="tab"
-        [routerLink]="item.path"
-        routerLinkActive="active"
-        #rla="routerLinkActive"
-        [attr.aria-current]="rla.isActive ? 'page' : null"
+        routerLink="/more"
+        [class.active]="moreActive()"
+        [attr.aria-current]="moreActive() ? 'page' : null"
       >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span>{{ item.label }}</span>
+        <mat-icon>menu</mat-icon>
+        <span>More</span>
       </a>
-    }
-    <a
-      class="tab"
-      routerLink="/more"
-      [class.active]="moreActive()"
-      [attr.aria-current]="moreActive() ? 'page' : null"
-    >
-      <mat-icon>menu</mat-icon>
-      <span>More</span>
-    </a>
-  </nav>
+    </nav>
+  }
 </div>

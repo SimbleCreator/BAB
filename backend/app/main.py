@@ -3,18 +3,28 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.core.config import get_settings
 from app.core.database import engine
-from app.routers import health
+from app.core.errors import AppError
+from app.routers import auth, health, profile
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     yield
     await engine.dispose()
+
+
+async def _app_error_handler(_: Request, exc: Exception) -> JSONResponse:
+    assert isinstance(exc, AppError)  # noqa: S101
+    headers = {"WWW-Authenticate": "Bearer"} if exc.status_code == 401 else None
+    return JSONResponse(
+        {"detail": exc.message, "code": exc.code}, status_code=exc.status_code, headers=headers
+    )
 
 
 def create_app() -> FastAPI:
@@ -33,7 +43,9 @@ def create_app() -> FastAPI:
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
         allow_headers=["Authorization", "Content-Type"],
     )
-    app.include_router(health.router, prefix=settings.api_prefix)
+    app.add_exception_handler(AppError, _app_error_handler)
+    for r in (health.router, auth.router, profile.router):
+        app.include_router(r, prefix=settings.api_prefix)
     return app
 
 

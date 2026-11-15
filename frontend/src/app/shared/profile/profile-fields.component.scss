@@ -1,0 +1,57 @@
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.field-label {
+  font: var(--mat-sys-title-small);
+  margin: 12px 0 4px;
+}
+
+.radio-field {
+  display: flex;
+  flex-direction: column;
+
+  .field-label {
+    margin-top: 0;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.opt {
+  display: block;
+}
+
+.hint {
+  display: block;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+mat-button-toggle-group {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.minutes {
+  max-width: 240px;
+}
+
+mat-slide-toggle {
+  margin: 4px 0 12px;
+}
