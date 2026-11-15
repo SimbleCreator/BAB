@@ -12,11 +12,13 @@ from app.core.config import get_settings
 from app.core.database import engine
 from app.core.errors import AppError
 from app.routers import (
+    account,
     activity,
     auth,
     checkins,
     habits,
     health,
+    history,
     milestones,
     nutrition,
     profile,
@@ -70,6 +72,8 @@ def create_app() -> FastAPI:
         training.router,
         nutrition.router,
         habits.router,
+        history.router,
+        account.router,
     ):
         app.include_router(r, prefix=settings.api_prefix)
     return app

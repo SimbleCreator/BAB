@@ -256,3 +256,14 @@ check-in, in the check-in history and on the Train page.
 | Ending | a plan can be ended (kept for history) or deleted with its logs |
 | Milestone | "Week within plan": one finished week within the allowance, across all plans |
 | Wording | it is a reduction plan; use is never called a prize, treat or reward; nothing encourages use; every plan screen says a doctor can help with quitting. All habit wording is in `frontend/src/app/features/habits/wording.ts` |
+
+## History, export and deletion
+
+| Rule | Value |
+| --- | --- |
+| Month view | one entry per day: activity logged, workout done or skipped, at least one meal item, check-in, number of runs; future months refused |
+| Day view | everything for one day (activity, runs, planned and logged workout, meals, check-in, reduction plan units), with edit links in the app |
+| Export | one JSON file with every stored record for the user (account, profile, activity, runs with tracks, plans, workouts with sets, targets, custom foods, meals with items, check-ins, adjustments, milestones, plans with logs); no password hash or tokens |
+| Delete account | needs the password and an explicit confirmation; rate limited like sign-in; removes the user and, by database cascade, every row they own; signs them out |
+| Contact email | from `BAB_CONTACT_EMAIL`, served by `/config/public` for the privacy and terms pages |
+| Admin | users with `is_admin` (set with `python -m app.cli make-admin <email>`); aggregates only: total users, active in 7 and 30 days (signed in or refreshed a session), new users per week for 12 weeks, record counts by type |

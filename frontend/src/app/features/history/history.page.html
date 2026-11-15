@@ -1,0 +1,220 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">History</h1>
+
+  @if (data.isLoading() && !data.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (data.error()) {
+    <p class="bab-form-error">Could not load this month.</p>
+    <button mat-button type="button" (click)="data.reload()">Try again</button>
+  } @else if (data.value(); as m) {
+    <div class="month-nav">
+      <button mat-icon-button type="button" (click)="shift(-1)" aria-label="Previous month">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="month-title">{{ title() }}</span>
+      <button
+        mat-icon-button
+        type="button"
+        (click)="shift(1)"
+        [disabled]="isCurrentMonth()"
+        aria-label="Next month"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+    <div class="grid" role="grid" aria-label="Days of the month">
+      @for (w of weekdays; track w) {
+        <div class="wd" role="columnheader">{{ w }}</div>
+      }
+      @for (b of blanks(); track $index) {
+        <div></div>
+      }
+      @for (d of m.days; track d.day) {
+        <button
+          type="button"
+          role="gridcell"
+          class="cell"
+          [class.selected]="d.day === selected()"
+          [class.today]="d.day === m.today"
+          [class.future]="isFuture(d)"
+          [disabled]="isFuture(d)"
+          [attr.aria-label]="describe(d)"
+          (click)="pick(d)"
+        >
+          <span class="n">{{ dayNum(d.day) }}</span>
+          @if (hasAny(d)) {
+            <span class="dots" aria-hidden="true">
+              @if (d.activity) {
+                <i class="dot activity"></i>
+              }
+              @if (d.workout === 'done') {
+                <i class="dot workout"></i>
+              }
+              @if (d.meals) {
+                <i class="dot meals"></i>
+              }
+              @if (d.checkin) {
+                <i class="dot checkin"></i>
+              }
+              @if (d.runs) {
+                <i class="dot runs"></i>
+              }
+            </span>
+          }
+        </button>
+      }
+    </div>
+    <div class="legend" aria-hidden="true">
+      <span><i class="dot activity"></i> Activity</span>
+      <span><i class="dot workout"></i> Workout</span>
+      <span><i class="dot meals"></i> Meals</span>
+      <span><i class="dot checkin"></i> Check-in</span>
+      <span><i class="dot runs"></i> Run</span>
+    </div>
+
+    @if (selected()) {
+      @if (detail.isLoading() && !detail.hasValue()) {
+        <div class="center"><mat-spinner diameter="32" /></div>
+      } @else if (detail.error()) {
+        <p class="bab-form-error">Could not load this day.</p>
+      } @else if (detail.value(); as d) {
+        <h2>{{ label(d.day) }}</h2>
+
+        <div class="section">
+          <div class="s-head">
+            <span><mat-icon>directions_walk</mat-icon> Activity</span>
+            <a
+              mat-button
+              [routerLink]="['/activity/day', d.day]"
+              [queryParams]="{ back: '/history' }"
+            >
+              {{ d.activity ? 'Edit' : 'Add' }}
+            </a>
+          </div>
+          @if (d.activity; as a) {
+            <p>
+              {{ a.steps | int }} steps &middot; {{ a.distance_m | km }}
+              @if (a.distance_estimated) {
+                <app-estimate />
+              }
+              &middot; {{ a.active_kcal | int }} kcal
+              @if (a.active_kcal_estimated) {
+                <app-estimate />
+              }
+            </p>
+          } @else {
+            <p class="bab-muted">Nothing logged.</p>
+          }
+        </div>
+
+        <div class="section">
+          <div class="s-head">
+            <span><mat-icon>fitness_center</mat-icon> Workout</span>
+            @if (d.workout_title) {
+              <a mat-button [routerLink]="['/train/workout', d.day]">{{
+                d.workout ? 'Edit' : 'Log'
+              }}</a>
+            }
+          </div>
+          @if (!d.workout_title) {
+            <p class="bab-muted">Rest day.</p>
+          } @else if (d.workout; as w) {
+            <p>
+              {{ d.workout_title }}:
+              @if (w.status === 'done') {
+                {{ w.summary.completion_pct }}% done, {{ w.summary.sets_done }} of
+                {{ w.summary.sets_planned }} sets
+              } @else {
+                skipped
+              }
+            </p>
+          } @else {
+            <p class="bab-muted">{{ d.workout_title }} planned, not logged.</p>
+          }
+        </div>
+
+        <div class="section">
+          <div class="s-head">
+            <span><mat-icon>directions_run</mat-icon> Runs</span>
+            <a mat-button routerLink="/runs/new">Add</a>
+          </div>
+          @for (r of d.runs; track r.id) {
+            <p>
+              <a [routerLink]="['/runs', r.id]"
+                >{{ r.distance_m | km }} in {{ r.duration_s | duration }}</a
+              >
+            </p>
+          } @empty {
+            <p class="bab-muted">No runs.</p>
+          }
+        </div>
+
+        <div class="section">
+          <div class="s-head">
+            <span><mat-icon>restaurant</mat-icon> Food</span>
+            <a
+              mat-button
+              [routerLink]="['/eat']"
+              [queryParams]="{ day: d.day === d.today ? null : d.day }"
+            >
+              {{ d.nutrition.eaten.calories_kcal ? 'Edit' : 'Add' }}
+            </a>
+          </div>
+          @if (d.nutrition.eaten.calories_kcal) {
+            <p>
+              {{ d.nutrition.eaten.calories_kcal | int }} of
+              {{ d.nutrition.target.calories_kcal | int }} kcal
+              <app-estimate />
+            </p>
+            <ul>
+              @for (meal of d.nutrition.meals; track meal.meal_type) {
+                @if (meal.items.length) {
+                  <li>
+                    {{ mealLabel[meal.meal_type] }}:
+                    @for (i of meal.items; track i.id; let last = $last) {
+                      {{ i.name }}{{ last ? '' : ', ' }}
+                    }
+                  </li>
+                }
+              }
+            </ul>
+          } @else {
+            <p class="bab-muted">No meals logged.</p>
+          }
+        </div>
+
+        <div class="section">
+          <div class="s-head">
+            <span><mat-icon>monitor_weight</mat-icon> Check-in</span>
+            <a mat-button routerLink="/checkin">{{ d.checkin ? 'View' : 'Check in' }}</a>
+          </div>
+          @if (d.checkin; as c) {
+            <p>
+              {{ c.weight_kg }} kg
+              @if (c.waist_cm !== null) {
+                &middot; waist {{ c.waist_cm }} cm
+              }
+            </p>
+          } @else {
+            <p class="bab-muted">No check-in.</p>
+          }
+        </div>
+
+        @if (d.habits.length) {
+          <div class="section">
+            <div class="s-head">
+              <span><mat-icon>trending_down</mat-icon> Reduction plans</span>
+              <a mat-button routerLink="/habits">Edit</a>
+            </div>
+            @for (h of d.habits; track h.habit_id) {
+              <p>{{ habitWords[h.type].title }}: {{ units(h.type, h.units) }}</p>
+            }
+          </div>
+        }
+      }
+    } @else {
+      <p class="bab-muted">Pick a day to see what was logged.</p>
+    }
+  }
+</section>

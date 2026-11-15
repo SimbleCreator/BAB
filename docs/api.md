@@ -87,6 +87,13 @@ endpoints.
 | POST | `/habits/{id}/stop` | bearer | End a plan |
 | DELETE | `/habits/{id}` | bearer | Delete a plan and its logs |
 
+| GET | `/history/month?month=YYYY-MM` | bearer | What was logged on each day of a month |
+| GET | `/history/days/{day}` | bearer | Everything recorded on one day |
+| GET | `/account/export` | bearer | One JSON file with all the user's data (download) |
+| POST | `/account/delete` | bearer | `{password, confirm: true}`; permanently deletes the account; 204 |
+| GET | `/config/public` | none | App name, contact email, version |
+| GET | `/admin/stats` | bearer, admin | Aggregate numbers only |
+
 `/today` also returns `habits` (availability per active plan), `nutrition` (target, eaten, remaining, protein), `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
 
 Activity responses return the value to show. When `distance_estimated` or

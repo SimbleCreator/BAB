@@ -40,3 +40,16 @@ h3 {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+.danger-title {
+  color: var(--mat-sys-error);
+}
+
+.danger-btn {
+  background: var(--mat-sys-error) !important;
+  color: var(--mat-sys-on-error) !important;
+}
+
+.links {
+  margin-top: 16px;
+}

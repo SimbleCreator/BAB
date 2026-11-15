@@ -3,11 +3,14 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { AccountApi } from '../../core/api/account.api';
 import { apiErrorMessage } from '../../core/api/api-error';
 import { ProfileApi } from '../../core/api/profile.api';
 import { AuthService } from '../../core/auth/auth.service';
@@ -24,6 +27,8 @@ import {
   imports: [
     ReactiveFormsModule,
     MatCardModule,
+    MatCheckboxModule,
+    RouterLink,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -127,6 +132,58 @@ export class AccountPage {
         this.pwError.set(apiErrorMessage(err));
       },
     });
+  }
+
+  private readonly accountApi = inject(AccountApi);
+  protected readonly exporting = signal(false);
+  protected readonly deleteForm = this.fb.group({
+    password: ['', Validators.required],
+    confirm: [false, Validators.requiredTrue],
+  });
+  protected readonly deleting = signal(false);
+  protected readonly deleteError = signal<string | null>(null);
+
+  protected exportData(): void {
+    this.exporting.set(true);
+    this.accountApi.export().subscribe({
+      next: (blob) => {
+        this.exporting.set(false);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `bab-export-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      },
+      error: (err: unknown) => {
+        this.exporting.set(false);
+        this.snack.open(apiErrorMessage(err), undefined, { duration: 4000 });
+      },
+    });
+  }
+
+  protected deleteAccount(): void {
+    if (this.deleteForm.invalid) {
+      this.deleteForm.markAllAsTouched();
+      return;
+    }
+    this.deleting.set(true);
+    this.deleteError.set(null);
+    this.accountApi
+      .delete({ password: this.deleteForm.getRawValue().password, confirm: true })
+      .subscribe({
+        next: () => {
+          this.deleting.set(false);
+          this.snack.open('Your account and all of its data have been deleted.', undefined, {
+            duration: 5000,
+          });
+          this.auth.sessionLost();
+        },
+        error: (err: unknown) => {
+          this.deleting.set(false);
+          this.deleteError.set(apiErrorMessage(err));
+        },
+      });
   }
 
   protected logout(): void {

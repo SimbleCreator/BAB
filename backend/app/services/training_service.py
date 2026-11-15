@@ -291,7 +291,7 @@ def _logged(row: WorkoutSession) -> list[eng.LoggedSet]:
     ]
 
 
-def _workout_out(row: WorkoutSession) -> WorkoutOut:
+def workout_out(row: WorkoutSession) -> WorkoutOut:
     logged = _logged(row)
     return WorkoutOut(
         day=row.day,
@@ -375,7 +375,7 @@ async def get_workout(session: AsyncSession, user: User, day: date) -> WorkoutOu
     row = await training_repo.get_session(session, user.id, day)
     if row is None:
         raise NotFoundError("No workout logged for this day.", code="workout_missing")
-    return _workout_out(row)
+    return workout_out(row)
 
 
 async def save_workout(session: AsyncSession, user: User, day: date, data: WorkoutIn) -> WorkoutOut:

@@ -153,3 +153,7 @@ async def delete_run(session: AsyncSession, user: User, run_id: int) -> None:
     await run_repo.delete(session, run)
     await milestone_service.evaluate(session, user.id)
     await session.commit()
+
+
+async def runs_on(session: AsyncSession, user: User, day) -> list[RunOut]:
+    return [_out(r, t) for r, t in await run_repo.on_day(session, user.id, day)]

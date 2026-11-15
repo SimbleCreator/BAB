@@ -27,3 +27,9 @@ export const onboardingGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   return auth.hasProfile() ? inject(Router).createUrlTree(['/today']) : true;
 };
+
+/** Admin pages: admins only. */
+export const adminGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  return auth.user()?.is_admin ? true : inject(Router).createUrlTree(['/today']);
+};

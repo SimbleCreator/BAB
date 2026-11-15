@@ -630,3 +630,65 @@ export interface DayLogOut {
   day: string;
   units: number;
 }
+
+// history router -------------------------------------------------------------
+
+export interface MonthDayOut {
+  day: string;
+  activity: boolean;
+  workout: 'done' | 'skipped' | null;
+  meals: boolean;
+  checkin: boolean;
+  runs: number;
+}
+
+export interface MonthOut {
+  /** YYYY-MM */
+  month: string;
+  today: string;
+  days: MonthDayOut[];
+}
+
+export interface HabitDayOut {
+  habit_id: number;
+  type: HabitType;
+  units: number;
+}
+
+export interface HistoryDayOut {
+  day: string;
+  today: string;
+  activity: ActivityOut | null;
+  runs: RunOut[];
+  workout_title: string | null;
+  workout: WorkoutOut | null;
+  nutrition: DayNutritionOut;
+  checkin: CheckinOut | null;
+  habits: HabitDayOut[];
+}
+
+// account router -------------------------------------------------------------
+
+export interface DeleteAccountIn {
+  password: string;
+  confirm: true;
+}
+
+export interface PublicConfigOut {
+  app_name: string;
+  contact_email: string;
+  version: string;
+}
+
+export interface WeekCount {
+  week_start: string;
+  count: number;
+}
+
+export interface AdminStatsOut {
+  total_users: number;
+  active_7_days: number;
+  active_30_days: number;
+  new_users_per_week: WeekCount[];
+  records: Record<string, number>;
+}

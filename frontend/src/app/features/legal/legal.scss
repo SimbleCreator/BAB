@@ -1,0 +1,23 @@
+.legal {
+  line-height: 1.6;
+
+  h2 {
+    font: var(--mat-sys-title-medium);
+    margin: 20px 0 6px;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+}
+
+.placeholder {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--mat-sys-tertiary);
+  color: var(--mat-sys-tertiary);
+  font: var(--mat-sys-label-large);
+}

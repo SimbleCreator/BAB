@@ -85,5 +85,47 @@
     </mat-card-content>
   </mat-card>
 
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Your data</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Download everything stored about you as one JSON file.</p>
+      <button mat-stroked-button type="button" (click)="exportData()" [disabled]="exporting()">
+        {{ exporting() ? 'Preparing...' : 'Export my data' }}
+      </button>
+      <h3 class="danger-title">Delete account</h3>
+      <p>
+        This permanently removes your account and everything you have logged. It cannot be undone.
+        Export your data first if you want a copy.
+      </p>
+      <form [formGroup]="deleteForm" (ngSubmit)="deleteAccount()" novalidate class="pw">
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <mat-error>Enter your password.</mat-error>
+        </mat-form-field>
+        <mat-checkbox formControlName="confirm">I understand this cannot be undone</mat-checkbox>
+        @if (deleteForm.controls.confirm.touched && deleteForm.controls.confirm.invalid) {
+          <p class="bab-field-error">Tick the box to confirm.</p>
+        }
+        @if (deleteError()) {
+          <p class="bab-form-error" role="alert">{{ deleteError() }}</p>
+        }
+        <button mat-flat-button type="submit" class="danger-btn" [disabled]="deleting()">
+          {{ deleting() ? 'Deleting...' : 'Delete my account' }}
+        </button>
+      </form>
+      <p class="bab-muted links">
+        <a routerLink="/privacy">Privacy policy</a> &middot; <a routerLink="/terms">Terms</a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+
   <button mat-stroked-button type="button" (click)="logout()">Sign out</button>
 </section>

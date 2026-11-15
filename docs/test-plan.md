@@ -130,3 +130,18 @@
 - Every plan screen shows the doctor line; no wording calls smoking or drinking a
   reward or treat.
 - End plan needs a second tap; a new plan of that type can then start.
+
+### M9
+- History: the month grid marks activity, workout, meals, check-in and runs; the
+  next-month arrow stops at the current month; future days cannot be picked.
+- Pick a day: every section shows what was logged with Edit or Add links that open
+  the right page for that day.
+- Account, Your data: "Export my data" downloads a JSON file with everything you
+  logged and no password or token.
+- Delete account: without the tick box it asks you to confirm; a wrong password is
+  refused; with both it signs you out, and signing in again fails.
+- Privacy and Terms open while signed out, show the placeholder notice and the
+  contact email from BAB_CONTACT_EMAIL.
+- Admin: run `python -m app.cli make-admin <email>`, sign in again; More shows
+  Admin with totals, active users, new users per week and record counts only.
+  A non-admin opening /admin is sent to Today.

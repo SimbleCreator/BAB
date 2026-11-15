@@ -1,9 +1,12 @@
 import { Routes } from '@angular/router';
 
-import { authGuard, guestGuard, onboardingGuard, profileGuard } from './core/auth/guards';
-
-const upcoming = () =>
-  import('./shared/components/upcoming-page.component').then((m) => m.UpcomingPageComponent);
+import {
+  adminGuard,
+  authGuard,
+  guestGuard,
+  onboardingGuard,
+  profileGuard,
+} from './core/auth/guards';
 
 export const routes: Routes = [
   // Public pages
@@ -22,22 +25,12 @@ export const routes: Routes = [
   {
     path: 'privacy',
     title: 'Privacy - B.A.B',
-    loadComponent: upcoming,
-    data: {
-      title: 'Privacy policy',
-      icon: 'policy',
-      blurb: 'The full privacy policy is published here before launch.',
-    },
+    loadComponent: () => import('./features/legal/privacy.page').then((m) => m.PrivacyPage),
   },
   {
     path: 'terms',
     title: 'Terms - B.A.B',
-    loadComponent: upcoming,
-    data: {
-      title: 'Terms of use',
-      icon: 'gavel',
-      blurb: 'The terms of use are published here before launch.',
-    },
+    loadComponent: () => import('./features/legal/terms.page').then((m) => m.TermsPage),
   },
 
   // Signed in, profile not set up yet
@@ -159,12 +152,13 @@ export const routes: Routes = [
       {
         path: 'history',
         title: 'History - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'History',
-          icon: 'calendar_month',
-          blurb: 'A calendar of everything you have logged.',
-        },
+        loadComponent: () => import('./features/history/history.page').then((m) => m.HistoryPage),
+      },
+      {
+        path: 'admin',
+        title: 'Admin - B.A.B',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./features/admin/admin.page').then((m) => m.AdminPage),
       },
       {
         path: 'account',

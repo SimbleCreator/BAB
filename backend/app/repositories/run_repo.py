@@ -52,3 +52,21 @@ async def totals(session: AsyncSession, user_id: int) -> tuple[int, int, int]:
         )
     ).one()
     return int(row[0]), int(row[1]), int(row[2])
+
+
+async def counts_by_day(session: AsyncSession, user_id: int, start, end) -> dict:
+    rows = await session.execute(
+        select(Run.day, func.count(Run.id))
+        .where(Run.user_id == user_id, Run.day >= start, Run.day <= end)
+        .group_by(Run.day)
+    )
+    return {d: int(n) for d, n in rows.all()}
+
+
+async def on_day(session: AsyncSession, user_id: int, day) -> list[tuple[Run, bool]]:
+    rows = await session.execute(
+        select(Run, _has_track)
+        .where(Run.user_id == user_id, Run.day == day)
+        .order_by(Run.started_at.nulls_last(), Run.id)
+    )
+    return [(r, bool(t)) for r, t in rows.all()]
