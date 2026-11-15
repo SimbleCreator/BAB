@@ -21,7 +21,7 @@ from app.schemas.run import (
     SplitOut,
     TrackPointOut,
 )
-from app.services import gpx
+from app.services import gpx, milestone_service
 from app.services.common import require_profile
 
 
@@ -85,6 +85,7 @@ async def create_manual(session: AsyncSession, user: User, data: RunIn) -> RunDe
         note=data.note,
     )
     run_repo.add(session, run)
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
     return await get_run(session, user, run.id)
 
@@ -117,6 +118,7 @@ async def create_from_gpx(
         ],
     )
     run_repo.add(session, run)
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
     return await get_run(session, user, run.id)
 
@@ -139,6 +141,7 @@ async def update_run(
         run.duration_s = data.duration_s
     if "note" in sent:
         run.note = data.note
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
     return await get_run(session, user, run_id)
 
@@ -148,4 +151,5 @@ async def delete_run(session: AsyncSession, user: User, run_id: int) -> None:
     if run is None:
         raise NotFoundError("Run not found.", code="run_missing")
     await run_repo.delete(session, run)
+    await milestone_service.evaluate(session, user.id)
     await session.commit()

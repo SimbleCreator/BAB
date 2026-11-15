@@ -13,6 +13,30 @@
     <p class="bab-muted date">{{ dateLabel() }}</p>
     <h1 class="bab-page-title">Hi {{ t.name }}</h1>
 
+    @if (t.new_milestones.length) {
+      <a class="banner win" routerLink="/milestones">
+        <mat-icon>military_tech</mat-icon>
+        <span>
+          <strong
+            >{{
+              t.new_milestones.length === 1
+                ? 'Milestone unlocked'
+                : t.new_milestones.length + ' milestones unlocked'
+            }}:</strong
+          >
+          {{ milestoneTitles() }}
+        </span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+    @if (t.checkin_due) {
+      <a class="banner" routerLink="/checkin">
+        <mat-icon>monitor_weight</mat-icon>
+        <span>Weekly check-in due. Takes a minute.</span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+
     <mat-card appearance="outlined" class="line">
       <mat-card-content>
         <mat-icon>bolt</mat-icon>

@@ -1,7 +1,7 @@
 from collections.abc import Iterable
 from datetime import date
 
-from sqlalchemy import delete, select
+from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.activity import DailyActivity
@@ -58,3 +58,16 @@ async def remove(session: AsyncSession, user_id: int, day: date) -> bool:
         delete(DailyActivity).where(DailyActivity.user_id == user_id, DailyActivity.day == day)
     )
     return result.rowcount > 0
+
+
+async def step_totals(session: AsyncSession, user_id: int) -> tuple[int, int]:
+    """(best single day, total) steps."""
+    row = (
+        await session.execute(
+            select(
+                func.coalesce(func.max(DailyActivity.steps), 0),
+                func.coalesce(func.sum(DailyActivity.steps), 0),
+            ).where(DailyActivity.user_id == user_id)
+        )
+    ).one()
+    return int(row[0]), int(row[1])

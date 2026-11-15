@@ -87,3 +87,44 @@ Same line all day for a user; changes every day.
 | Stored track | downsampled to at most 2,000 evenly spaced points, first and last always kept; distance is measured on the full track first |
 | Splits | per km; the time at each km mark is interpolated between points; a last partial split is shown if 10 m or more |
 | Splits after edits | track distances are scaled to the run's stored distance, so splits always add up to the distance and time shown |
+
+## Weekly check-in (`app/engines/checkin_engine.py`)
+
+| Rule | Value |
+| --- | --- |
+| Fields | weight 30 to 300 kg (required); waist, chest, arm, thigh 20 to 250 cm (optional); note 500 chars |
+| One per day | saving the same day again replaces it; future days rejected |
+| Due | no check-in yet, or the newest one is more than 7 days old (day 8 onward) |
+| Change | value minus the previous check-in's value (by date), rounded to 0.1 |
+| Profile weight | saving the newest check-in (latest date) sets the profile weight; back-filling an older date does not |
+| Deleting | does not change the profile weight |
+| Adjustment | the weekly adjustment engine runs after a check-in from M7 |
+
+## Milestones (`app/engines/milestone_engine.py`)
+
+| Code | Title | Unlocks when |
+| --- | --- | --- |
+| steps_5k_day | 5K step day | best single day >= 5,000 steps |
+| steps_10k_day | 10K step day | best single day >= 10,000 steps |
+| steps_100k_total | 100K club | total steps >= 100,000 |
+| streak_7 | One solid week | longest step-goal streak >= 7 days |
+| streak_30 | Month of momentum | longest step-goal streak >= 30 days |
+| run_first | First run | runs >= 1 |
+| run_5k | 5 km run | longest single run >= 5,000 m |
+| run_10k | 10 km run | longest single run >= 10,000 m |
+| run_25k_total | 25 km on the clock | total run distance >= 25,000 m |
+| run_50k_total | 50 km on the clock | total run distance >= 50,000 m |
+| workout_first | First workout | finished workouts >= 1 (counted from M5) |
+| workout_10 | 10 workouts | finished workouts >= 10 |
+| workout_50 | 50 workouts | finished workouts >= 50 |
+| meals_7_days | A week of meals | different days with a logged meal >= 7 (counted from M6) |
+| checkins_4 | Four check-ins | check-ins >= 4 |
+| checkins_12 | Twelve check-ins | check-ins >= 12 |
+| habit_week_within | Week within plan | full weeks inside the habit allowance >= 1 (counted from M8) |
+
+- Evaluated on the server after every change to activity (including CSV import),
+  runs, check-ins (and, as they are built, workouts, meals and habit logs), and
+  when the milestones list or Today is read, to catch up on older data.
+- Streak milestones use the longest streak ever against the current step goal.
+- `unlocked_at` is set once and never cleared, even if the data is deleted later.
+- `seen_at` is set when the user has seen the celebration (`POST /milestones/seen`).

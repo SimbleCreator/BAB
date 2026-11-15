@@ -151,6 +151,9 @@ export interface TodayOut {
   step_goal: number;
   current_streak: number;
   activity: ActivityOut | null;
+  checkin_due: boolean;
+  /** Unlocked but not seen yet. */
+  new_milestones: MilestoneBrief[];
 }
 
 // runs router ---------------------------------------------------------------
@@ -203,4 +206,51 @@ export interface RunDetailOut extends RunOut {
 export interface RunListOut {
   items: RunOut[];
   total: number;
+}
+
+// checkins router ------------------------------------------------------------
+
+export interface CheckinIn {
+  weight_kg: number;
+  waist_cm: number | null;
+  chest_cm: number | null;
+  arms_cm: number | null;
+  thighs_cm: number | null;
+  note: string | null;
+}
+
+export interface CheckinOut extends CheckinIn {
+  day: string;
+  /** Change from the previous check-in. */
+  weight_change_kg: number | null;
+  waist_change_cm: number | null;
+}
+
+export interface CheckinStatusOut {
+  due: boolean;
+  last_day: string | null;
+  days_since: number | null;
+  today: string;
+}
+
+// milestones router ----------------------------------------------------------
+
+export type MilestoneCategory = 'steps' | 'runs' | 'training' | 'food' | 'checkins' | 'habits';
+export type MilestoneUnit = 'steps' | 'm' | 'count' | 'days' | 'weeks';
+
+export interface MilestoneOut {
+  code: string;
+  title: string;
+  description: string;
+  category: MilestoneCategory;
+  target: number;
+  current: number;
+  unit: MilestoneUnit;
+  unlocked_at: string | null;
+  seen: boolean;
+}
+
+export interface MilestoneBrief {
+  code: string;
+  title: string;
 }

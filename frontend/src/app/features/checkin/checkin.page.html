@@ -1,0 +1,166 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Weekly check-in</h1>
+
+  @if (status.value(); as s) {
+    <div class="status" [class.due]="s.due">
+      <mat-icon>{{ s.due ? 'event_upcoming' : 'event_available' }}</mat-icon>
+      @if (!s.last_day) {
+        <span
+          >Your first check-in sets the starting point. Weigh in and take a few measurements.</span
+        >
+      } @else if (s.due) {
+        <span>Check-in due. Your last one was {{ s.days_since }} days ago.</span>
+      } @else {
+        <span>Done for this week. Last check-in {{ label(s.last_day) | lowercase }}.</span>
+      }
+    </div>
+  }
+
+  <mat-card appearance="outlined">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="day"
+              [max]="maxDate()"
+              readonly
+              (click)="picker.open()"
+            />
+            <mat-datepicker-toggle matIconSuffix [for]="picker" />
+            <mat-datepicker #picker />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Weight</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              formControlName="weight_kg"
+            />
+            <span matTextSuffix>kg</span>
+            <mat-error>30 to 300 kg.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <p class="bab-muted hint">Measurements are optional. Measure the same way each week.</p>
+        <div class="grid">
+          <mat-form-field>
+            <mat-label>Waist</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              formControlName="waist_cm"
+            />
+            <span matTextSuffix>cm</span>
+            <mat-error>20 to 250 cm.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Chest</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              formControlName="chest_cm"
+            />
+            <span matTextSuffix>cm</span>
+            <mat-error>20 to 250 cm.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Arm</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              formControlName="arms_cm"
+            />
+            <span matTextSuffix>cm</span>
+            <mat-error>20 to 250 cm.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Thigh</mat-label>
+            <input
+              matInput
+              type="number"
+              inputmode="decimal"
+              step="0.1"
+              formControlName="thighs_cm"
+            />
+            <span matTextSuffix>cm</span>
+            <mat-error>20 to 250 cm.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Note (optional)</mat-label>
+          <textarea matInput formControlName="note" rows="2" maxlength="500"></textarea>
+        </mat-form-field>
+
+        @if (error()) {
+          <p class="bab-form-error" role="alert">{{ error() }}</p>
+        }
+        <div class="actions">
+          <button mat-flat-button type="submit" [disabled]="saving()">
+            {{ saving() ? 'Saving...' : existing() ? 'Update check-in' : 'Save check-in' }}
+          </button>
+          @if (existing()) {
+            <button
+              mat-button
+              type="button"
+              class="danger"
+              (click)="remove()"
+              [disabled]="saving()"
+            >
+              {{ confirmDelete() ? 'Tap again to delete' : 'Delete' }}
+            </button>
+          }
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <h2>History</h2>
+  @if (history.isLoading() && !history.hasValue()) {
+    <div class="center"><mat-spinner diameter="36" /></div>
+  } @else if (history.error()) {
+    <p class="bab-form-error">Could not load your check-ins.</p>
+    <button mat-button type="button" (click)="history.reload()">Try again</button>
+  } @else if (history.value(); as rows) {
+    @if (rows.length === 0) {
+      <p class="bab-muted">No check-ins yet.</p>
+    } @else {
+      @if (rows.length > 1) {
+        <mat-card appearance="outlined" class="chart">
+          <mat-card-content>
+            <app-weight-chart [points]="chartPoints()" />
+          </mat-card-content>
+        </mat-card>
+      }
+      <div class="list">
+        @for (c of rows; track c.day) {
+          <button type="button" class="item" (click)="edit(c)">
+            <div class="item-head">
+              <span class="day">{{ label(c.day) }}</span>
+              <span class="weight">{{ c.weight_kg.toFixed(1) }} kg</span>
+            </div>
+            @if (summary(c); as text) {
+              <div class="bab-muted small">{{ text }}</div>
+            }
+          </button>
+        }
+      </div>
+    }
+  }
+  <p class="bab-disclaimer">
+    Saving your newest check-in updates the weight used for your plans. Estimates only, not medical
+    advice.
+  </p>
+</section>

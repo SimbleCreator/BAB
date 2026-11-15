@@ -52,6 +52,15 @@ endpoints.
 | PATCH | `/runs/{id}` | bearer | Change any of `day`, `distance_m`, `duration_s`, `note` |
 | DELETE | `/runs/{id}` | bearer | Delete the run and its track |
 
+| GET | `/checkins` | bearer | All check-ins, newest first, with change from the previous one |
+| GET | `/checkins/status` | bearer | `due`, last check-in day, days since |
+| PUT | `/checkins/{day}` | bearer | Create or replace a check-in; the newest one updates profile weight |
+| DELETE | `/checkins/{day}` | bearer | Remove a check-in |
+| GET | `/milestones` | bearer | Every milestone with progress, `unlocked_at` and `seen` |
+| POST | `/milestones/seen` | bearer | Mark unlocked milestones as seen after celebrating |
+
+`/today` also returns `checkin_due` and `new_milestones` (unlocked, not yet seen).
+
 Activity responses return the value to show. When `distance_estimated` or
 `active_kcal_estimated` is true, that field was blank and the value is an estimate;
 send it back as `null` when editing so it stays estimated.

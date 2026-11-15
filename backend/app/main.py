@@ -11,7 +11,7 @@ from app.content import load_all as load_content
 from app.core.config import get_settings
 from app.core.database import engine
 from app.core.errors import AppError
-from app.routers import activity, auth, health, profile, runs, today
+from app.routers import activity, auth, checkins, health, milestones, profile, runs, today
 
 
 @asynccontextmanager
@@ -53,6 +53,8 @@ def create_app() -> FastAPI:
         today.router,
         activity.router,
         runs.router,
+        checkins.router,
+        milestones.router,
     ):
         app.include_router(r, prefix=settings.api_prefix)
     return app

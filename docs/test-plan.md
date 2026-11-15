@@ -57,3 +57,14 @@
 - Edit a run: change the distance; pace, calories and splits update; the map stays.
 - Delete needs a second tap.
 - The map stays under the top bar and bottom navigation when scrolling.
+
+### M4
+- With no check-ins, Today shows "Weekly check-in due"; Check-in explains the first one.
+- Save a check-in for an earlier date, then one for today: history shows the
+  weight and waist change, the trend chart appears, and Today's banner disappears.
+- Profile weight (Account) follows the newest check-in only.
+- A check-in 8 or more days old makes it due again; 7 days is not due yet.
+- Log 10,000+ steps or a 5 km run: Today shows a milestone banner; Milestones shows a
+  short celebration once, then not again after reload.
+- Delete the run: the milestone stays unlocked.
+- Milestones shows progress bars for locked ones (steps, km, days).

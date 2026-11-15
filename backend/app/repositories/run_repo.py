@@ -38,3 +38,17 @@ def add(session: AsyncSession, run: Run) -> None:
 
 async def delete(session: AsyncSession, run: Run) -> None:
     await session.delete(run)
+
+
+async def totals(session: AsyncSession, user_id: int) -> tuple[int, int, int]:
+    """(count, longest distance, total distance) in metres."""
+    row = (
+        await session.execute(
+            select(
+                func.count(Run.id),
+                func.coalesce(func.max(Run.distance_m), 0),
+                func.coalesce(func.sum(Run.distance_m), 0),
+            ).where(Run.user_id == user_id)
+        )
+    ).one()
+    return int(row[0]), int(row[1]), int(row[2])

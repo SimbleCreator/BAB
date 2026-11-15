@@ -44,6 +44,10 @@ export class TodayPage {
     return t ? Math.max(0, t.step_goal - (t.activity?.steps ?? 0)) : 0;
   });
 
+  protected readonly milestoneTitles = computed(() =>
+    (this.today.value()?.new_milestones ?? []).map((m) => m.title).join(', '),
+  );
+
   protected readonly dateLabel = computed(() => {
     const t = this.today.value();
     if (!t) return '';

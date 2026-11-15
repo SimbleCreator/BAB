@@ -3,6 +3,7 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 from app.schemas.activity import ActivityOut
+from app.schemas.milestone import MilestoneBrief
 
 
 class TodayOut(BaseModel):
@@ -14,3 +15,5 @@ class TodayOut(BaseModel):
     step_goal: int
     current_streak: int
     activity: ActivityOut | None = Field(description="Null when nothing is logged yet today")
+    checkin_due: bool = Field(description="No check-in in the last 7 days")
+    new_milestones: list[MilestoneBrief] = Field(description="Unlocked but not seen yet")

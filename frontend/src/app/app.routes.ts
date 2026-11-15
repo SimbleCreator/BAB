@@ -124,22 +124,13 @@ export const routes: Routes = [
       {
         path: 'checkin',
         title: 'Check-in - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Check-in',
-          icon: 'monitor_weight',
-          blurb: 'Weekly weight and measurements.',
-        },
+        loadComponent: () => import('./features/checkin/checkin.page').then((m) => m.CheckinPage),
       },
       {
         path: 'milestones',
         title: 'Milestones - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Milestones',
-          icon: 'military_tech',
-          blurb: 'Targets you unlock as you keep going.',
-        },
+        loadComponent: () =>
+          import('./features/milestones/milestones.page').then((m) => m.MilestonesPage),
       },
       {
         path: 'habits',

@@ -21,7 +21,7 @@ from app.schemas.activity import (
     CsvRowOut,
     DayPoint,
 )
-from app.services import activity_csv
+from app.services import activity_csv, milestone_service
 from app.services.common import require_profile
 
 MAX_RANGE_DAYS = 366
@@ -79,6 +79,7 @@ async def save_day(session: AsyncSession, user: User, day: date, data: ActivityI
     row.steps, row.distance_m, row.active_kcal = data.steps, data.distance_m, data.active_kcal
     row.note = data.note
     row.source = Source.manual.value
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
     await session.refresh(row)
     return to_out(row, profile)
@@ -87,6 +88,7 @@ async def save_day(session: AsyncSession, user: User, day: date, data: ActivityI
 async def delete_day(session: AsyncSession, user: User, day: date) -> None:
     if not await activity_repo.remove(session, user.id, day):
         raise NotFoundError("Nothing logged for this day.", code="activity_missing")
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
 
 
@@ -181,6 +183,7 @@ async def csv_import(
             updated += 1
         row.steps, row.distance_m, row.active_kcal = r.steps, r.distance_m, r.active_kcal
         row.source = Source.csv.value
+    await milestone_service.evaluate(session, user.id)
     await session.commit()
     return CsvImportOut(
         created=created,

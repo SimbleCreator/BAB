@@ -1,0 +1,62 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Milestones</h1>
+
+  @if (celebrate().length) {
+    <div class="celebrate" role="status">
+      <div class="burst" aria-hidden="true">
+        @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+          <span [style.--i]="i"></span>
+        }
+      </div>
+      <mat-icon>military_tech</mat-icon>
+      <div>
+        <div class="celebrate-title">
+          {{
+            celebrate().length === 1 ? 'New milestone!' : celebrate().length + ' new milestones!'
+          }}
+        </div>
+        <div>
+          @for (m of celebrate(); track m.code; let last = $last) {
+            {{ m.title }}{{ last ? '' : ', ' }}
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (milestones.isLoading() && !milestones.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (milestones.error()) {
+    <p class="bab-form-error">Could not load milestones.</p>
+    <button mat-button type="button" (click)="milestones.reload()">Try again</button>
+  } @else {
+    <p class="bab-muted">{{ unlockedCount() }} of {{ total() }} unlocked. Keep stacking days.</p>
+
+    @for (g of groups(); track g.category) {
+      <h2>
+        <mat-icon>{{ g.icon }}</mat-icon> {{ g.label }}
+      </h2>
+      <div class="grid">
+        @for (m of g.items; track m.code) {
+          <div class="card" [class.done]="m.unlocked_at" [class.fresh]="isFresh(m)">
+            <div class="card-head">
+              <span class="title">{{ m.title }}</span>
+              @if (m.unlocked_at) {
+                <mat-icon class="check" aria-label="Unlocked">verified</mat-icon>
+              }
+            </div>
+            <p class="desc">{{ m.description }}</p>
+            <mat-progress-bar mode="determinate" [value]="percent(m)" />
+            <div class="meta">
+              @if (m.unlocked_at) {
+                Unlocked {{ unlockedOn(m) }}
+              } @else {
+                {{ progressText(m) }}
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+</section>
