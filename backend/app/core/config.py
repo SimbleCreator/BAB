@@ -72,6 +72,12 @@ class Settings(BaseSettings):
     def ai_fallback_list(self) -> list[str]:
         return [m.strip() for m in self.ai_fallback_models.split(",") if m.strip()]
 
+    @field_validator("frontend_origin")
+    @classmethod
+    def _origin(cls, v: str) -> str:
+        # Browsers send the origin in lower case and without a trailing slash.
+        return v.strip().rstrip("/").lower()
+
     @field_validator("database_url", "test_database_url")
     @classmethod
     def _async_url(cls, v: str) -> str:

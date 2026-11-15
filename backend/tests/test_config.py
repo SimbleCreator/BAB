@@ -17,3 +17,11 @@ from app.core.config import normalize_database_url as n
 )
 def test_normalize_database_url(given, expected):
     assert n(given) == expected
+
+
+def test_frontend_origin_is_normalised():
+    from app.core.config import Settings
+
+    assert Settings(frontend_origin=" https://BeABeast.pages.dev/ ").frontend_origin == (
+        "https://beabeast.pages.dev"
+    )
