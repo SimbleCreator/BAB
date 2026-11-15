@@ -1,0 +1,132 @@
+@let s = status();
+@let a = s.availability;
+<div class="plan">
+  <div class="head">
+    <h2>{{ w().title }} reduction plan</h2>
+    <span class="bab-muted">Week {{ s.week_number }}</span>
+  </div>
+  <p class="bab-muted sub">
+    Started at {{ units(s.habit.type, s.habit.baseline) }} {{ w().per }}. This week:
+    {{ units(s.habit.type, s.allowance_per_period) }} {{ w().per }}.
+  </p>
+
+  @if (s.allowance_per_period === 0) {
+    <p class="zero"><mat-icon>flag</mat-icon> {{ zeroLine }}</p>
+  } @else {
+    <div class="numbers">
+      <div>
+        <div class="big">{{ a.available_now }}</div>
+        <div class="bab-muted">available now</div>
+      </div>
+      <div>
+        <div class="big muted">{{ a.locked }}</div>
+        <div class="bab-muted">locked</div>
+      </div>
+      <div>
+        <div class="big muted">{{ a.used }}</div>
+        <div class="bab-muted">used {{ periodWord() }}</div>
+      </div>
+    </div>
+    <mat-progress-bar
+      mode="determinate"
+      [value]="a.allowance ? (100 * a.unlocked) / a.allowance : 0"
+    />
+    @if (a.over) {
+      <p class="bab-muted">
+        {{ units(s.habit.type, a.over) }} above the plan {{ periodWord() }}. Keep logging honestly;
+        that is how the plan works.
+      </p>
+    }
+
+    <p class="goals-line">{{ goalsLine }}</p>
+    <ul class="goals">
+      <li [class.met]="s.goals_today.steps">
+        <mat-icon>{{ s.goals_today.steps ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+        Step goal
+      </li>
+      <li [class.met]="s.goals_today.workout">
+        <mat-icon>{{ s.goals_today.workout ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+        Planned workout (rest days count)
+      </li>
+      <li [class.met]="s.goals_today.meals">
+        <mat-icon>{{ s.goals_today.meals ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+        Two meals logged
+      </li>
+    </ul>
+  }
+
+  <button mat-stroked-button type="button" class="log" (click)="logOne()" [disabled]="busy()">
+    <mat-icon>add</mat-icon>
+    {{ w().logLabel }}
+  </button>
+
+  @if (s.last_week; as lw) {
+    <div class="last-week">
+      @if (lw.within) {
+        <mat-icon>trending_down</mat-icon>
+        <span>
+          Last week stayed within the plan: {{ units(s.habit.type, lw.used) }} of
+          {{ lw.allowance_total }}. That is {{ units(s.habit.type, lw.avoided) }} fewer than your
+          usual week.
+        </span>
+      } @else {
+        <mat-icon>refresh</mat-icon>
+        <span>{{ overLine }}</span>
+      }
+    </div>
+  }
+
+  <button mat-button type="button" (click)="showDays.set(!showDays())">
+    <mat-icon>{{ showDays() ? 'expand_less' : 'edit_calendar' }}</mat-icon>
+    Edit recent days and history
+  </button>
+  @if (showDays()) {
+    <div class="days">
+      @for (d of recentDays(); track d) {
+        <div class="day">
+          <span>{{ label(d) }}</span>
+          <div class="stepper">
+            <button
+              mat-icon-button
+              type="button"
+              (click)="setDay(d, -1)"
+              [disabled]="busy() || unitsOn(d) === 0"
+              aria-label="One less"
+            >
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span class="n">{{ unitsOn(d) }}</span>
+            <button
+              mat-icon-button
+              type="button"
+              (click)="setDay(d, 1)"
+              [disabled]="busy()"
+              aria-label="One more"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      }
+      @if (history.value(); as weeks) {
+        @if (weeks.length) {
+          <h3>Finished weeks</h3>
+          @for (wk of weeks; track wk.number) {
+            <div class="week">
+              <span>Week {{ wk.number }} &middot; {{ range(wk.start, wk.end) }}</span>
+              <span class="bab-muted">
+                {{ wk.used }} of {{ wk.allowance_total }}
+                {{ wk.within ? '· ' + wk.avoided + ' fewer than usual' : '· repeated' }}
+              </span>
+            </div>
+          }
+        }
+      }
+    </div>
+  }
+
+  <p class="doctor"><mat-icon>medical_services</mat-icon> {{ s.doctor_line }}</p>
+  <button mat-button type="button" class="stop" (click)="stop()" [disabled]="busy()">
+    {{ confirmStop() ? 'Tap again to end this plan' : 'End plan' }}
+  </button>
+</div>

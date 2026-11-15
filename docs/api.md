@@ -78,7 +78,16 @@ endpoints.
 | GET/POST | `/foods/custom` | bearer | List or create custom foods |
 | PUT/DELETE | `/foods/custom/{id}` | bearer | Edit or delete a custom food |
 
-`/today` also returns `nutrition` (target, eaten, remaining, protein), `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
+| GET | `/habits` | bearer | Active reduction plans with this week's allowance, availability and goals |
+| POST | `/habits` | bearer | Start a plan `{type, baseline, pace_pct}` |
+| POST | `/habits/{id}/log` | bearer | One tap: one unit today (or `{day}`) |
+| PUT | `/habits/{id}/days/{day}` | bearer | Set a day's total `{units}` |
+| GET | `/habits/{id}/days?from=&to=` | bearer | Daily totals |
+| GET | `/habits/{id}/weeks` | bearer | Finished weeks with allowance, used, within and units avoided |
+| POST | `/habits/{id}/stop` | bearer | End a plan |
+| DELETE | `/habits/{id}` | bearer | Delete a plan and its logs |
+
+`/today` also returns `habits` (availability per active plan), `nutrition` (target, eaten, remaining, protein), `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
 
 Activity responses return the value to show. When `distance_estimated` or
 `active_kcal_estimated` is true, that field was blank and the value is an estimate;

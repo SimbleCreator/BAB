@@ -112,7 +112,7 @@ def _build(profile: Profile) -> eng.WeekPlan:
     return eng.build_week(training_input(profile), lib.exercises, lib.warmup, lib.cooldown)
 
 
-def _sessions_by_day(plan: TrainingPlan) -> dict[date, eng.SessionPlan]:
+def sessions_by_day(plan: TrainingPlan) -> dict[date, eng.SessionPlan]:
     out = {}
     for d in plan.plan_json["sessions"]:
         s = _session_from_json(d)
@@ -210,7 +210,7 @@ async def last_week(session: AsyncSession, user: User, before: date):
         plan = await training_repo.latest_plan(session, user.id, ws)
         if plan is None:
             continue
-        planned_days |= {d for d in _sessions_by_day(plan) if start <= d < before}
+        planned_days |= {d for d in sessions_by_day(plan) if start <= d < before}
     logged = await training_repo.sessions_with_sets(
         session, user.id, start, before - timedelta(days=1)
     )
@@ -337,7 +337,7 @@ async def get_week(session: AsyncSession, user: User, day: date | None) -> WeekO
         )
     plan = await ensure_plan(session, user, profile, week_start)
     await session.commit()
-    planned = _sessions_by_day(plan)
+    planned = sessions_by_day(plan)
     logged = await training_repo.sessions_between(
         session, user.id, week_start, week_start + timedelta(days=6)
     )
@@ -365,7 +365,7 @@ async def _planned_for(
     session: AsyncSession, user: User, profile: Profile, day: date
 ) -> tuple[TrainingPlan, eng.SessionPlan]:
     plan = await ensure_plan(session, user, profile, week_start_for(day))
-    planned = _sessions_by_day(plan).get(day)
+    planned = sessions_by_day(plan).get(day)
     if planned is None:
         raise AppError("This is a rest day in your plan.", code="rest_day")
     return plan, planned
@@ -441,7 +441,7 @@ async def today_brief(
 ) -> WorkoutBrief | None:
     """Today's planned session for the Today screen, or None on a rest day. Does not commit."""
     plan = await ensure_plan(session, user, profile, week_start_for(today))
-    planned = _sessions_by_day(plan).get(today)
+    planned = sessions_by_day(plan).get(today)
     if planned is None:
         return None
     logged = await training_repo.sessions_between(session, user.id, today, today)

@@ -235,3 +235,24 @@ to any of those rebuilds the plan from the rules (progress starts again).
 
 Summary: every adjustment stores plain lines of what changed and why, shown after the
 check-in, in the check-in history and on the Train page.
+
+## Habit reduction (`app/engines/habit_engine.py`)
+
+| Rule | Value |
+| --- | --- |
+| Plans | optional; smoking (baseline per day) or drinking (baseline per week); one active plan per type; baseline 1 to 100 |
+| Pace | gentle 5% or standard 10% of the baseline per week |
+| Allowance | max(0, round(baseline x (1 - pace x step))), rounding halves up |
+| Weeks | 7-day weeks counted from the day the plan starts |
+| Steps | the first week is step 1. A finished week within its allowance moves to the next step; a week over it repeats the same step |
+| Week allowance | smoking: daily allowance x 7; drinking: the weekly allowance |
+| Daily goals | step goal met; planned workout done (a rest day counts as met); at least two meals logged |
+| Unlocking, smoking | today's unlocked = floor(daily allowance x goals met today / 3) |
+| Unlocking, drinking | this week's unlocked = floor(weekly allowance x goals met on all days so far this week / 21) |
+| Available now | unlocked - used (never below 0); locked = allowance - unlocked |
+| Logging | one tap adds one unit; any day from the plan start to today can be set to a total |
+| Week within | shows units avoided = baseline week total - used |
+| Week over | the same allowance repeats; no blame wording |
+| Ending | a plan can be ended (kept for history) or deleted with its logs |
+| Milestone | "Week within plan": one finished week within the allowance, across all plans |
+| Wording | it is a reduction plan; use is never called a prize, treat or reward; nothing encourages use; every plan screen says a doctor can help with quitting. All habit wording is in `frontend/src/app/features/habits/wording.ts` |

@@ -166,7 +166,7 @@ milestones         user_id FK, code, unlocked_at, seen_at   PK (user_id, code)
 weekly_adjustments id PK, user_id FK, checkin_day, created_at, summary (JSON)
                    UNIQUE (user_id, checkin_day)
 habits             id PK, user_id FK, type, baseline, period, pace_pct, started_on,
-                   active
+                   active          UNIQUE (user_id, type) WHERE active
 habit_logs         id PK, habit_id FK, day, units, logged_at
 ```
 All schema changes go through Alembic migrations. Deleting a user cascades to all

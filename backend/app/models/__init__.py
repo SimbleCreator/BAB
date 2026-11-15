@@ -4,6 +4,7 @@ from app.models.activity import DailyActivity
 from app.models.adjustment import WeeklyAdjustment
 from app.models.base import Base
 from app.models.checkin import Checkin
+from app.models.habit import Habit, HabitLog
 from app.models.milestone import Milestone
 from app.models.nutrition import CustomFood, Meal, MealItem, NutritionTarget
 from app.models.profile import Profile
@@ -20,6 +21,8 @@ __all__ = [
     "Checkin",
     "Milestone",
     "DailyActivity",
+    "Habit",
+    "HabitLog",
     "Profile",
     "RefreshToken",
     "Run",

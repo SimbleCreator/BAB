@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { TodayApi } from '../../core/api/today.api';
 import { EstimateBadgeComponent } from '../../shared/components/estimate-badge.component';
 import { IntPipe, KmPipe } from '../../shared/format/format.pipes';
+import { HABIT } from '../habits/wording';
 import { mealForNow } from '../nutrition/meals';
 
 @Component({
@@ -50,6 +51,9 @@ export class TodayPage {
     return n && n.target_kcal ? Math.min(100, Math.round((100 * n.eaten_kcal) / n.target_kcal)) : 0;
   });
   protected readonly mealNow = mealForNow;
+  protected habitTitle(type: 'smoking' | 'drinking'): string {
+    return HABIT[type].title;
+  }
 
   protected readonly milestoneTitles = computed(() =>
     (this.today.value()?.new_milestones ?? []).map((m) => m.title).join(', '),

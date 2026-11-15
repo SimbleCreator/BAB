@@ -157,6 +157,14 @@ export interface TodayOut {
   /** Null on a rest day. */
   workout: WorkoutBrief | null;
   nutrition: TodayNutrition;
+  /** Active reduction plans; empty if none. */
+  habits: TodayHabit[];
+}
+
+export interface TodayHabit {
+  id: number;
+  type: HabitType;
+  availability: AvailabilityOut;
 }
 
 export interface TodayNutrition {
@@ -551,4 +559,74 @@ export interface AdjustmentOut {
 export interface CheckinSavedOut extends CheckinOut {
   adjustment: AdjustmentOut | null;
   adjustment_note: string | null;
+}
+
+// habits router --------------------------------------------------------------
+
+export type HabitType = 'smoking' | 'drinking';
+
+export interface HabitIn {
+  type: HabitType;
+  /** Cigarettes per day, or drinks per week. */
+  baseline: number;
+  pace_pct: 5 | 10;
+}
+
+export interface HabitOut {
+  id: number;
+  type: HabitType;
+  period: 'day' | 'week';
+  baseline: number;
+  pace_pct: number;
+  started_on: string;
+  active: boolean;
+}
+
+export interface GoalsOut {
+  steps: boolean;
+  workout: boolean;
+  meals: boolean;
+  met: number;
+}
+
+export interface AvailabilityOut {
+  period: 'day' | 'week';
+  allowance: number;
+  unlocked: number;
+  available_now: number;
+  locked: number;
+  used: number;
+  over: number;
+}
+
+export interface WeekResultOut {
+  number: number;
+  start: string;
+  end: string;
+  step: number;
+  allowance_total: number;
+  used: number;
+  within: boolean;
+  avoided: number;
+}
+
+export interface HabitStatusOut {
+  habit: HabitOut;
+  today: string;
+  week_number: number;
+  week_start: string;
+  week_end: string;
+  allowance_per_period: number;
+  week_allowance: number;
+  week_used: number;
+  today_used: number;
+  availability: AvailabilityOut;
+  goals_today: GoalsOut;
+  last_week: WeekResultOut | null;
+  doctor_line: string;
+}
+
+export interface DayLogOut {
+  day: string;
+  units: number;
 }

@@ -154,12 +154,7 @@ export const routes: Routes = [
       {
         path: 'habits',
         title: 'Habits - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Habits',
-          icon: 'trending_down',
-          blurb: 'An optional plan to cut down on smoking or drinking.',
-        },
+        loadComponent: () => import('./features/habits/habits.page').then((m) => m.HabitsPage),
       },
       {
         path: 'history',

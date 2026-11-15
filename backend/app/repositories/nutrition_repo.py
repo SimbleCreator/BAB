@@ -133,3 +133,16 @@ async def custom_food(session: AsyncSession, user_id: int, food_id: int) -> Cust
     return await session.scalar(
         select(CustomFood).where(CustomFood.id == food_id, CustomFood.user_id == user_id)
     )
+
+
+async def meal_types_by_day(
+    session: AsyncSession, user_id: int, start: date, end: date
+) -> dict[date, int]:
+    """Number of meals with at least one item, per day."""
+    rows = await session.execute(
+        select(Meal.day, func.count(func.distinct(Meal.meal_type)))
+        .join(MealItem)
+        .where(Meal.user_id == user_id, Meal.day >= start, Meal.day <= end)
+        .group_by(Meal.day)
+    )
+    return {d: int(n) for d, n in rows.all()}

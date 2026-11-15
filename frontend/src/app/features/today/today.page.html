@@ -171,6 +171,19 @@
       </mat-card-content>
     </mat-card>
 
+    @for (hb of t.habits; track hb.id) {
+      <a class="banner habit" routerLink="/habits">
+        <mat-icon>trending_down</mat-icon>
+        <span>
+          <strong>{{ habitTitle(hb.type) }} plan:</strong>
+          {{ hb.availability.available_now }} available now, {{ hb.availability.locked }} locked ({{
+            hb.availability.period === 'day' ? 'today' : 'this week'
+          }})
+        </span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+
     <p class="bab-disclaimer">
       Calories and distance marked "estimate" are estimates only, not medical advice.
     </p>

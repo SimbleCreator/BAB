@@ -4,6 +4,7 @@ meals, check-ins or habit logs, inside the caller's transaction."""
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import utcnow
+from app.core.timeutil import local_today
 from app.engines import activity_engine
 from app.engines import milestone_engine as eng
 from app.models.user import User
@@ -17,6 +18,7 @@ from app.repositories import (
     training_repo,
 )
 from app.schemas.milestone import MilestoneBrief, MilestoneOut
+from app.services import habit_progress
 
 
 async def gather_stats(session: AsyncSession, user_id: int) -> eng.ProgressStats:
@@ -37,6 +39,11 @@ async def gather_stats(session: AsyncSession, user_id: int) -> eng.ProgressStats
         checkin_count=await checkin_repo.count(session, user_id),
         workout_count=await training_repo.count_done(session, user_id),
         meal_days=await nutrition_repo.meal_days(session, user_id),
+        habit_weeks_within=(
+            await habit_progress.weeks_within(session, user_id, local_today(profile.timezone))
+            if profile is not None
+            else 0
+        ),
     )
 
 

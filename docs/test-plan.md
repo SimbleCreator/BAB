@@ -116,3 +116,17 @@
   replaces it.
 - Miss most workouts, then check in: one set fewer per exercise from tomorrow.
 - Next week's plan keeps the changes. Changing goal or days in Account starts fresh.
+
+### M8
+- Onboarding has an optional "Cut down" step; skipping it works; choosing drinking
+  with a baseline creates the plan and Today shows it.
+- Habits: start a smoking plan (for example 12 a day, standard): this week shows 11 a
+  day. Available now, locked and used match the goals ticked (each goal a third).
+- Meet the step goal and log two meals: more becomes available.
+- "Log a cigarette" adds one; "Edit recent days" changes any day since the start.
+- After a finished week within the plan: the next week's allowance is lower and the
+  page shows units avoided. After a week over: the same allowance repeats with a
+  neutral message.
+- Every plan screen shows the doctor line; no wording calls smoking or drinking a
+  reward or treat.
+- End plan needs a second tap; a new plan of that type can then start.

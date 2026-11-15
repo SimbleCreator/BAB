@@ -3,8 +3,15 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 from app.schemas.activity import ActivityOut
+from app.schemas.habit import AvailabilityOut
 from app.schemas.milestone import MilestoneBrief
 from app.schemas.training import WorkoutBrief
+
+
+class TodayHabit(BaseModel):
+    id: int
+    type: str
+    availability: AvailabilityOut
 
 
 class TodayNutrition(BaseModel):
@@ -28,3 +35,4 @@ class TodayOut(BaseModel):
     new_milestones: list[MilestoneBrief] = Field(description="Unlocked but not seen yet")
     workout: WorkoutBrief | None = Field(description="Today's planned workout; null on a rest day")
     nutrition: TodayNutrition
+    habits: list[TodayHabit] = Field(description="Active reduction plans; empty if none")
