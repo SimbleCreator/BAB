@@ -9,9 +9,11 @@ services:
     runtime: docker
     plan: free
     region: singapore # closest to India; cannot be changed later
-    rootDir: backend # only changes under backend/ trigger a new deploy
-    dockerfilePath: ./backend/Dockerfile
-    dockerContext: ./backend
+    # Render resolves the two paths below inside rootDir, so they are relative to
+    # backend/. Only changes under backend/ trigger a new deploy.
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     healthCheckPath: /api/v1/health
     autoDeployTrigger: commit
     envVars:

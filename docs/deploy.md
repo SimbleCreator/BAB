@@ -18,7 +18,8 @@ managed PostgreSQL (Neon, Supabase, Aiven).
 No card is needed for any of the three (check each provider's current terms when you
 sign up). The repository already contains what they need:
 
-- `render.yaml`: the API service for Render (Docker, free plan, Singapore region).
+- `render.yaml`: the API service for Render (Docker, free plan, Singapore region; paths
+  are relative to `backend/`, its root directory).
 - `frontend/functions/api/[[path]].js`: a Cloudflare Pages Function that forwards
   `/api/*` to Render, so the browser sees one site and the login cookie works everywhere.
 - `frontend/public/_headers`: security and caching headers for Cloudflare Pages.
