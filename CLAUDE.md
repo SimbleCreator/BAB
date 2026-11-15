@@ -376,3 +376,6 @@ choosing.
 - Python: backend targets the system Python 3.10+ in a venv at `backend/.venv`.
 - Docker may not be installed on the dev machine; a native PostgreSQL works too
   (see README).
+- API clients must send the `X-BAB-Client` header on `/auth/refresh` and
+  `/auth/logout` (cross-site protection for the refresh cookie).
+- Production: `backend/Dockerfile`, `docs/deploy.md`, `docs/security-review.md`.

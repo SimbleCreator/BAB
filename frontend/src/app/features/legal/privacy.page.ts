@@ -52,6 +52,7 @@ import { publicConfigResource } from './legal';
       <p>
         Your data is not sold or shared with anyone. It is kept on the servers that run the app. Map
         tiles are loaded from OpenStreetMap, which sees the map area you view but not your account.
+        Fonts are loaded from Google Fonts, which receives your IP address when the app loads.
       </p>
 
       <h2>Export and delete</h2>

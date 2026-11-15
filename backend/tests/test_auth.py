@@ -199,6 +199,8 @@ async def test_production_refuses_weak_secret(monkeypatch):
     with pytest.raises(ValueError, match="BAB_JWT_SECRET"):
         Settings(_env_file=None)
     monkeypatch.setenv("BAB_JWT_SECRET", "x" * 40)
+    monkeypatch.setenv("BAB_DATABASE_URL", "postgresql+asyncpg://u:p@db/x")
+    monkeypatch.setenv("BAB_FRONTEND_ORIGIN", "https://app.example.com")
     assert Settings(_env_file=None).is_production
 
 

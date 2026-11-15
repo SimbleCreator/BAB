@@ -7,6 +7,7 @@ from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 DEV_JWT_SECRET = "dev-only-secret-never-use-in-production-0000"  # noqa: S105
+DEV_DATABASE_URL = "postgresql+asyncpg://bab:bab_dev_password@localhost:5432/bab"
 
 
 class Settings(BaseSettings):
@@ -17,7 +18,7 @@ class Settings(BaseSettings):
     version: str = "0.1.0"
     api_prefix: str = "/api/v1"
 
-    database_url: str = "postgresql+asyncpg://bab:bab_dev_password@localhost:5432/bab"
+    database_url: str = DEV_DATABASE_URL
     test_database_url: str = "postgresql+asyncpg://bab:bab_dev_password@localhost:5432/bab_test"
     frontend_origin: str = "http://localhost:4200"
     contact_email: str = "owner@example.com"
@@ -30,9 +31,15 @@ class Settings(BaseSettings):
     cookie_samesite: Literal["lax", "strict", "none"] = "lax"
 
     @model_validator(mode="after")
-    def _strong_secret_in_production(self) -> "Settings":
-        if self.is_production and (self.jwt_secret == DEV_JWT_SECRET or len(self.jwt_secret) < 32):
+    def _safe_production(self) -> "Settings":
+        if not self.is_production:
+            return self
+        if self.jwt_secret == DEV_JWT_SECRET or len(self.jwt_secret) < 32:
             raise ValueError("BAB_JWT_SECRET must be set to 32+ random characters in production.")
+        if self.database_url == DEV_DATABASE_URL:
+            raise ValueError("BAB_DATABASE_URL must be set in production.")
+        if not self.frontend_origin.startswith("https://"):
+            raise ValueError("BAB_FRONTEND_ORIGIN must be an https:// origin in production.")
         return self
 
     @property

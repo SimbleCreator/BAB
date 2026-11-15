@@ -9,8 +9,10 @@ from fastapi.responses import JSONResponse
 
 from app.content import load_all as load_content
 from app.core.config import get_settings
+from app.core.cookies import CLIENT_HEADER
 from app.core.database import engine
 from app.core.errors import AppError
+from app.core.middleware import BodySizeLimit, SecurityHeaders
 from app.routers import (
     account,
     activity,
@@ -51,14 +53,18 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
         docs_url=None if settings.is_production else "/docs",
         redoc_url=None,
+        # The schema is for building clients; it is not served in production.
+        openapi_url=None if settings.is_production else "/openapi.json",
     )
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[settings.frontend_origin],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
-        allow_headers=["Authorization", "Content-Type"],
+        allow_headers=["Authorization", "Content-Type", CLIENT_HEADER],
     )
+    app.add_middleware(SecurityHeaders, hsts=settings.is_production)
+    app.add_middleware(BodySizeLimit)
     app.add_exception_handler(AppError, _app_error_handler)
     for r in (
         health.router,

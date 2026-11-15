@@ -50,6 +50,7 @@ describe('authInterceptor', () => {
     const req = ctrl.expectOne(`${API}/profile`);
     expect(req.request.headers.get('Authorization')).toBe('Bearer old');
     expect(req.request.withCredentials).toBe(true);
+    expect(req.request.headers.get('X-BAB-Client')).toBe('web');
     req.flush({});
   });
 

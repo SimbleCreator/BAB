@@ -145,3 +145,19 @@
 - Admin: run `python -m app.cli make-admin <email>`, sign in again; More shows
   Admin with totals, active users, new users per week and record counts only.
   A non-admin opening /admin is sent to Today.
+
+### M10
+- `npm run build:prod` (with and without `BAB_API_URL`) succeeds; serve
+  `dist/frontend/browser` over http://localhost:8080 (not the dev port 4200; add that
+  origin to `BAB_FRONTEND_ORIGIN` for the test): the browser offers to install "B.A.B"
+  with the orange B icon; after one visit the app shell opens offline (data pages show
+  their error state, since API responses are never cached).
+- DevTools > Application > Service workers: `ngsw-worker.js` active; Cache storage
+  holds only app files, never `/api/` responses.
+- Backend in production mode refuses to start without `BAB_JWT_SECRET`,
+  `BAB_DATABASE_URL` and an https `BAB_FRONTEND_ORIGIN`.
+- `/api/v1/health` response has nosniff, frame DENY, CSP and (production) HSTS headers;
+  `/docs` and `/openapi.json` return 404 in production.
+- Uploading a file over 6 MB returns 413 before it is parsed.
+- Build the container (`docker build -t bab-api backend`) and run it with a real
+  database; migrations run on start and the health check passes.

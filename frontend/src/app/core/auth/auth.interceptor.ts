@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
 
 const SESSION_ENDPOINTS = /\/auth\/(login|register|refresh|logout)$/;
+/** Required by the API on cookie-based endpoints (see backend app/core/cookies.py). */
+export const CLIENT_HEADER = 'X-BAB-Client';
 
 function withToken(req: HttpRequest<unknown>, token: string | null): HttpRequest<unknown> {
   return token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
@@ -19,7 +21,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (!req.url.startsWith(environment.apiBaseUrl)) return next(req);
 
   const auth = inject(AuthService);
-  const apiReq = req.clone({ withCredentials: true });
+  const apiReq = req.clone({ withCredentials: true, setHeaders: { [CLIENT_HEADER]: 'web' } });
   if (SESSION_ENDPOINTS.test(req.url)) return next(apiReq);
 
   return next(withToken(apiReq, auth.token())).pipe(

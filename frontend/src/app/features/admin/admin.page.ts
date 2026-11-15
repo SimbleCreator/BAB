@@ -65,8 +65,7 @@ const RECORD_LABEL: Record<string, string> = {
           <mat-card-content>
             @for (r of records(); track r.key) {
               <div class="rec">
-                <span>{{ r.label }}</span
-                ><span>{{ r.count | int }}</span>
+                <span>{{ r.label }}</span><span>{{ r.count | int }}</span>
               </div>
             }
           </mat-card-content>

@@ -77,7 +77,11 @@ async def make_client(sessionmaker) -> AsyncIterator[Callable[[], httpx.AsyncCli
 
         app.dependency_overrides[get_session] = _session
         # https so the Secure refresh cookie is stored and sent back.
-        c = httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="https://test")
+        c = httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=app),
+            base_url="https://test",
+            headers={"X-BAB-Client": "test"},
+        )
         clients.append(c)
         return c
 

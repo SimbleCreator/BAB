@@ -68,6 +68,19 @@ npm run lint
 npx ng test --watch=false
 ```
 
+The service worker is off in development (`npm start`). To try it, serve a production
+build on a different port than the dev server (for example 8080). A service worker
+registered on port 4200 would keep serving the production app shell there; remove it in
+DevTools > Application > Service workers if that happens.
+
+## Production
+- Build and run the API container: see [docs/deploy.md](docs/deploy.md).
+- Frontend production build with the API address:
+  `cd frontend && BAB_API_URL=https://api.example.com/api/v1 npm run build:prod`
+- The app is an installable PWA in production builds (service worker caches the app
+  shell only).
+- Security review: [docs/security-review.md](docs/security-review.md).
+
 ## Admin commands
 Version 1 sends no email. Run these from `backend/`:
 ```bash

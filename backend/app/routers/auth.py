@@ -2,7 +2,12 @@ from typing import Annotated
 
 from fastapi import APIRouter, Cookie, Depends, Response, status
 
-from app.core.cookies import REFRESH_COOKIE, clear_refresh_cookie, set_refresh_cookie
+from app.core.cookies import (
+    REFRESH_COOKIE,
+    clear_refresh_cookie,
+    require_client_header,
+    set_refresh_cookie,
+)
 from app.core.deps import CurrentUser, SessionDep
 from app.core.rate_limit import login_limiter, register_limiter
 from app.schemas.auth import ChangePasswordIn, LoginIn, RegisterIn, TokenOut, UserOut
@@ -40,7 +45,8 @@ async def login(data: LoginIn, session: SessionDep, response: Response) -> Token
 @router.post(
     "/refresh",
     response_model=TokenOut,
-    responses=_errors,
+    responses={**_errors, 403: {"model": ErrorOut}},
+    dependencies=[Depends(require_client_header)],
     summary="Rotate the refresh cookie and get a new access token",
 )
 async def refresh(session: SessionDep, response: Response, token: RefreshCookie = None) -> TokenOut:
@@ -49,7 +55,12 @@ async def refresh(session: SessionDep, response: Response, token: RefreshCookie 
     return result.token
 
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
+@router.post(
+    "/logout",
+    status_code=status.HTTP_204_NO_CONTENT,
+    dependencies=[Depends(require_client_header)],
+    responses={403: {"model": ErrorOut}},
+)
 async def logout(session: SessionDep, response: Response, token: RefreshCookie = None) -> None:
     await auth_service.logout(session, token)
     clear_refresh_cookie(response)
