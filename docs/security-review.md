@@ -23,7 +23,7 @@ test that covers the item.
 | Requirement | Status | Where / test |
 | --- | --- | --- |
 | Every query filters by the signed-in user | done | repositories take `user_id`; child rows reached through owned parents |
-| One isolation test per router | done | `test_*_isolation_between_users` for profile, activity, runs, check-ins, milestones, training, nutrition, adjustments, habits, history and export |
+| One isolation test per router | done | `test_*_isolation_between_users` for profile, activity, runs, check-ins, milestones, training, nutrition, adjustments, habits, history, Bounce and export |
 | Admin sees aggregates only | done | `/admin/stats`; `test_admin_stats` asserts no emails |
 | Account deletion removes every row | done | DB cascades; `test_delete_account_removes_everything` checks every table with `user_id` and child tables for orphans |
 | Export contains no secrets | done | `test_export` |
@@ -64,6 +64,12 @@ test that covers the item.
 ## Known limits and follow-ups
 
 - Rate limiting is per process: run a single API container (documented).
+- Bounce sends profile numbers (no name, email or IDs) to the configured AI endpoint
+  only when the user asks for a plan; the privacy page says so. The token is read from
+  `BAB_AI_API_KEY` and never logged; model replies are validated against a strict
+  schema before storage and rendered as plain text (Angular escapes it). Prompt text is
+  built from validated enums and numbers, plus the user's own gym notes (300 characters
+  at most), which can only affect that user's own plan.
 - Fonts load from Google Fonts, which receives the visitor's IP address. The privacy
   policy says so. Self-hosting the fonts would remove this; it needs two font packages,
   which are outside the agreed library list.

@@ -5,24 +5,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 
 import { apiErrorMessage } from '../../core/api/api-error';
 import { CustomFoodOut } from '../../core/api/models';
 import { NutritionApi } from '../../core/api/nutrition.api';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-my-foods-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatProgressSpinnerModule,
   ],
   template: `
     <section class="bab-page">
@@ -32,7 +32,7 @@ import { NutritionApi } from '../../core/api/nutrition.api';
         Foods you added with your own values. Changing one does not change days already logged.
       </p>
       @if (list.isLoading()) {
-        <div class="center"><mat-spinner diameter="36" /></div>
+        <app-loader />
       } @else if (list.error()) {
         <p class="bab-form-error">Could not load your foods.</p>
       } @else if (list.value(); as foods) {

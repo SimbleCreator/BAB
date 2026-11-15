@@ -11,7 +11,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
@@ -21,15 +20,16 @@ import { TodayApi } from '../../core/api/today.api';
 import { parseDay } from '../../shared/format/dates';
 import { RunFieldsComponent } from './run-fields.component';
 import { buildRunForm, patchRunForm, runFromForm } from './run-form';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-run-edit-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     RouterLink,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     RunFieldsComponent,
   ],
   template: `
@@ -40,7 +40,7 @@ import { buildRunForm, patchRunForm, runFromForm } from './run-form';
       </a>
       <h1 class="bab-page-title">Edit run</h1>
       @if (run.isLoading()) {
-        <div class="center"><mat-spinner diameter="40" /></div>
+        <app-loader />
       } @else if (run.error()) {
         <p class="bab-form-error">Could not load this run.</p>
       } @else {

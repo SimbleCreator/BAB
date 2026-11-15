@@ -53,7 +53,7 @@
   }
 
   @if (loading()) {
-    <div class="center"><mat-spinner diameter="36" /></div>
+    <app-loader />
   } @else if (hasMore()) {
     <button mat-button type="button" class="more" (click)="load()">Show older runs</button>
   }

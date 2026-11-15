@@ -15,7 +15,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LowerCasePipe } from '@angular/common';
 
@@ -24,12 +23,14 @@ import { CheckinsApi } from '../../core/api/checkins.api';
 import { AdjustmentOut, CheckinIn, CheckinOut } from '../../core/api/models';
 import { WeightChartComponent } from '../../shared/components/weight-chart.component';
 import { dayLabel, formatDay, parseDay } from '../../shared/format/dates';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const cm = [Validators.min(20), Validators.max(250)];
 
 @Component({
   selector: 'app-checkin-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
@@ -37,7 +38,6 @@ const cm = [Validators.min(20), Validators.max(250)];
     MatInputModule,
     MatIconModule,
     MatDatepickerModule,
-    MatProgressSpinnerModule,
     WeightChartComponent,
     LowerCasePipe,
   ],

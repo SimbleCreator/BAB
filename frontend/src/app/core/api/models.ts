@@ -51,6 +51,8 @@ export type Sex = 'male' | 'female';
 export type Goal = 'lose_fat' | 'build_muscle' | 'stay_fit';
 export type Level = 'beginner' | 'intermediate' | 'advanced';
 export type DietType = 'veg' | 'egg' | 'non_veg';
+/** activity: walk, jog, home workouts. gym: gym training. both: the user does both. */
+export type TrainingMode = 'activity' | 'gym' | 'both';
 
 export interface ProfileIn {
   name: string;
@@ -66,6 +68,7 @@ export interface ProfileIn {
   diet_type: DietType;
   daily_step_goal: number;
   timezone: string;
+  training_mode: TrainingMode;
 }
 
 export interface ProfileOut extends ProfileIn {
@@ -691,4 +694,129 @@ export interface AdminStatsOut {
   active_30_days: number;
   new_users_per_week: WeekCount[];
   records: Record<string, number>;
+}
+
+// bounce router -------------------------------------------------------------
+
+export type BounceDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
+export type BouncePlanState = 'disabled' | 'none' | 'active' | 'checkin_needed' | 'update_ready';
+export type GymExperience = 'beginner' | 'intermediate' | 'advanced';
+export type SupplementCode =
+  | 'none'
+  | 'whey_protein'
+  | 'creatine'
+  | 'pre_workout'
+  | 'multivitamin'
+  | 'omega_3'
+  | 'bcaa'
+  | 'mass_gainer'
+  | 'fat_burner'
+  | 'other';
+
+export interface BounceExercise {
+  name: string;
+  sets: number;
+  reps: number | null;
+  seconds: number | null;
+  rest_s: number | null;
+  notes: string | null;
+}
+
+export interface BounceStretch {
+  name: string;
+  seconds: number;
+}
+
+export interface BouncePlanDay {
+  day: BounceDay;
+  rest: boolean;
+  walk_minutes: number;
+  jog_minutes: number;
+  steps_target: number;
+  home_exercises: BounceExercise[];
+  gym_focus: string | null;
+  gym_exercises: BounceExercise[];
+  cardio_minutes: number;
+  stretching: BounceStretch[];
+}
+
+export interface BounceMealDay {
+  day: BounceDay;
+  breakfast: string;
+  lunch: string;
+  snack: string;
+  dinner: string;
+}
+
+export interface BounceDiet {
+  principles: string[];
+  eat_more: string[];
+  limit: string[];
+  days: BounceMealDay[];
+}
+
+export interface BouncePlanContent {
+  summary: string;
+  days: BouncePlanDay[];
+  diet: BounceDiet;
+  supplements_advice: string[];
+  tips: string[];
+}
+
+export interface BounceTargets {
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+}
+
+export interface BouncePlanOut {
+  id: number;
+  created_at: string;
+  week_start: string;
+  mode: TrainingMode;
+  model: string;
+  based_on_checkin_day: string | null;
+  /** From the nutrition engine, not the model. */
+  targets: BounceTargets;
+  content: BouncePlanContent;
+}
+
+export interface BounceNotificationOut {
+  /** Stable per day and reason; the app hides it once dismissed. */
+  id: string;
+  kind: 'checkin' | 'meals' | 'activity';
+  title: string;
+  message: string;
+  action_label: string;
+}
+
+export interface BounceStatusOut {
+  enabled: boolean;
+  mode: TrainingMode;
+  state: BouncePlanState;
+  gym_profile_needed: boolean;
+  plan_created_at: string | null;
+  next_update_on: string | null;
+  plans_left_today: number;
+  /** True when asking for a new plan would be accepted. */
+  can_generate: boolean;
+  message: string;
+  /** Immediate suggestions for today. */
+  tips: string[];
+  /** The one thing Bounce wants the user to do now, if any. */
+  notification: BounceNotificationOut | null;
+}
+
+export interface GymProfileIn {
+  experience: GymExperience;
+  days_per_week: number;
+  session_minutes: number;
+  supplements: SupplementCode[];
+  supplements_note: string | null;
+  injuries_note: string | null;
+}
+
+export interface GymProfileOut extends GymProfileIn {
+  updated_at: string;
 }

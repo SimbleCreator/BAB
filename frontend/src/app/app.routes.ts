@@ -47,12 +47,13 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard, profileGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'today' },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
-        path: 'today',
-        title: 'Today - B.A.B',
-        loadComponent: () => import('./features/today/today.page').then((m) => m.TodayPage),
+        path: 'home',
+        title: 'Home - B.A.B',
+        loadComponent: () => import('./features/home/home.page').then((m) => m.HomePage),
       },
+      { path: 'today', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'activity',
         title: 'Activity - B.A.B',
@@ -139,6 +140,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/checkin/checkin.page').then((m) => m.CheckinPage),
       },
       {
+        path: 'bounce',
+        title: 'Bounce - B.A.B',
+        loadComponent: () => import('./features/bounce/bounce.page').then((m) => m.BouncePage),
+      },
+      {
         path: 'milestones',
         title: 'Milestones - B.A.B',
         loadComponent: () =>
@@ -167,5 +173,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'today' },
+  { path: '**', redirectTo: 'home' },
 ];

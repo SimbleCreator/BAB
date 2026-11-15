@@ -24,7 +24,6 @@ import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, map, of, throwError } from 'rxjs';
@@ -35,6 +34,7 @@ import { ActivityIn, ActivityOut } from '../../core/api/models';
 import { EstimateBadgeComponent } from '../../shared/components/estimate-badge.component';
 import { dayLabel, formatDay, parseDay } from '../../shared/format/dates';
 import { IntPipe, KmPipe } from '../../shared/format/format.pipes';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const atLeastOne = (group: AbstractControl): ValidationErrors | null => {
   const v = group.value as Record<string, unknown>;
@@ -45,6 +45,7 @@ const atLeastOne = (group: AbstractControl): ValidationErrors | null => {
 @Component({
   selector: 'app-day-edit-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     RouterLink,
     MatCardModule,
@@ -53,7 +54,6 @@ const atLeastOne = (group: AbstractControl): ValidationErrors | null => {
     MatInputModule,
     MatIconModule,
     MatDatepickerModule,
-    MatProgressSpinnerModule,
     EstimateBadgeComponent,
     IntPipe,
     KmPipe,

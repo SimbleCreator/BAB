@@ -8,7 +8,7 @@
   </div>
 
   @if (summary.isLoading() && !summary.hasValue()) {
-    <div class="center"><mat-spinner diameter="40" /></div>
+    <app-loader />
   } @else if (summary.error()) {
     <mat-card appearance="outlined">
       <mat-card-content>

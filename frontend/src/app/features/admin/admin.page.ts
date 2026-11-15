@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AccountApi } from '../../core/api/account.api';
 import { shortDay } from '../../shared/format/dates';
 import { IntPipe } from '../../shared/format/format.pipes';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const RECORD_LABEL: Record<string, string> = {
   daily_activity: 'Activity days',
@@ -23,13 +23,13 @@ const RECORD_LABEL: Record<string, string> = {
 
 @Component({
   selector: 'app-admin-page',
-  imports: [MatCardModule, MatButtonModule, MatProgressSpinnerModule, IntPipe],
+  imports: [LoaderComponent, MatCardModule, MatButtonModule, IntPipe],
   template: `
     <section class="bab-page">
       <h1 class="bab-page-title">Admin</h1>
       <p class="bab-muted">Totals only. No one's personal data is shown here.</p>
       @if (stats.isLoading()) {
-        <div class="center"><mat-spinner diameter="40" /></div>
+        <app-loader />
       } @else if (stats.error()) {
         <p class="bab-form-error">Could not load the numbers.</p>
         <button mat-button type="button" (click)="stats.reload()">Try again</button>

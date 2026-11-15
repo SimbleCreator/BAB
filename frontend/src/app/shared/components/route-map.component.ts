@@ -53,7 +53,7 @@ function cssVar(name: string, fallback: string): string {
       background: var(--mat-sys-surface-container);
     }
     :host ::ng-deep .leaflet-tile-pane {
-      filter: brightness(0.85) saturate(0.9);
+      filter: saturate(1.05);
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

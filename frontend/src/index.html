@@ -5,7 +5,7 @@
     <title>B.A.B</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#1c1b1f" />
+    <meta name="theme-color" content="#fff8f1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="B.A.B" />
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap"
       rel="stylesheet"
     />
     <link
@@ -22,9 +22,137 @@
       rel="stylesheet"
     />
     <link rel="manifest" href="manifest.webmanifest" />
+    <style>
+      /* Start-up screen, shown until the app has loaded. */
+      html,
+      body {
+        background: #fff8f1;
+        margin: 0;
+      }
+      .boot {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        color: #6b6385;
+        background:
+          radial-gradient(40rem 30rem at 0% 0%, rgba(255, 122, 69, 0.3), transparent 60%),
+          radial-gradient(40rem 30rem at 100% 0%, rgba(255, 46, 126, 0.18), transparent 60%),
+          radial-gradient(40rem 30rem at 50% 110%, rgba(6, 182, 212, 0.18), transparent 60%);
+      }
+      .boot-brand {
+        font-size: 2.6rem;
+        line-height: 1.25;
+        padding-top: 4px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        background: linear-gradient(135deg, #ff6a3d, #ff4d8d 55%, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .boot svg {
+        width: 220px;
+        height: auto;
+      }
+      .boot .r {
+        animation: boot-run 2.6s ease-in-out infinite;
+      }
+      .boot .l {
+        animation: boot-lane 0.6s linear infinite;
+      }
+      @keyframes boot-run {
+        0% {
+          transform: translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        85% {
+          transform: translateX(150px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(160px);
+          opacity: 0;
+        }
+      }
+      @keyframes boot-lane {
+        to {
+          stroke-dashoffset: -22;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot .r,
+        .boot .l {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <div class="boot" role="status" aria-label="Loading B.A.B">
+        <div class="boot-brand">B.A.B</div>
+        <svg viewBox="0 0 240 110" aria-hidden="true">
+          <line
+            x1="8"
+            y1="96"
+            x2="232"
+            y2="96"
+            stroke="#ff6a3d"
+            stroke-width="3"
+            stroke-linecap="round"
+            opacity="0.7"
+          />
+          <line
+            class="l"
+            x1="8"
+            y1="104"
+            x2="232"
+            y2="104"
+            stroke="rgba(40,24,80,0.18)"
+            stroke-width="2"
+            stroke-dasharray="10 12"
+          />
+          <line
+            x1="206"
+            y1="96"
+            x2="206"
+            y2="34"
+            stroke="#1d1534"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M207 36 C 218 32, 226 42, 236 37 L 236 55 C 226 60, 218 50, 207 54 Z"
+            fill="#ff4d8d"
+          />
+          <g class="r">
+            <g
+              transform="translate(30 62)"
+              fill="none"
+              stroke="#ff8a50"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M0 0 L -6 18 L 2 31" stroke="#c2410c" />
+              <path d="M2 -24 L -9 -13 L -3 -4" stroke="#c2410c" />
+              <path d="M0 0 L 4 -26" />
+              <circle cx="7" cy="-35" r="7" fill="#ffb547" stroke="none" />
+              <path d="M0 0 L 8 16 L 1 31" />
+              <path d="M2 -24 L 13 -15 L 21 -21" />
+            </g>
+          </g>
+        </svg>
+        <div>Warming up...</div>
+      </div>
+    </app-root>
     <noscript>B.A.B needs JavaScript to run.</noscript>
   </body>
 </html>

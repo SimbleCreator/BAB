@@ -2,7 +2,7 @@
   <h1 class="bab-page-title">History</h1>
 
   @if (data.isLoading() && !data.hasValue()) {
-    <div class="center"><mat-spinner diameter="40" /></div>
+    <app-loader />
   } @else if (data.error()) {
     <p class="bab-form-error">Could not load this month.</p>
     <button mat-button type="button" (click)="data.reload()">Try again</button>
@@ -75,7 +75,7 @@
 
     @if (selected()) {
       @if (detail.isLoading() && !detail.hasValue()) {
-        <div class="center"><mat-spinner diameter="32" /></div>
+        <app-loader />
       } @else if (detail.error()) {
         <p class="bab-form-error">Could not load this day.</p>
       } @else if (detail.value(); as d) {

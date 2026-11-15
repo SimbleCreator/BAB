@@ -1,0 +1,324 @@
+<section class="bab-page bounce">
+  <header class="hero">
+    <div class="ball" aria-hidden="true"><app-bounce-ball class="hero-ball" [buff]="true" /></div>
+    <div class="hero-text">
+      <p class="eyebrow">Your AI coach</p>
+      <h1>Bounce</h1>
+      @if (status.value(); as s) {
+        <p class="message">{{ s.message }}</p>
+        <div class="chips">
+          <span class="bab-chip"><mat-icon>tune</mat-icon>{{ modeLabel() }}</span>
+          @if (s.state === 'checkin_needed' || s.state === 'update_ready') {
+            <span class="bab-chip"><mat-icon>event</mat-icon>Weekly update due</span>
+          } @else if (s.next_update_on) {
+            <span class="bab-chip"
+              ><mat-icon>event</mat-icon>Next update {{ date(s.next_update_on) }}</span
+            >
+          }
+        </div>
+      }
+    </div>
+  </header>
+
+  @if (status.isLoading() && !status.hasValue()) {
+    <app-loader label="Bounce is warming up..." />
+  } @else if (status.error()) {
+    <div class="bab-panel">
+      <p class="bab-form-error">Could not reach Bounce. Check your connection.</p>
+      <button mat-flat-button type="button" (click)="status.reload()">Try again</button>
+    </div>
+  } @else if (status.value(); as s) {
+    <!-- Immediate suggestions -->
+    <div class="bab-panel accent tips-now" style="--g: var(--bab-grad-hero)">
+      <h2><mat-icon>bolt</mat-icon>Right now</h2>
+      <ul>
+        @for (t of s.tips; track $index) {
+          <li>{{ t }}</li>
+        }
+      </ul>
+    </div>
+
+    <!-- What to do next -->
+    @if (s.state === 'disabled') {
+      <div class="bab-panel notice">
+        <mat-icon>power_off</mat-icon>
+        <p>
+          Bounce needs an AI key on the server before it can write plans. Your other screens work as
+          usual.
+        </p>
+      </div>
+    } @else if (s.state === 'checkin_needed') {
+      <div class="bab-panel notice due">
+        <mat-icon>monitor_weight</mat-icon>
+        <div>
+          <p>
+            <strong>A week is done.</strong> Log your weekly check-in so Bounce can see your
+            progress and adjust your plan.
+          </p>
+          <a mat-flat-button routerLink="/checkin">Do my check-in</a>
+        </div>
+      </div>
+    }
+
+    @if (showGymForm()) {
+      <div class="bab-panel accent" style="--g: var(--bab-grad-train)">
+        <h2><mat-icon>fitness_center</mat-icon>Your gym details</h2>
+        <p class="bab-muted">
+          Bounce uses these, with your height, weight and goal, to plan your gym week and food. Tell
+          it about any supplements you take.
+        </p>
+        <app-gym-form [initial]="gym.value() ?? null" (saved)="gymSaved($event)" />
+      </div>
+    }
+
+    @if (generating()) {
+      <div class="bab-panel">
+        <app-loader label="Bounce is writing your week. This can take up to a minute..." />
+      </div>
+    } @else if (canGenerate()) {
+      <div class="cta">
+        <button mat-flat-button type="button" (click)="generate()">
+          <mat-icon>auto_awesome</mat-icon>{{ generateLabel() }}
+        </button>
+        <span class="bab-muted">{{ s.plans_left_today }} left today</span>
+      </div>
+    }
+    @if (error()) {
+      <div class="bab-panel notice error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <div>
+          <p>{{ error() }}</p>
+          @if (errorCode() === 'checkin_needed') {
+            <a mat-flat-button routerLink="/checkin">Do my check-in</a>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- The plan -->
+    @if (plan.isLoading() && !plan.hasValue()) {
+      <app-loader [compact]="true" label="Loading your plan..." />
+    } @else if (plan.value(); as p) {
+      <div class="bab-panel summary">
+        <p>{{ p.content.summary }}</p>
+        <div class="targets">
+          <div>
+            <strong>{{ p.targets.calories_kcal }}</strong><span>kcal (estimate)</span>
+          </div>
+          <div>
+            <strong>{{ p.targets.protein_g }} g</strong><span>protein</span>
+          </div>
+          <div>
+            <strong>{{ p.targets.carbs_g }} g</strong><span>carbs</span>
+          </div>
+          <div>
+            <strong>{{ p.targets.fat_g }} g</strong><span>fat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="days" role="tablist" aria-label="Day of the plan">
+        @for (d of days; track d) {
+          <button
+            type="button"
+            role="tab"
+            [class.on]="selected() === d"
+            [class.rest]="p.content.days[$index].rest"
+            [attr.aria-selected]="selected() === d"
+            (click)="selected.set(d)"
+          >
+            <span>{{ d }}</span>
+            @if (d === today) {
+              <small>today</small>
+            }
+          </button>
+        }
+      </div>
+
+      @if (planDay(); as d) {
+        <div class="day-grid">
+          @if (d.rest) {
+            <div class="bab-panel accent rest-card" style="--g: var(--bab-grad-sky)">
+              <h2><mat-icon>self_improvement</mat-icon>Rest day</h2>
+              <p class="bab-muted">Recovery is part of the plan. Easy walking is welcome.</p>
+              @if (d.walk_minutes) {
+                <p class="big">{{ d.walk_minutes }} min easy walk</p>
+              }
+            </div>
+          }
+
+          @if (!d.rest && (d.walk_minutes || d.jog_minutes || d.home_exercises.length)) {
+            <div class="bab-panel accent" style="--g: var(--bab-grad-steps)">
+              <h2><mat-icon>directions_walk</mat-icon>Activity</h2>
+              <div class="stats">
+                @if (d.walk_minutes) {
+                  <div>
+                    <strong>{{ d.walk_minutes }}</strong><span>min walk</span>
+                  </div>
+                }
+                @if (d.jog_minutes) {
+                  <div>
+                    <strong>{{ d.jog_minutes }}</strong><span>min jog</span>
+                  </div>
+                }
+                @if (d.steps_target) {
+                  <div>
+                    <strong>{{ d.steps_target.toLocaleString() }}</strong><span>steps</span>
+                  </div>
+                }
+              </div>
+              @if (d.home_exercises.length) {
+                <h3>Home exercises</h3>
+                <ul class="moves">
+                  @for (e of d.home_exercises; track $index) {
+                    <li>
+                      <span class="name">{{ e.name }}</span>
+                      <span class="dose">{{ dose(e) }}</span>
+                      @if (e.notes) {
+                        <small>{{ e.notes }}</small>
+                      }
+                    </li>
+                  }
+                </ul>
+              }
+            </div>
+          }
+
+          @if (!d.rest && (d.gym_exercises.length || d.cardio_minutes)) {
+            <div class="bab-panel accent" style="--g: var(--bab-grad-train)">
+              <h2>
+                <mat-icon>fitness_center</mat-icon>Gym{{ d.gym_focus ? ': ' + d.gym_focus : '' }}
+              </h2>
+              <ul class="moves">
+                @for (e of d.gym_exercises; track $index) {
+                  <li>
+                    <span class="name">{{ e.name }}</span>
+                    <span class="dose">{{ dose(e) }}</span>
+                    @if (e.notes) {
+                      <small>{{ e.notes }}</small>
+                    }
+                  </li>
+                }
+              </ul>
+              @if (d.cardio_minutes) {
+                <p class="extra"><mat-icon>favorite</mat-icon>{{ d.cardio_minutes }} min cardio</p>
+              }
+            </div>
+          }
+
+          @if (d.stretching.length) {
+            <div class="bab-panel accent" style="--g: var(--bab-grad-habit)">
+              <h2><mat-icon>accessibility_new</mat-icon>Stretching</h2>
+              <ul class="moves">
+                @for (st of d.stretching; track $index) {
+                  <li>
+                    <span class="name">{{ st.name }}</span><span class="dose"
+                      >{{ st.seconds }}s</span
+                    >
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+
+          @if (mealDay(); as m) {
+            <div class="bab-panel accent meals" style="--g: var(--bab-grad-food)">
+              <h2><mat-icon>restaurant</mat-icon>Food for {{ m.day }}</h2>
+              <dl>
+                <dt>Breakfast</dt>
+                <dd>{{ m.breakfast }}</dd>
+                <dt>Lunch</dt>
+                <dd>{{ m.lunch }}</dd>
+                <dt>Snack</dt>
+                <dd>{{ m.snack }}</dd>
+                <dt>Dinner</dt>
+                <dd>{{ m.dinner }}</dd>
+              </dl>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="bab-panel accent" style="--g: var(--bab-grad-food)">
+        <h2><mat-icon>eco</mat-icon>How to eat this week</h2>
+        <ul>
+          @for (r of p.content.diet.principles; track $index) {
+            <li>{{ r }}</li>
+          }
+        </ul>
+        <div class="lists">
+          <div>
+            <h3 class="good">Eat more</h3>
+            <div class="tags">
+              @for (f of p.content.diet.eat_more; track $index) {
+                <span class="tag good">{{ f }}</span>
+              }
+            </div>
+          </div>
+          <div>
+            <h3 class="cut">Cut down</h3>
+            <div class="tags">
+              @for (f of p.content.diet.limit; track $index) {
+                <span class="tag cut">{{ f }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @if (p.content.supplements_advice.length) {
+        <div class="bab-panel accent" style="--g: var(--bab-grad-checkin)">
+          <h2><mat-icon>science</mat-icon>Your supplements</h2>
+          <ul>
+            @for (a of p.content.supplements_advice; track $index) {
+              <li>{{ a }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      <div class="bab-panel accent" style="--g: var(--bab-grad-primary)">
+        <h2><mat-icon>tips_and_updates</mat-icon>Bounce's tips</h2>
+        <ul>
+          @for (t of p.content.tips; track $index) {
+            <li>{{ t }}</li>
+          }
+        </ul>
+      </div>
+    } @else if (plan.error()) {
+      <div class="bab-panel">
+        <p class="bab-form-error">Could not load your plan.</p>
+        <button mat-flat-button type="button" (click)="plan.reload()">Try again</button>
+      </div>
+    } @else if (s.state !== 'disabled') {
+      <div class="bab-panel empty">
+        <mat-icon>auto_awesome</mat-icon>
+        <p>
+          No plan yet. Bounce builds a full week of training and food from your height, weight, goal
+          and time.
+        </p>
+      </div>
+    }
+
+    @if (s.mode !== 'activity' && gym.value(); as g) {
+      @if (!editingGym()) {
+        <div class="bab-panel gym-summary">
+          <div>
+            <h3>Gym details</h3>
+            <p class="bab-muted">
+              {{ experienceLabel(g.experience) }} · {{ g.days_per_week }} days ·
+              {{ g.session_minutes }} min · Supplements: {{ supplementLabels(g.supplements) }}
+            </p>
+          </div>
+          <button mat-stroked-button type="button" (click)="editingGym.set(true)">Edit</button>
+        </div>
+      }
+    }
+
+    <p class="bab-disclaimer">
+      Plans are written by an AI model and checked by B.A.B's rules. Estimates only, not medical
+      advice. Check with a doctor before a big change, and stop any exercise that causes pain.
+      Change Activity or Gym in your <a routerLink="/account">profile</a>.
+    </p>
+  }
+</section>

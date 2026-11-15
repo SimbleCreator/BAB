@@ -3,7 +3,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
@@ -13,6 +12,7 @@ import { EstimateBadgeComponent } from '../../shared/components/estimate-badge.c
 import { RouteMapComponent } from '../../shared/components/route-map.component';
 import { parseDay } from '../../shared/format/dates';
 import { DurationPipe, IntPipe, KmPipe, PacePipe } from '../../shared/format/format.pipes';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const DATE = new Intl.DateTimeFormat(undefined, {
   weekday: 'long',
@@ -25,11 +25,11 @@ const TIME = new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-di
 @Component({
   selector: 'app-run-detail-page',
   imports: [
+    LoaderComponent,
     RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     RouteMapComponent,
     EstimateBadgeComponent,
     KmPipe,

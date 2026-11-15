@@ -37,6 +37,7 @@ medical advice" note.
 | daily_step_goal | 1,000 to 50,000, default 8,000 |
 | diet_type | veg, egg, non_veg |
 | timezone | any IANA name known to the server |
+| training_mode | activity, gym, both (default activity) |
 
 ## Daily activity (`app/engines/activity_engine.py`)
 
@@ -267,3 +268,43 @@ check-in, in the check-in history and on the Train page.
 | Delete account | needs the password and an explicit confirmation; rate limited like sign-in; removes the user and, by database cascade, every row they own; signs them out |
 | Contact email | from `BAB_CONTACT_EMAIL`, served by `/config/public` for the privacy and terms pages |
 | Admin | users with `is_admin` (set with `python -m app.cli make-admin <email>`); aggregates only: total users, active in 7 and 30 days (signed in or refreshed a session), new users per week for 12 weeks, record counts by type |
+
+## Bounce (`app/services/bounce/`)
+
+The model writes the plan; these rules decide what is accepted (`rules.py`).
+
+| Rule | Value |
+| --- | --- |
+| Plan length | 7 days, Mon to Sun in order, in both the workout days and the meal days |
+| Plan states | `none`; `active` while under 7 days old (user's local date); after that `update_ready` if a check-in is newer than `based_on_checkin_day` (or any check-in when that was empty), otherwise `checkin_needed` |
+| Rebuild inside the week | only when the profile, the training mode or the gym details changed after the plan was made (409 `plan_current` otherwise) |
+| Daily limit | `BAB_AI_DAILY_PLAN_LIMIT` plans per user in the last 24 hours (default 5) |
+| Repairs before validation | a list sent as one string is split (by sentence, or by comma for a single sentence); text longer than its limit is cut; numbers outside a range are clamped to it; missing or null counts become 0 and lists empty. Missing days, meals or fields still fail |
+| Request | JSON mode on (`BAB_AI_JSON_MODE`); on OpenRouter, reasoning off and `BAB_AI_FALLBACK_MODELS` tried in order when the main model is busy |
+| Attempts | 2 per request: a reply that is not valid JSON in the shape, or breaks the diet, is sent back once with the reason |
+| veg excludes | meat and fish words (chicken, mutton, lamb, goat, beef, pork, bacon, ham, sausage, salami, turkey, meat, keema, fish, tuna, salmon, sardine, mackerel, prawn(s), shrimp, crab, seafood) and egg, eggs, omelette, omelet |
+| egg excludes | the meat and fish words |
+| non_veg excludes | nothing |
+| Diet scan | whole words in the meal plan and the "eat more" list; skipped after "no", "without", "skip", "avoid", "instead of", or before "-free" |
+| Mode activity | gym focus, gym exercises and cardio minutes cleared |
+| Mode gym | home exercises, walk and jog minutes cleared |
+| Rest day | exercises, jog and cardio cleared (an easy walk may stay) |
+| Supplement notes | only for gym or both; lines naming steroids, SARMs, prohormones, anabolic, clenbuterol or DNP dropped; at most 4 model lines; a fat burner warning first when the user takes one; two fixed safety lines last |
+| Targets | from the current nutrition target row (rule engines), stored with the plan |
+| Immediate suggestions | steps left to goal with a walk of `round(left / 100 / 5) x 5` minutes (at least 5), check-in due, today's part of the plan, then plan tips; at most 4 |
+| Gym profile | experience beginner/intermediate/advanced, 1 to 7 days, 20 to 180 minutes, supplements from a fixed list ("none" clears the rest), notes up to 300 characters |
+
+### Bounce notifications (`rules.pick_nudge`)
+
+At most one, in this order. Hours are the user's local time.
+
+| Kind | When | Message |
+| --- | --- | --- |
+| checkin | the weekly check-in is due (none yet, or the last is more than 7 days old) | weigh in so the plan can adapt |
+| meals | the latest meal whose hour has passed is not logged: breakfast 10:00, lunch 15:00, snack 18:00, dinner 21:00 | what did you have for that meal |
+| activity | no activity numbers for today from 12:00 | add today's steps |
+| activity | steps under the goal from 18:00 | steps left to the goal |
+
+The `id` (for example `meals:2026-11-15:lunch`) is stable for the day and reason. The web
+app remembers dismissed ids in browser storage (last 30), so "Later" hides that one
+notification until the reason or the day changes.

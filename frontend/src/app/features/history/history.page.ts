@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -13,6 +12,7 @@ import { dayLabel, parseDay } from '../../shared/format/dates';
 import { DurationPipe, IntPipe, KmPipe } from '../../shared/format/format.pipes';
 import { HABIT, units } from '../habits/wording';
 import { MEAL_LABEL } from '../nutrition/meals';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const MONTH = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' });
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -26,10 +26,10 @@ function shiftMonth(month: string, delta: number): string {
 @Component({
   selector: 'app-history-page',
   imports: [
+    LoaderComponent,
     RouterLink,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     EstimateBadgeComponent,
     IntPipe,
     KmPipe,

@@ -8,7 +8,7 @@
     </mat-card-header>
     <mat-card-content>
       @if (profile.isLoading() && !profile.hasValue()) {
-        <div class="loading"><mat-spinner diameter="32" /></div>
+        <div class="loading"><app-loader [compact]="true" label="" /></div>
       } @else if (profile.error()) {
         <p class="bab-form-error" role="alert">Could not load your profile.</p>
         <button mat-button type="button" (click)="profile.reload()">Try again</button>

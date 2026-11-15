@@ -93,6 +93,11 @@ endpoints.
 | POST | `/account/delete` | bearer | `{password, confirm: true}`; permanently deletes the account; 204 |
 | GET | `/config/public` | none | App name, contact email, version |
 | GET | `/admin/stats` | bearer, admin | Aggregate numbers only |
+| GET | `/bounce/status` | bearer | Bounce state (`disabled`, `none`, `active`, `checkin_needed`, `update_ready`), message, immediate tips, plans left today, `can_generate`, and `notification` (`{id, kind: checkin/meals/activity, title, message, action_label}` or null; `id` is stable per day and reason so a client can remember a dismissal) |
+| GET | `/bounce/plan` | bearer | Current weekly plan; 404 `no_plan` |
+| POST | `/bounce/plan` | bearer | New plan from the AI model. 409 `checkin_needed`, `gym_profile_needed` or `plan_current`; 429 daily limit; 502 model failure (`model_credits`, `model_timeout`, `model_bad_output` ...); 503 `bounce_disabled`. Can take up to a minute |
+| GET | `/bounce/gym-profile` | bearer | Gym experience, schedule, supplements; 404 when missing |
+| PUT | `/bounce/gym-profile` | bearer | Save gym details |
 
 `/today` also returns `habits` (availability per active plan), `nutrition` (target, eaten, remaining, protein), `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
 

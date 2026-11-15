@@ -1,29 +1,101 @@
 @use '@angular/material' as mat;
 @use './theme/theme-colors' as bab;
 
+// ---------------------------------------------------------------------------
+// Design tokens: bright, sporty, warm. Sunrise orange leads; each area of the app
+// has its own vivid gradient.
+// ---------------------------------------------------------------------------
+:root {
+  --bab-bg: #fff8f1;
+  --bab-bg-raised: #ffffff;
+  --bab-glass: rgba(255, 255, 255, 0.72);
+  --bab-glass-strong: rgba(255, 255, 255, 0.9);
+  --bab-border: rgba(40, 24, 80, 0.08);
+  --bab-border-strong: rgba(40, 24, 80, 0.14);
+  --bab-text: #1d1534;
+  --bab-text-dim: #6b6385;
+  --bab-track: rgba(40, 24, 80, 0.08);
+
+  --bab-orange: #ff5a1f;
+  --bab-amber: #ffaa00;
+  --bab-pink: #ff2e7e;
+  --bab-violet: #7c3aed;
+  --bab-indigo: #4f46e5;
+  --bab-teal: #06b6d4;
+  --bab-green: #10b981;
+  --bab-blue: #3b82f6;
+  --bab-lime: #84cc16;
+
+  --bab-grad-primary: linear-gradient(135deg, #ff5a1f 0%, #ff2e7e 100%);
+  --bab-grad-steps: linear-gradient(135deg, #ff5a1f 0%, #ffaa00 100%);
+  --bab-grad-food: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  --bab-grad-train: linear-gradient(135deg, #7c3aed 0%, #ff2e7e 100%);
+  --bab-grad-run: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  --bab-grad-checkin: linear-gradient(135deg, #ffaa00 0%, #ff2e7e 100%);
+  --bab-grad-habit: linear-gradient(135deg, #84cc16 0%, #10b981 100%);
+  --bab-grad-hero: linear-gradient(120deg, #ff5a1f 0%, #ff2e7e 45%, #7c3aed 100%);
+  --bab-grad-sky: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #7c3aed 100%);
+
+  --bab-radius: 24px;
+  --bab-radius-sm: 16px;
+  --bab-shadow: 0 1px 2px rgba(40, 24, 80, 0.04), 0 10px 30px rgba(40, 24, 80, 0.08);
+  --bab-shadow-lift: 0 18px 40px rgba(40, 24, 80, 0.14);
+  --bab-glow-orange: 0 10px 26px rgba(255, 90, 31, 0.35);
+  --bab-font-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --bab-font-body: 'Inter', system-ui, sans-serif;
+}
+
 html {
   height: 100%;
-  color-scheme: dark;
+  color-scheme: light;
   @include mat.theme(
     (
       color: (
-        theme-type: dark,
+        theme-type: light,
         primary: bab.$primary-palette,
         tertiary: bab.$tertiary-palette,
       ),
-      typography: Roboto,
+      typography: (
+        plain-family: 'Inter, system-ui, sans-serif',
+        brand-family: 'Plus Jakarta Sans, Inter, system-ui, sans-serif',
+        bold-weight: 700,
+        medium-weight: 600,
+        regular-weight: 400,
+      ),
       density: 0,
     )
   );
+
+  --mat-sys-surface: var(--bab-bg);
+  --mat-sys-background: var(--bab-bg);
+  --mat-sys-on-surface: var(--bab-text);
+  --mat-sys-on-surface-variant: var(--bab-text-dim);
+  --mat-sys-primary: #e8480f;
+  --mat-sys-surface-container-low: rgba(255, 255, 255, 0.6);
+  --mat-sys-surface-container: rgba(255, 255, 255, 0.75);
+  --mat-sys-surface-container-high: rgba(255, 255, 255, 0.92);
+  --mat-sys-surface-container-highest: #ffffff;
+  --mat-sys-outline-variant: var(--bab-border-strong);
+  --mat-sys-primary-container: #ffe3d6;
+  --mat-sys-on-primary-container: #7a1f00;
 }
 
 body {
   margin: 0;
-  height: 100%;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  min-height: 100%;
+  color: var(--bab-text);
   font: var(--mat-sys-body-large);
+  font-family: var(--bab-font-body);
   -webkit-tap-highlight-color: transparent;
+  background-color: var(--bab-bg);
+  // Bright colour glows: sunrise, aqua and lime.
+  background-image:
+    radial-gradient(42rem 32rem at -8% -12%, rgba(255, 122, 69, 0.28), transparent 62%),
+    radial-gradient(40rem 30rem at 108% -6%, rgba(255, 46, 126, 0.18), transparent 60%),
+    radial-gradient(44rem 34rem at 100% 70%, rgba(124, 58, 237, 0.12), transparent 62%),
+    radial-gradient(40rem 32rem at -10% 90%, rgba(6, 182, 212, 0.16), transparent 62%),
+    radial-gradient(30rem 22rem at 50% 50%, rgba(132, 204, 22, 0.07), transparent 70%);
+  background-attachment: fixed;
 }
 
 *,
@@ -33,71 +105,243 @@ body {
 }
 
 a {
-  color: var(--mat-sys-primary);
+  color: #e8480f;
 }
 
-// Large readable numbers for stats across the app.
+::selection {
+  background: rgba(255, 90, 31, 0.22);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(255, 90, 31, 0.55);
+  outline-offset: 2px;
+}
+
+// ---------------------------------------------------------------------------
+// Material component polish
+// ---------------------------------------------------------------------------
+.mat-mdc-card.mdc-card,
+.mat-mdc-card.mdc-card--outlined {
+  background: var(--bab-glass);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--bab-radius);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: var(--bab-shadow);
+}
+
+.mat-mdc-card-title {
+  font-family: var(--bab-font-display);
+  font-weight: 800;
+}
+
+.mat-mdc-unelevated-button.mat-mdc-button-base:not(:disabled) {
+  background: var(--bab-grad-primary);
+  color: #fff;
+  box-shadow: var(--bab-glow-orange);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(255, 90, 31, 0.42);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button,
+.mat-mdc-button {
+  border-radius: 999px !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  border-color: var(--bab-border-strong) !important;
+  background: #fff;
+  color: var(--bab-text) !important;
+}
+
+.mat-mdc-progress-bar {
+  --mat-progress-bar-track-height: 8px;
+  --mat-progress-bar-active-indicator-height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.mat-mdc-progress-bar .mdc-linear-progress__bar-inner {
+  border-color: var(--bab-orange);
+}
+
+.mat-mdc-progress-bar .mdc-linear-progress__buffer-bar {
+  background: var(--bab-track);
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background: #1d1534 !important;
+  border-radius: 16px !important;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  color: #fff !important;
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+}
+
+.mat-button-toggle-group.mat-button-toggle-group-appearance-standard {
+  border-radius: 999px;
+  border-color: var(--bab-border-strong);
+  background: #fff;
+}
+
+.mat-button-toggle-checked .mat-button-toggle-button {
+  background: var(--bab-grad-primary);
+  color: #fff;
+}
+
+// ---------------------------------------------------------------------------
+// App classes
+// ---------------------------------------------------------------------------
 .bab-stat {
-  font: var(--mat-sys-display-medium);
+  font-family: var(--bab-font-display);
+  font-size: clamp(2.4rem, 8vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  line-height: 1.1;
 }
 
 .bab-muted {
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--bab-text-dim);
 }
 
 // Shown on calorie, plan and habit screens.
 .bab-disclaimer {
   font: var(--mat-sys-body-small);
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--bab-text-dim);
 }
 
 .bab-page {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px 16px 24px;
 }
 
 .bab-page-title {
-  font: var(--mat-sys-headline-medium);
-  margin: 8px 0 16px;
+  font-family: var(--bab-font-display);
+  font-size: clamp(1.8rem, 6.5vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 8px 0 18px;
+  background: var(--bab-grad-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// A glass panel. Pair with a --g gradient: style="--g: var(--bab-grad-food)".
+.bab-panel {
+  position: relative;
+  padding: 18px;
+  border-radius: var(--bab-radius);
+  background: var(--bab-glass);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: var(--bab-shadow);
+  overflow: hidden;
+
+  &.accent::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--g, var(--bab-grad-primary));
+  }
+}
+
+.bab-gradient-text {
+  background: var(--g, var(--bab-grad-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bab-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font: var(--mat-sys-label-medium);
+  font-weight: 700;
+  background: #fff;
+  border: 1px solid var(--bab-border);
+  box-shadow: 0 2px 8px rgba(40, 24, 80, 0.06);
 }
 
 // Sign-in and register pages.
 .bab-auth {
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
-  padding: 32px 16px;
+  padding: 40px 16px;
 
   form {
     display: flex;
     flex-direction: column;
     gap: 4px;
     margin: 24px 0 16px;
+    padding: 26px 22px;
+    border-radius: var(--bab-radius);
+    background: var(--bab-glass);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--bab-shadow-lift);
   }
 
   h2 {
-    font: var(--mat-sys-headline-small);
+    font-family: var(--bab-font-display);
+    font-size: 1.55rem;
+    font-weight: 800;
     margin: 0 0 12px;
   }
 
   button[type='submit'] {
     margin-top: 12px;
-    height: 48px;
+    height: 54px;
+    font-size: 1.02rem;
   }
 }
 
 .bab-auth-brand {
-  font: var(--mat-sys-display-small);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--mat-sys-primary);
+  display: inline-block;
+  font-family: var(--bab-font-display);
+  font-size: clamp(3rem, 13vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
   margin: 0;
+  padding-top: 4px;
+  background: var(--bab-grad-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .bab-auth-tagline {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
+  font-size: 1.08rem;
+  font-weight: 500;
 }
 
 .bab-form-error {
@@ -113,4 +357,14 @@ a {
 
 .bab-field-error.inline {
   margin: 0 0 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

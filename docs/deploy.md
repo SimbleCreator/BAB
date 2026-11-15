@@ -58,6 +58,12 @@ Environment variables (secrets go in the host's secret settings, never in git):
 | `BAB_JWT_SECRET` | yes | 32+ random characters: `python -c "import secrets; print(secrets.token_urlsafe(48))"` |
 | `BAB_FRONTEND_ORIGIN` | yes | `https://app.example.com` (exact origin, https, no trailing slash) |
 | `BAB_CONTACT_EMAIL` | yes | shown on the privacy and terms pages |
+| `BAB_AI_API_KEY` | no | OpenRouter key (`sk-or-...`), or the key of another OpenAI-compatible endpoint; empty switches Bounce off |
+| `BAB_AI_MODEL`, `BAB_AI_BASE_URL` | no | defaults `google/gemma-4-31b-it:free` and `https://openrouter.ai/api/v1`; any OpenAI-compatible endpoint works |
+| `BAB_AI_FALLBACK_MODELS` | no | comma-separated backups tried in order when the main model is busy (OpenRouter only) |
+| `BAB_AI_JSON_MODE` | no | `true` (default) asks for strict JSON; set `false` if an endpoint rejects it |
+| `BAB_AI_TIMEOUT_S` | no | default 120 |
+| `BAB_AI_DAILY_PLAN_LIMIT` | no | plans per user per 24 hours, default 5 |
 | `BAB_COOKIE_SAMESITE` | no | `lax` (default) or `none` (see section 1) |
 | `BAB_ENV` | set by the image | `production`: hides API docs, adds HSTS, refuses weak settings |
 | `PORT` | no | most hosts set this; default 8000 |

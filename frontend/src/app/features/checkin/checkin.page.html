@@ -145,7 +145,7 @@
 
   <h2>History</h2>
   @if (history.isLoading() && !history.hasValue()) {
-    <div class="center"><mat-spinner diameter="36" /></div>
+    <app-loader />
   } @else if (history.error()) {
     <p class="bab-form-error">Could not load your check-ins.</p>
     <button mat-button type="button" (click)="history.reload()">Try again</button>

@@ -48,6 +48,9 @@ Checks:
 .venv/bin/ruff check . && .venv/bin/ruff format --check .
 ```
 
+Bounce (the AI coach) is optional: set `BAB_AI_API_KEY` to a free OpenRouter key
+(see START_PROCEDURES.md). Without it Bounce is switched off.
+
 New migration after changing models:
 ```bash
 .venv/bin/alembic revision --autogenerate -m "describe the change"

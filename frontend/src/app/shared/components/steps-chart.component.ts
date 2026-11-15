@@ -66,7 +66,7 @@ export class StepsChartComponent implements OnDestroy {
 
   private draw(days: DayPoint[], goal: number): void {
     const primary = cssVar('--mat-sys-primary') || '#ffb59d';
-    const muted = cssVar('--mat-sys-outline') || '#8f7f7a';
+    const muted = 'rgba(124, 58, 237, 0.18)';
     const text = cssVar('--mat-sys-on-surface-variant') || '#d8c2bb';
     const grid = cssVar('--mat-sys-outline-variant') || '#53433f';
     const labels = days.map((d) => (days.length <= 7 ? weekday(d.day) : shortDay(d.day)));

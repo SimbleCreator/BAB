@@ -1,0 +1,374 @@
+<section class="home">
+  @if (today.isLoading() && !today.hasValue()) {
+    <app-loader label="Lacing up your dashboard..." />
+  } @else if (today.error()) {
+    <div class="bab-panel error">
+      <p class="bab-form-error">Could not load your dashboard. Check your connection.</p>
+      <button mat-flat-button type="button" (click)="today.reload()">Try again</button>
+    </div>
+  } @else if (today.value(); as t) {
+    <!-- Hero -->
+    <header class="hero">
+      <span class="shape s1" aria-hidden="true"></span>
+      <span class="shape s2" aria-hidden="true"></span>
+      <span class="shape s3" aria-hidden="true"></span>
+      <svg class="runner-art" viewBox="0 0 200 140" aria-hidden="true">
+        <line class="lane" x1="0" y1="128" x2="200" y2="128" />
+        <g class="runner">
+          <g class="bob" transform="translate(90 86)">
+            <path class="limb back leg" d="M0 0 L -8 22 L 3 38" />
+            <path class="limb back arm" d="M3 -30 L -10 -16 L -3 -5" />
+            <path class="limb" d="M0 0 L 5 -32" />
+            <circle cx="9" cy="-43" r="9" fill="#fff" />
+            <path class="limb leg front" d="M0 0 L 10 20 L 1 38" />
+            <path class="limb arm front" d="M3 -30 L 16 -19 L 26 -26" />
+          </g>
+        </g>
+        <g class="flag">
+          <line
+            x1="176"
+            y1="128"
+            x2="176"
+            y2="62"
+            stroke="#fff"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M177 64 C 186 60, 192 68, 200 64 L 200 80 C 192 84, 186 76, 177 80 Z"
+            fill="#ffe066"
+          />
+        </g>
+      </svg>
+      <div class="hero-text">
+        <div class="hero-top">
+          <span class="date">{{ dateLabel() }}</span>
+          <span class="streak" [class.on]="t.current_streak > 0">
+            <mat-icon>local_fire_department</mat-icon>
+            <span [appCountUp]="t.current_streak"></span>&nbsp;day streak
+          </span>
+        </div>
+        <h1>{{ greeting() }},<br />{{ t.name }}!</h1>
+        <p class="line">{{ t.line }}</p>
+        @if (mission(); as m) {
+          <div class="hero-progress" [attr.aria-label]="m.done + ' of 4 daily goals done'">
+            <div class="bar"><span [style.width.%]="m.pct"></span></div>
+            <span class="count">{{ m.done }}/4 today</span>
+          </div>
+        }
+      </div>
+    </header>
+
+    <!-- Alerts -->
+    @if (t.new_milestones.length) {
+      <a class="alert win" routerLink="/milestones">
+        <span class="alert-icon"><mat-icon>military_tech</mat-icon></span>
+        <span><strong>Milestone unlocked!</strong> {{ milestoneTitles() }}</span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+
+    <!-- Mission -->
+    @if (mission(); as m) {
+      <div class="mission bab-panel">
+        <div class="mission-head">
+          <div>
+            <h2>Today's mission</h2>
+            <p class="bab-muted">{{ missionLine() }}</p>
+          </div>
+          <div class="mission-score" [class.full]="m.done === 4">
+            <span>{{ m.done }}</span><small>/4</small>
+          </div>
+        </div>
+        <div class="mission-list">
+          @for (item of m.items; track item.icon) {
+            <a
+              class="mission-item"
+              [class.done]="item.done"
+              [routerLink]="item.link"
+              [queryParams]="item.query"
+            >
+              <span class="m-icon" [style.background]="item.gradient">
+                <mat-icon>{{ item.done ? 'check' : item.icon }}</mat-icon>
+              </span>
+              <span class="m-label">{{ item.label }}</span>
+              <mat-icon class="m-go">{{ item.done ? 'verified' : 'arrow_forward' }}</mat-icon>
+            </a>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Rings -->
+    <div class="section-head"><h2>Today at a glance</h2></div>
+    <div class="rings bab-panel">
+      <a
+        class="ring-item"
+        [routerLink]="['/activity/day', t.day]"
+        [queryParams]="{ back: '/home' }"
+      >
+        <app-progress-ring
+          [value]="todaySteps()"
+          [max]="t.step_goal"
+          from="#ff5a1f"
+          to="#ffaa00"
+          [size]="108"
+        >
+          <mat-icon class="ring-icon steps">directions_walk</mat-icon>
+          <span class="ring-num" [appCountUp]="todaySteps()"></span>
+        </app-progress-ring>
+        <span class="ring-label">Steps</span>
+        <span class="ring-sub">of {{ t.step_goal | int }}</span>
+      </a>
+      <a class="ring-item" routerLink="/eat">
+        <app-progress-ring
+          [value]="t.nutrition.eaten_kcal"
+          [max]="t.nutrition.target_kcal"
+          from="#10b981"
+          to="#06b6d4"
+          [size]="108"
+        >
+          <mat-icon class="ring-icon food">local_dining</mat-icon>
+          <span class="ring-num" [appCountUp]="t.nutrition.eaten_kcal"></span>
+        </app-progress-ring>
+        <span class="ring-label">Calories</span>
+        <span class="ring-sub">of {{ t.nutrition.target_kcal | int }} <app-estimate /></span>
+      </a>
+      <a class="ring-item" routerLink="/eat">
+        <app-progress-ring
+          [value]="t.nutrition.protein_g"
+          [max]="t.nutrition.target_protein_g"
+          from="#7c3aed"
+          to="#ff2e7e"
+          [size]="108"
+        >
+          <mat-icon class="ring-icon protein">egg_alt</mat-icon>
+          <span class="ring-num" [appCountUp]="t.nutrition.protein_g" suffix="g"></span>
+        </app-progress-ring>
+        <span class="ring-label">Protein</span>
+        <span class="ring-sub">of {{ t.nutrition.target_protein_g }} g</span>
+      </a>
+    </div>
+    @if (!t.activity) {
+      <a
+        mat-flat-button
+        class="cta"
+        [routerLink]="['/activity/day', t.day]"
+        [queryParams]="{ back: '/home' }"
+      >
+        <mat-icon>add</mat-icon>
+        Add today's numbers
+      </a>
+    }
+
+    <!-- Bold cards -->
+    <div class="grid two">
+      <div class="bold-card train">
+        <span class="bold-shape" aria-hidden="true"></span>
+        <div class="bold-head">
+          <span class="bold-icon"><mat-icon>fitness_center</mat-icon></span>
+          <span class="bold-kicker">Workout</span>
+          @if (t.workout?.status === 'done') {
+            <span class="pill"><mat-icon>check_circle</mat-icon> Done</span>
+          }
+        </div>
+        @if (t.workout; as w) {
+          <p class="bold-title">{{ w.title }}</p>
+          <p class="bold-sub">
+            {{ w.exercise_count }} exercises &middot; about {{ w.est_minutes }} min
+          </p>
+          @if (w.status === 'planned' || w.status === 'not_logged') {
+            <a class="bold-btn" [routerLink]="['/train/workout', w.day]">
+              <mat-icon>play_arrow</mat-icon>
+              Start now
+            </a>
+          } @else {
+            <a class="bold-btn ghost" routerLink="/train">See the week</a>
+          }
+        } @else {
+          <p class="bold-title">Rest day</p>
+          <p class="bold-sub">Recovery is part of the plan. An easy walk still counts.</p>
+          <a class="bold-btn ghost" routerLink="/train">See the week</a>
+        }
+      </div>
+
+      <div class="bold-card food">
+        <span class="bold-shape" aria-hidden="true"></span>
+        <div class="bold-head">
+          <span class="bold-icon"><mat-icon>restaurant</mat-icon></span>
+          <span class="bold-kicker">Food</span>
+        </div>
+        <p class="bold-title">
+          @if (t.nutrition.remaining_kcal >= 0) {
+            <span [appCountUp]="t.nutrition.remaining_kcal"></span>
+            <span class="unit">kcal left</span>
+          } @else {
+            <span [appCountUp]="-t.nutrition.remaining_kcal"></span>
+            <span class="unit">kcal over</span>
+          }
+        </p>
+        <p class="bold-sub">
+          Protein {{ t.nutrition.protein_g }} of {{ t.nutrition.target_protein_g }} g &middot;
+          estimate
+        </p>
+        <a
+          class="bold-btn"
+          [routerLink]="['/eat/add']"
+          [queryParams]="{ day: t.day, meal: mealNow() }"
+        >
+          <mat-icon>add</mat-icon>
+          Quick add
+        </a>
+      </div>
+    </div>
+
+    @for (hb of t.habits; track hb.id) {
+      <a class="habit bab-panel accent" style="--g: var(--bab-grad-habit)" routerLink="/habits">
+        <span class="m-icon" style="background: var(--bab-grad-habit)"
+          ><mat-icon>trending_down</mat-icon></span
+        >
+        <div class="habit-text">
+          <strong>{{ habitTitle(hb.type) }} plan</strong>
+          <span class="bab-muted">
+            {{ hb.availability.available_now }} available now &middot;
+            {{ hb.availability.locked }} locked ({{
+              hb.availability.period === 'day' ? 'today' : 'this week'
+            }})
+          </span>
+        </div>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+
+    <!-- Quick actions -->
+    <div class="section-head"><h2>Jump in</h2></div>
+    <div class="actions">
+      @for (a of quickActions(); track a.label) {
+        <a class="action" [routerLink]="a.link" [queryParams]="a.query ?? null">
+          <span class="action-icon" [style.background]="a.gradient"
+            ><mat-icon>{{ a.icon }}</mat-icon></span
+          >
+          <span>{{ a.label }}</span>
+        </a>
+      }
+    </div>
+
+    <!-- This week -->
+    <div class="section-head"><h2>This week</h2></div>
+    @if (streakDots().length) {
+      <div class="streak-strip bab-panel">
+        <span class="strip-title">Step goal</span>
+        <div class="dots">
+          @for (d of streakDots(); track d.day) {
+            <div class="dot-col">
+              <span class="dot" [class.met]="d.met">
+                @if (d.met) {
+                  <mat-icon>bolt</mat-icon>
+                }
+              </span>
+              <span class="dot-day">{{ d.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    <div class="tiles">
+      <div class="tile steps">
+        <mat-icon>directions_walk</mat-icon>
+        <span class="tile-num" [appCountUp]="weekStats().steps"></span>
+        <span class="tile-label">steps</span>
+      </div>
+      <div class="tile run">
+        <mat-icon>route</mat-icon>
+        <span class="tile-num">{{ weekStats().distance | km }}</span>
+        <span class="tile-label">distance</span>
+      </div>
+      <div class="tile train">
+        <mat-icon>fitness_center</mat-icon>
+        <span class="tile-num"
+          >{{ weekStats().workoutsDone }}/{{ weekStats().workoutsPlanned }}</span
+        >
+        <span class="tile-label">workouts</span>
+      </div>
+      <div class="tile food">
+        <mat-icon>restaurant</mat-icon>
+        <span class="tile-num" [appCountUp]="weekStats().avgKcal"></span>
+        <span class="tile-label">avg kcal a day</span>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="bab-panel chart-card">
+        <div class="card-head">
+          <h3>Steps</h3>
+          <span class="bab-chip">{{ weekStats().goalDays }} goal days</span>
+        </div>
+        @if (steps.value(); as s) {
+          <app-steps-chart [days]="s.days" [goal]="s.step_goal" />
+        } @else {
+          <app-loader [compact]="true" label="" />
+        }
+      </div>
+      <div class="bab-panel chart-card">
+        <div class="card-head">
+          <h3>Calories <app-estimate /></h3>
+        </div>
+        @if (food.value(); as f) {
+          <app-calories-chart [days]="f.days" />
+        } @else {
+          <app-loader [compact]="true" label="" />
+        }
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="bab-panel accent card" style="--g: var(--bab-grad-checkin)">
+        <div class="card-head">
+          <span class="m-icon" style="background: var(--bab-grad-checkin)"
+            ><mat-icon>monitor_weight</mat-icon></span
+          >
+          <h3>Weight</h3>
+          @if (latestCheckin(); as c) {
+            <span class="bab-chip">{{ change(c.weight_change_kg) || 'first check-in' }}</span>
+          }
+        </div>
+        @if (latestCheckin(); as c) {
+          <p class="big-title">{{ c.weight_kg.toFixed(1) }} <span class="unit">kg</span></p>
+          @if (weightPoints().length > 1) {
+            <app-weight-chart [points]="weightPoints()" />
+          }
+        } @else {
+          <p class="bab-muted">Your first check-in sets the starting point.</p>
+          <a mat-flat-button routerLink="/checkin">Check in</a>
+        }
+      </div>
+
+      <a
+        class="bab-panel accent card milestone"
+        style="--g: var(--bab-grad-hero)"
+        routerLink="/milestones"
+      >
+        <div class="card-head">
+          <span class="m-icon" style="background: var(--bab-grad-hero)"
+            ><mat-icon>military_tech</mat-icon></span
+          >
+          <h3>Next milestone</h3>
+          <span class="bab-chip">{{ unlockedCount() }} unlocked</span>
+        </div>
+        @if (nextMilestone(); as m) {
+          <p class="big-title">{{ m.title }}</p>
+          <p class="bab-muted">{{ m.description }}</p>
+          <div class="meter"><span [style.width.%]="milestonePct(m.current, m.target)"></span></div>
+          <p class="bab-muted small">{{ milestoneProgress(m) }}</p>
+        } @else {
+          <p class="big-title">All unlocked</p>
+          <p class="bab-muted">Every milestone is yours. Keep the streak going.</p>
+        }
+      </a>
+    </div>
+
+    <p class="bab-disclaimer">
+      Calories, distance and targets marked "estimate" are estimates only, not medical advice.
+    </p>
+  }
+</section>

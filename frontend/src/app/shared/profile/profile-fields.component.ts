@@ -14,6 +14,7 @@ import {
   GOAL_OPTIONS,
   LEVEL_OPTIONS,
   MINUTE_OPTIONS,
+  MODE_OPTIONS,
   ProfileForm,
   SEX_OPTIONS,
   TIMEZONES,
@@ -43,6 +44,7 @@ export class ProfileFieldsComponent {
   readonly section = input.required<Section>();
 
   protected readonly goals = GOAL_OPTIONS;
+  protected readonly modes = MODE_OPTIONS;
   protected readonly levels = LEVEL_OPTIONS;
   protected readonly diets = DIET_OPTIONS;
   protected readonly sexes = SEX_OPTIONS;

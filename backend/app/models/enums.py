@@ -34,3 +34,11 @@ class Source(str, Enum):
     gpx = "gpx"
     android = "android"
     ios = "ios"
+
+
+class TrainingMode(str, Enum):
+    """Activity: walking, jogging and home bodyweight work. Gym: gym training. Both."""
+
+    activity = "activity"
+    gym = "gym"
+    both = "both"

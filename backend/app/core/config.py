@@ -30,6 +30,27 @@ class Settings(BaseSettings):
     # "none" when they are on different sites; the cookie is always Secure.
     cookie_samesite: Literal["lax", "strict", "none"] = "lax"
 
+    # Bounce, the AI assistant: any OpenAI-compatible chat endpoint. Default: OpenRouter free
+    # models. Without an API key Bounce is switched off.
+    ai_base_url: str = "https://openrouter.ai/api/v1"
+    ai_model: str = "google/gemma-4-31b-it:free"
+    ai_api_key: str = Field(default="", repr=False)
+    ai_timeout_s: float = 120.0
+    # Comma-separated backup models. Used with OpenRouter, which tries them in order when
+    # the main model is busy or unavailable.
+    ai_fallback_models: str = ""
+    # Ask the endpoint for strict JSON output. Turn off only if an endpoint rejects it.
+    ai_json_mode: bool = True
+    ai_daily_plan_limit: int = 5
+
+    @property
+    def ai_enabled(self) -> bool:
+        return bool(self.ai_api_key)
+
+    @property
+    def ai_fallback_list(self) -> list[str]:
+        return [m.strip() for m in self.ai_fallback_models.split(",") if m.strip()]
+
     @model_validator(mode="after")
     def _safe_production(self) -> "Settings":
         if not self.is_production:

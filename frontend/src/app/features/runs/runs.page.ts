@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
 import { apiErrorMessage } from '../../core/api/api-error';
@@ -10,6 +9,7 @@ import { RunOut } from '../../core/api/models';
 import { RunsApi } from '../../core/api/runs.api';
 import { parseDay } from '../../shared/format/dates';
 import { DurationPipe, KmPipe, PacePipe } from '../../shared/format/format.pipes';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const PAGE = 20;
 const DATE = new Intl.DateTimeFormat(undefined, {
@@ -22,11 +22,11 @@ const DATE = new Intl.DateTimeFormat(undefined, {
 @Component({
   selector: 'app-runs-page',
   imports: [
+    LoaderComponent,
     RouterLink,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     KmPipe,
     DurationPipe,
     PacePipe,

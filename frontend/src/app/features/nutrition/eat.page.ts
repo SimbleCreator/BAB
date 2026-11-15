@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { map, of } from 'rxjs';
@@ -18,16 +17,17 @@ import { EstimateBadgeComponent } from '../../shared/components/estimate-badge.c
 import { addDays, dayLabel } from '../../shared/format/dates';
 import { IntPipe } from '../../shared/format/format.pipes';
 import { MEALS, servingsLabel } from './meals';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-eat-page',
   imports: [
+    LoaderComponent,
     RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
     CaloriesChartComponent,
     EstimateBadgeComponent,
     IntPipe,

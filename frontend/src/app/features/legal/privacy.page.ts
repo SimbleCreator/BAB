@@ -33,8 +33,8 @@ import { publicConfigResource } from './legal';
           use one, your smoking or drinking reduction plan.
         </li>
         <li>
-          What the app works out from that: training plans, calorie targets, weekly adjustments and
-          milestones.
+          What the app works out from that: training plans, calorie targets, weekly adjustments,
+          milestones and Bounce plans.
         </li>
       </ul>
       <p>
@@ -53,6 +53,16 @@ import { publicConfigResource } from './legal';
         Your data is not sold or shared with anyone. It is kept on the servers that run the app. Map
         tiles are loaded from OpenStreetMap, which sees the map area you view but not your account.
         Fonts are loaded from Google Fonts, which receives your IP address when the app loads.
+      </p>
+      <p>
+        Bounce, the AI coach, is the one exception. Only when you ask Bounce for a plan, the server
+        sends the numbers it needs (age, sex, height, weight, goal, level, training time, diet type,
+        how you train, recent check-ins and step averages, and your gym and supplement answers) to
+        the AI service set up by the owner (by default OpenRouter, which passes the request to the
+        company running the chosen model, such as Google or NVIDIA; free models may keep requests to
+        improve their services). Your name, email and account details are never sent. The plan that
+        comes back is stored with your data and is removed when you delete your account.
+        <!-- Placeholder for the owner: name the AI provider you use and link its privacy policy. -->
       </p>
 
       <h2>Export and delete</h2>

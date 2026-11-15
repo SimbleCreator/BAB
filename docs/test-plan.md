@@ -5,6 +5,28 @@
   `.venv/bin/ruff check . && .venv/bin/ruff format --check .`
 - Frontend: `cd frontend && npm run build`, `npm run lint`, `npx ng test --watch=false`
 
+## Bounce (AI coach)
+- The violet Bounce key sits above the middle of the dock on every page; its ball hops and
+  now and then flexes into the strong form. Tapping it opens the Bounce page (key pressed).
+- Go from any page to Home: the ball bounces in from the left in 2 or 3 arcs, turns strong
+  mid-way, turns back and lands in the key. With reduced motion it only flexes in the key.
+- With a notification (no check-in this week, a meal not logged after its hour, no steps
+  by noon, or under the step goal after 18:00): after landing, Bounce jumps to the right
+  holding a letter, with the message. The action opens Check-in, Eat or Activity; "Later"
+  sends it back into the key and it stays hidden for that day. The key shows a pink dot
+  while a notification is waiting.
+- Without `BAB_AI_API_KEY`: the Bounce page shows "switched off" with today's tips;
+  notifications still work; nothing else changes.
+- With an OpenRouter key: Activity profile, veg diet -> "Build my week" shows a loader,
+  then 7 day chips, walking and home exercises only, meals with no meat or eggs, foods to
+  eat more and cut down, tips. Pressing again says the week is already set.
+- Account > profile: switch to Gym -> Bounce asks for gym details and supplements; after
+  saving, the rebuilt plan has gym sessions and supplement notes, no home exercises.
+- "Both": plan has gym days and walk or home days.
+- A week later (or move the plan's `created_at` back 8 days in the database): Bounce asks
+  for the weekly check-in; after saving one, "Build next week's plan" appears.
+- Export includes `gym_profile` and `bounce_plans`.
+
 ## Manual checks by milestone
 
 ### M0

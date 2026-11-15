@@ -11,9 +11,11 @@ from app.core.config import get_settings
 from app.core.errors import AppError
 from app.core.security import utcnow, verify_password
 from app.models import (
+    BouncePlan,
     Checkin,
     CustomFood,
     DailyActivity,
+    GymProfile,
     Habit,
     HabitLog,
     Meal,
@@ -120,6 +122,8 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
         ),
         milestones=await rows(Milestone, Milestone.user_id == uid, order=Milestone.unlocked_at),
         habits=habits,
+        gym_profile=_row(gym) if (gym := await session.get(GymProfile, uid)) else None,
+        bounce_plans=await rows(BouncePlan, BouncePlan.user_id == uid, order=BouncePlan.id),
     )
 
 
@@ -147,6 +151,7 @@ RECORD_TYPES = {
     "milestones": Milestone,
     "habits": Habit,
     "habit_logs": HabitLog,
+    "bounce_plans": BouncePlan,
 }
 
 

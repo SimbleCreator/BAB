@@ -5,7 +5,7 @@
   </a>
 
   @if (!ready()) {
-    <div class="center"><mat-spinner diameter="40" /></div>
+    <app-loader />
   } @else if (week.error() || existing.error()) {
     <p class="bab-form-error">Could not load this workout.</p>
     <button mat-button type="button" (click)="week.reload(); existing.reload()">Try again</button>

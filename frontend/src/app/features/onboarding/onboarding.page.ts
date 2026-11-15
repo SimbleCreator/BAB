@@ -68,7 +68,7 @@ export class OnboardingPage {
       .subscribe({
         next: () => {
           this.auth.markProfileComplete();
-          void this.router.navigateByUrl('/today');
+          void this.router.navigateByUrl('/home');
         },
         error: (err: unknown) => {
           this.pending.set(false);

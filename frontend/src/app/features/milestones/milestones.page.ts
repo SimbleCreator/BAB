@@ -10,10 +10,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MilestoneCategory, MilestoneOut } from '../../core/api/models';
 import { MilestonesApi } from '../../core/api/milestones.api';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const GROUPS: { category: MilestoneCategory; label: string; icon: string }[] = [
   { category: 'steps', label: 'Steps', icon: 'directions_walk' },
@@ -34,7 +34,7 @@ const DATE = new Intl.DateTimeFormat(undefined, {
 
 @Component({
   selector: 'app-milestones-page',
-  imports: [MatIconModule, MatButtonModule, MatProgressBarModule, MatProgressSpinnerModule],
+  imports: [LoaderComponent, MatIconModule, MatButtonModule, MatProgressBarModule],
   templateUrl: './milestones.page.html',
   styleUrl: './milestones.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -13,7 +13,7 @@ export const authGuard: CanActivateFn = (_route, state) => {
 /** Login and register pages: skip them when already signed in. */
 export const guestGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
-  return auth.isLoggedIn() ? inject(Router).createUrlTree(['/today']) : true;
+  return auth.isLoggedIn() ? inject(Router).createUrlTree(['/home']) : true;
 };
 
 /** App pages need a finished onboarding. */
@@ -25,11 +25,11 @@ export const profileGuard: CanActivateFn = () => {
 /** Onboarding only until it is done. */
 export const onboardingGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
-  return auth.hasProfile() ? inject(Router).createUrlTree(['/today']) : true;
+  return auth.hasProfile() ? inject(Router).createUrlTree(['/home']) : true;
 };
 
 /** Admin pages: admins only. */
 export const adminGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
-  return auth.user()?.is_admin ? true : inject(Router).createUrlTree(['/today']);
+  return auth.user()?.is_admin ? true : inject(Router).createUrlTree(['/home']);
 };

@@ -1,6 +1,24 @@
 import { NonNullableFormBuilder, ValidatorFn, Validators } from '@angular/forms';
 
-import { DietType, Goal, Level, ProfileIn, ProfileOut, Sex } from '../../core/api/models';
+import {
+  DietType,
+  Goal,
+  Level,
+  ProfileIn,
+  ProfileOut,
+  Sex,
+  TrainingMode,
+} from '../../core/api/models';
+
+export const MODE_OPTIONS: { value: TrainingMode; label: string; hint: string }[] = [
+  {
+    value: 'activity',
+    label: 'Activity',
+    hint: 'Walking, jogging and home workouts, no equipment',
+  },
+  { value: 'gym', label: 'Gym', hint: 'Training at a gym with weights and machines' },
+  { value: 'both', label: 'Both', hint: 'Some gym days and some walking, jogging or home days' },
+];
 
 export const GOAL_OPTIONS: { value: Goal; label: string; hint: string }[] = [
   { value: 'lose_fat', label: 'Lose fat', hint: 'Small calorie deficit, cardio finishers' },
@@ -69,6 +87,7 @@ export function buildProfileForm(fb: NonNullableFormBuilder) {
       minutes_per_day: [30, Validators.required],
       days_per_week: [3, Validators.required],
       has_pullup_bar: [false],
+      training_mode: fb.control<TrainingMode>('activity', Validators.required),
     }),
     daily: fb.group({
       diet_type: fb.control<DietType | null>(null, Validators.required),
@@ -96,6 +115,7 @@ export function profileFromForm(form: ProfileForm): ProfileIn {
     diet_type: daily.diet_type!,
     daily_step_goal: Number(daily.daily_step_goal),
     timezone: daily.timezone,
+    training_mode: training.training_mode,
   };
 }
 
@@ -114,6 +134,7 @@ export function patchProfileForm(form: ProfileForm, p: ProfileOut): void {
       minutes_per_day: p.minutes_per_day,
       days_per_week: p.days_per_week,
       has_pullup_bar: p.has_pullup_bar,
+      training_mode: p.training_mode ?? 'activity',
     },
     daily: {
       diet_type: p.diet_type,

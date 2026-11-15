@@ -5,7 +5,7 @@
   </a>
 
   @if (run.isLoading() && !run.hasValue()) {
-    <div class="center"><mat-spinner diameter="40" /></div>
+    <app-loader />
   } @else if (run.error()) {
     <p class="bab-form-error">Could not load this run. It may have been deleted.</p>
     <button mat-button type="button" (click)="run.reload()">Try again</button>

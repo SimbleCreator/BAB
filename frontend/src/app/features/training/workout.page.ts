@@ -12,7 +12,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
 import { apiErrorMessage } from '../../core/api/api-error';
@@ -21,6 +20,7 @@ import { TrainingApi } from '../../core/api/training.api';
 import { dayLabel } from '../../shared/format/dates';
 import { formatDuration } from '../../shared/format/format.pipes';
 import { targetLine } from './format';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 interface Entry {
   value: number | null;
@@ -31,13 +31,7 @@ const key = (code: string, n: number) => `${code}#${n}`;
 
 @Component({
   selector: 'app-workout-page',
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [LoaderComponent, RouterLink, MatButtonModule, MatIconModule, MatProgressBarModule],
   templateUrl: './workout.page.html',
   styleUrl: './workout.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

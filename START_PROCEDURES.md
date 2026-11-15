@@ -40,6 +40,41 @@ cd "/home/bharat/Bharaths_Personal/BAB APP/backend" && .venv/bin/alembic upgrade
 cd "/home/bharat/Bharaths_Personal/BAB APP/frontend" && source ~/.nvm/nvm.sh && nvm use && npm install
 ```
 
+### e) Optional: switch on Bounce, the AI coach
+
+Bounce uses free models on OpenRouter by default (Google Gemma 4, with NVIDIA Nemotron
+as backups when Gemma is busy).
+
+1. Create a free account at https://openrouter.ai (no card), open
+   https://openrouter.ai/settings/keys and click **Create Key**. Copy the key
+   (it starts with `sk-or-`).
+2. Open `backend/.env` and set the key. The model lines are already in
+   `.env.example`; copy them over if your `.env` is older:
+
+```bash
+nano "/home/bharat/Bharaths_Personal/BAB APP/backend/.env"
+```
+
+```
+BAB_AI_API_KEY=sk-or-your_key_here
+BAB_AI_BASE_URL=https://openrouter.ai/api/v1
+BAB_AI_MODEL=google/gemma-4-31b-it:free
+BAB_AI_FALLBACK_MODELS=nvidia/nemotron-3.5-lightning:free,nvidia/nemotron-3-ultra-550b-a55b:free
+```
+
+3. Restart the backend (Ctrl+C, then start it again; `--reload` does not watch
+   `.env`). Without a key Bounce shows as switched off and the rest of the app works.
+
+Notes:
+- Free models have a daily request limit per account (about 50 a day without bought
+  credits). Each plan uses one or two requests.
+- "The AI service is busy" means every model in the list was rate-limited: wait a
+  minute. Free models come and go; pick others at https://openrouter.ai/models?q=free.
+- If a request fails with "No endpoints found matching your data policy", allow free
+  models at https://openrouter.ai/settings/privacy.
+- Any OpenAI-compatible endpoint works (Groq, a local Ollama, Hugging Face with
+  credits): change `BAB_AI_BASE_URL`, `BAB_AI_MODEL` and the key.
+
 ## 3. Run it (two terminals, leave both open)
 
 ### Terminal 1: backend API

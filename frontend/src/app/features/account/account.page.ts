@@ -7,7 +7,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AccountApi } from '../../core/api/account.api';
@@ -21,10 +20,12 @@ import {
   patchProfileForm,
   profileFromForm,
 } from '../../shared/profile/profile-form';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-account-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     MatCardModule,
     MatCheckboxModule,
@@ -32,7 +33,6 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatProgressSpinnerModule,
     ProfileFieldsComponent,
   ],
   templateUrl: './account.page.html',

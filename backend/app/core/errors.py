@@ -35,3 +35,15 @@ class ForbiddenError(AppError):
 class RateLimitError(AppError):
     status_code = 429
     code = "rate_limited"
+
+
+class UpstreamError(AppError):
+    """The AI service failed or sent something unusable."""
+
+    status_code = 502
+    code = "model_error"
+
+
+class UnavailableError(AppError):
+    status_code = 503
+    code = "unavailable"

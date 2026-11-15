@@ -18,7 +18,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('.bottom-nav')).toBeNull();
-    expect(el.querySelector('.rail')).toBeNull();
+    expect(el.querySelector('.dock')).toBeNull();
+    expect(el.querySelector('.topbar')).toBeNull();
   });
 });

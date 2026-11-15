@@ -73,6 +73,16 @@
         <p class="bab-field-error inline">Choose a goal.</p>
       }
 
+      <span class="field-label">How do you train?</span>
+      <mat-radio-group class="stack" formControlName="training_mode" aria-label="How you train">
+        @for (m of modes; track m.value) {
+          <mat-radio-button [value]="m.value">
+            <span class="opt">{{ m.label }}</span>
+            <span class="hint">{{ m.hint }}</span>
+          </mat-radio-button>
+        }
+      </mat-radio-group>
+
       <span class="field-label">Level</span>
       <mat-radio-group class="stack" formControlName="level" aria-label="Level">
         @for (l of levels; track l.value) {

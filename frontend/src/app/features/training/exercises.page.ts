@@ -3,22 +3,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
 import { Group } from '../../core/api/models';
 import { TrainingApi } from '../../core/api/training.api';
 import { GROUP_LABEL } from './format';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-exercises-page',
-  imports: [
-    RouterLink,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [LoaderComponent, RouterLink, MatButtonModule, MatButtonToggleModule, MatIconModule],
   template: `
     <section class="bab-page">
       <a mat-button routerLink="/train" class="back"><mat-icon>arrow_back</mat-icon> Plan</a>
@@ -45,7 +39,7 @@ import { GROUP_LABEL } from './format';
         </mat-button-toggle-group>
       </div>
       @if (list.isLoading()) {
-        <div class="center"><mat-spinner diameter="36" /></div>
+        <app-loader />
       } @else if (list.error()) {
         <p class="bab-form-error">Could not load exercises.</p>
         <button mat-button type="button" (click)="list.reload()">Try again</button>

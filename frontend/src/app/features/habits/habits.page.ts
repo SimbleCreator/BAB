@@ -3,7 +3,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { apiErrorMessage } from '../../core/api/api-error';
@@ -13,14 +12,15 @@ import { HabitPlanComponent } from './habit-plan.component';
 import { buildHabitForm, habitFromForm } from './habit-setup';
 import { HabitSetupComponent } from './habit-setup.component';
 import { PLAN_INTRO } from './wording';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-habits-page',
   imports: [
+    LoaderComponent,
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule,
     HabitPlanComponent,
     HabitSetupComponent,
   ],
@@ -28,7 +28,7 @@ import { PLAN_INTRO } from './wording';
     <section class="bab-page">
       <h1 class="bab-page-title">Habits</h1>
       @if (plans.isLoading() && !plans.hasValue()) {
-        <div class="center"><mat-spinner diameter="40" /></div>
+        <app-loader />
       } @else if (plans.error()) {
         <p class="bab-form-error">Could not load your plans.</p>
         <button mat-button type="button" (click)="plans.reload()">Try again</button>

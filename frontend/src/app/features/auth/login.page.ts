@@ -59,6 +59,6 @@ export class LoginPage {
   private safeReturnUrl(): string {
     const url = this.returnUrl();
     // Only same-app paths, never another site.
-    return url && url.startsWith('/') && !url.startsWith('//') ? url : '/today';
+    return url && url.startsWith('/') && !url.startsWith('//') ? url : '/home';
   }
 }

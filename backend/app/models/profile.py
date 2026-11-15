@@ -26,6 +26,9 @@ class Profile(Base):
     diet_type: Mapped[str] = mapped_column(String(10))
     daily_step_goal: Mapped[int] = mapped_column(Integer)
     timezone: Mapped[str] = mapped_column(String(64))
+    training_mode: Mapped[str] = mapped_column(
+        String(10), default="activity", server_default="activity"
+    )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

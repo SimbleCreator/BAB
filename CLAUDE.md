@@ -18,12 +18,13 @@ All data is stored per user, per day, on the server.
 - Android app (after there are users): same accounts and backend, adds automatic
   step capture, wake-up alarm with motivational lines, and a motivating buddy
 - iOS app after Android
-- LLM features later: meal photo calories, buddy chat, AI-written plans
+- AI-written weekly plans: built (Bounce, see below)
+- LLM features later: meal photo calories, buddy chat
 - Community and subscription later
 
 ### Out of scope now (do NOT build, do not add dependencies for these)
 - Native mobile code, automatic step capture, alarms, push notifications
-- Any LLM or AI API, meal photo recognition, chat
+- Any LLM use other than Bounce plans and tips; meal photo recognition; chat
 - Community, subscription, payments, ads, third-party analytics
 - Email sending (no verification or reset emails in version 1)
 - Body photos (removed from the product permanently)
@@ -168,7 +169,12 @@ weekly_adjustments id PK, user_id FK, checkin_day, created_at, summary (JSON)
 habits             id PK, user_id FK, type, baseline, period, pace_pct, started_on,
                    active          UNIQUE (user_id, type) WHERE active
 habit_logs         id PK, habit_id FK, day, units, logged_at
+gym_profiles       user_id PK FK, experience, days_per_week, session_minutes,
+                   supplements (JSON list), supplements_note, injuries_note, updated_at
+bounce_plans       id PK, user_id FK, mode, week_start, content (JSON), targets (JSON),
+                   model, based_on_checkin_day, created_at
 ```
+`profiles.training_mode` is activity, gym or both (default activity).
 All schema changes go through Alembic migrations. Deleting a user cascades to all
 of their rows.
 
@@ -192,7 +198,8 @@ of their rows.
 - After first login: name, age, sex, height, weight, goal (lose fat / build
   muscle / stay fit), level, minutes per day, training days per week, pull-up bar
   yes/no, diet type (veg / egg / non-veg), timezone (default from the browser), and
-  an optional smoking or drinking reduction plan.
+  how they train (Activity: walk, jog, home workouts / Gym / Both), and an optional
+  smoking or drinking reduction plan.
 - Finishing onboarding generates the first nutrition targets and training plan.
 - Editable later. Changing goal, level, time or days regenerates the plan from the
   next day after confirmation.
@@ -320,15 +327,57 @@ of their rows.
   active in the last 7 and 30 days, counts of records by type. Aggregates only; no
   admin view of an individual's health data. First admin is set by a CLI command.
 
+### Bounce, the AI coach (plans and tips only, no chat)
+- Uses any OpenAI-compatible chat endpoint. Default: OpenRouter free models
+  (`https://openrouter.ai/api/v1`), `google/gemma-4-31b-it:free` with
+  `BAB_AI_FALLBACK_MODELS` (NVIDIA Nemotron free models) when it is busy; key in
+  `BAB_AI_API_KEY`. No key means Bounce is switched off and every other screen works
+  as before. Requests ask for JSON mode and, on OpenRouter, no reasoning tokens.
+  Hugging Face Inference Providers no longer has a usable free tier.
+- Activity and Train are kept apart: Activity is walking, jogging, stretching and
+  no-equipment home exercises; Train is the gym. A plan mixes them only when the
+  user picks "Both".
+- Bounce writes one week: per-day activity or gym work and stretching, a 7-day meal
+  plan for the user's diet type (Indian focus), foods to eat more of and cut down,
+  supplement notes (Train only, from the gym questionnaire), and tips.
+- Calorie and macro targets come from the nutrition engine, never from the model.
+- Server-side checks: JSON shape validated (one retry), meal plan scanned for foods
+  the diet type excludes (one retry, then rejected), gym or home parts removed to
+  match the mode, lines naming steroids, SARMs or prohormones dropped, fixed safety
+  lines added for supplements and fat burners.
+- Weekly loop: after 7 days a new plan needs a check-in newer than the one the last
+  plan used; Bounce asks for it. Inside the week a rebuild is allowed only after the
+  profile, mode or gym details change. At most `BAB_AI_DAILY_PLAN_LIMIT` (5) plans
+  per user per 24 hours.
+- Immediate suggestions and notifications are rule based (no AI call). The status
+  carries at most one notification, most important first: weekly check-in due; a meal
+  not logged after its hour (breakfast 10:00, lunch 15:00, snack 18:00, dinner 21:00
+  local); no activity numbers by 12:00; under the step goal at 18:00.
+- The mascot: an orange ball that turns into a strong form (face, sweatband, flexing
+  arms) and back. It lives in the Bounce key above the dock. Each time the user comes
+  back to Home it bounces in from the left in 2 or 3 random arcs and lands in the key;
+  with a notification it then jumps to the right side holding a letter, with the
+  message and an action. "Later" hides that notification for the day (browser storage).
+  Reduced motion skips the flights.
+
 ### PWA
 - Web manifest with app name "B.A.B", icons and theme colour so it can be added to
   the home screen. Service worker caches the app shell only, never API responses.
 
 ## UI guidelines
 - Mobile-first, works from 360 px width, also usable on desktop.
-- Dark theme, one accent colour (deep orange), large readable numbers.
-- Bottom navigation on phones: Today, Activity, Train, Eat, More. More holds Runs,
-  Check-in, Milestones, Habits, History, Account.
+- Bright, sporty light theme: warm cream background with colour glows, white glass
+  cards, sunrise orange leading, and a vivid gradient per area (steps orange/amber,
+  food green/teal, training violet/pink, runs blue/cyan, check-in amber/pink, habits
+  lime/green). Motivational and animated, but simple to use. Tokens live in
+  `frontend/src/styles.scss`. Respect reduced-motion settings.
+- Loading states use `<app-loader>` (a jogger running toward a milestone flag).
+- After sign-in the app opens on the Home dashboard (`/home`): hero, today's mission,
+  rings, workout and food cards, quick actions, week stats, weight and next milestone.
+- Navigation on every screen size: a floating dock (Home, Activity, Train, Eat, More)
+  with the Bounce key raised above its centre, like the up key above the arrow keys.
+  More opens a sheet of colourful tiles (Runs, Check-in, Milestones, Habits, History,
+  Account, Admin for admins). No permanent side list.
 - Every page handles loading, empty and error states. Forms validate inline.
 - Text tone: short, direct, encouraging, original.
 

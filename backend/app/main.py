@@ -17,6 +17,7 @@ from app.routers import (
     account,
     activity,
     auth,
+    bounce,
     checkins,
     habits,
     health,
@@ -80,6 +81,7 @@ def create_app() -> FastAPI:
         habits.router,
         history.router,
         account.router,
+        bounce.router,
     ):
         app.include_router(r, prefix=settings.api_prefix)
     return app

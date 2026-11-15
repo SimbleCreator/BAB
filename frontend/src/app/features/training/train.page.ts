@@ -3,7 +3,6 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 import { of } from 'rxjs';
@@ -13,6 +12,7 @@ import { DayStatus, PlanDayOut } from '../../core/api/models';
 import { TrainingApi } from '../../core/api/training.api';
 import { addDays, dayLabel, parseDay, weekday } from '../../shared/format/dates';
 import { GROUP_LABEL, targetLine } from './format';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 const STATUS_LABEL: Record<DayStatus, string> = {
   rest: 'Rest',
@@ -25,7 +25,7 @@ const DAY_NUM = new Intl.DateTimeFormat(undefined, { day: 'numeric' });
 
 @Component({
   selector: 'app-train-page',
-  imports: [RouterLink, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [LoaderComponent, RouterLink, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './train.page.html',
   styleUrl: './train.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.models.enums import DietType, Goal, Level, Sex
+from app.models.enums import DietType, Goal, Level, Sex, TrainingMode
 
 
 class ProfileIn(BaseModel):
@@ -20,6 +20,10 @@ class ProfileIn(BaseModel):
     diet_type: DietType
     daily_step_goal: int = Field(default=8000, ge=1000, le=50000)
     timezone: str = Field(min_length=1, max_length=64, description="IANA name, e.g. Asia/Kolkata")
+    training_mode: TrainingMode = Field(
+        default=TrainingMode.activity,
+        description="activity (walk, jog, home workouts), gym, or both",
+    )
 
     @field_validator("name")
     @classmethod

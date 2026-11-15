@@ -2,22 +2,22 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 
 import { TrainingApi } from '../../core/api/training.api';
 import { GROUP_LABEL } from './format';
+import { LoaderComponent } from '../../shared/components/loader.component';
 
 @Component({
   selector: 'app-exercise-detail-page',
-  imports: [RouterLink, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [LoaderComponent, RouterLink, MatButtonModule, MatIconModule],
   template: `
     <section class="bab-page">
       <a mat-button routerLink="/train/exercises" class="back">
         <mat-icon>arrow_back</mat-icon> Exercise library
       </a>
       @if (one.isLoading()) {
-        <div class="center"><mat-spinner diameter="36" /></div>
+        <app-loader />
       } @else if (one.error()) {
         <p class="bab-form-error">Exercise not found.</p>
       } @else if (one.value(); as e) {
