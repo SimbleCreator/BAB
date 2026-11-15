@@ -1,0 +1,45 @@
+# Render Blueprint for the B.A.B API (free web service, Docker).
+# Render reads this file when you choose New > Blueprint and pick this repository.
+# Values marked "sync: false" are asked for once, when the Blueprint is first created.
+# See docs/deploy.md for the full steps.
+
+services:
+  - type: web
+    name: bab-api
+    runtime: docker
+    plan: free
+    region: singapore # closest to India; cannot be changed later
+    rootDir: backend # only changes under backend/ trigger a new deploy
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/v1/health
+    autoDeployTrigger: commit
+    envVars:
+      # Neon connection string, pasted as Neon shows it (postgresql://...?sslmode=require).
+      - key: BAB_DATABASE_URL
+        sync: false
+      # The Cloudflare Pages address, e.g. https://bab.pages.dev (https, no trailing slash).
+      - key: BAB_FRONTEND_ORIGIN
+        sync: false
+      # Shown on the privacy and terms pages.
+      - key: BAB_CONTACT_EMAIL
+        sync: false
+      # OpenRouter key (sk-or-...). Leave empty to switch Bounce off.
+      - key: BAB_AI_API_KEY
+        sync: false
+      - key: BAB_JWT_SECRET
+        generateValue: true
+      - key: BAB_COOKIE_SAMESITE
+        value: lax
+      - key: BAB_AI_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: BAB_AI_MODEL
+        value: google/gemma-4-31b-it:free
+      - key: BAB_AI_FALLBACK_MODELS
+        value: nvidia/nemotron-3.5-lightning:free,nvidia/nemotron-3-ultra-550b-a55b:free
+      # Requests arrive through Render's proxy (and the Cloudflare proxy); trust the
+      # forwarded client address so the login rate limit sees real visitors.
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"
+      - key: RUN_MIGRATIONS
+        value: "1"

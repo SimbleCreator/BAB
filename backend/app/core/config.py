@@ -3,11 +3,32 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 DEV_JWT_SECRET = "dev-only-secret-never-use-in-production-0000"  # noqa: S105
 DEV_DATABASE_URL = "postgresql+asyncpg://bab:bab_dev_password@localhost:5432/bab"
+
+
+def normalize_database_url(url: str) -> str:
+    """Accept a connection string as hosting providers show it (for example Neon's
+    postgresql://...?sslmode=require&channel_binding=require) and turn it into the async
+    driver's form: postgresql+asyncpg://...?ssl=require."""
+    url = url.strip()
+    for prefix in ("postgres://", "postgresql://"):
+        if url.startswith(prefix):
+            url = "postgresql+asyncpg://" + url[len(prefix) :]
+    base, _, query = url.partition("?")
+    if not query:
+        return base
+    params = []
+    for part in query.split("&"):
+        key, _, value = part.partition("=")
+        if key == "sslmode":
+            params.append(f"ssl={value}")
+        elif key != "channel_binding":  # not supported by asyncpg; TLS still applies
+            params.append(part)
+    return base + ("?" + "&".join(params) if params else "")
 
 
 class Settings(BaseSettings):
@@ -50,6 +71,11 @@ class Settings(BaseSettings):
     @property
     def ai_fallback_list(self) -> list[str]:
         return [m.strip() for m in self.ai_fallback_models.split(",") if m.strip()]
+
+    @field_validator("database_url", "test_database_url")
+    @classmethod
+    def _async_url(cls, v: str) -> str:
+        return normalize_database_url(v)
 
     @model_validator(mode="after")
     def _safe_production(self) -> "Settings":

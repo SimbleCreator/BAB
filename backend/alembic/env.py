@@ -17,7 +17,8 @@ if config.config_file_name is not None:
 
 # An explicit -x url=... or a URL set by the caller (tests) wins over settings.
 if not config.get_main_option("sqlalchemy.url"):
-    config.set_main_option("sqlalchemy.url", get_settings().database_url)
+    # "%" must be doubled for the config parser (URL-encoded passwords can contain it).
+    config.set_main_option("sqlalchemy.url", get_settings().database_url.replace("%", "%%"))
 
 target_metadata = Base.metadata
 
