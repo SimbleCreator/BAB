@@ -79,12 +79,24 @@ export const routes: Routes = [
       {
         path: 'train',
         title: 'Train - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Train',
-          icon: 'fitness_center',
-          blurb: 'Your weekly bodyweight plan and workout log.',
-        },
+        loadComponent: () => import('./features/training/train.page').then((m) => m.TrainPage),
+      },
+      {
+        path: 'train/workout/:day',
+        title: 'Workout - B.A.B',
+        loadComponent: () => import('./features/training/workout.page').then((m) => m.WorkoutPage),
+      },
+      {
+        path: 'train/exercises',
+        title: 'Exercises - B.A.B',
+        loadComponent: () =>
+          import('./features/training/exercises.page').then((m) => m.ExercisesPage),
+      },
+      {
+        path: 'train/exercises/:code',
+        title: 'Exercise - B.A.B',
+        loadComponent: () =>
+          import('./features/training/exercise-detail.page').then((m) => m.ExerciseDetailPage),
       },
       {
         path: 'eat',

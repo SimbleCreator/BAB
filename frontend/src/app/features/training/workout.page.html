@@ -1,0 +1,197 @@
+<section class="bab-page">
+  <a mat-button routerLink="/train" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Plan
+  </a>
+
+  @if (!ready()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (week.error() || existing.error()) {
+    <p class="bab-form-error">Could not load this workout.</p>
+    <button mat-button type="button" (click)="week.reload(); existing.reload()">Try again</button>
+  } @else if (isFuture()) {
+    <p class="bab-muted">This workout is not due yet. Come back on the day.</p>
+  } @else if (noSession()) {
+    <p class="bab-muted">This is a rest day in your plan.</p>
+  } @else if (result(); as r) {
+    <div class="finish">
+      <mat-icon>emoji_events</mat-icon>
+      <h1>Workout saved</h1>
+      <p class="bab-muted">{{ session()?.title }} &middot; {{ title() }}</p>
+      <div class="stats">
+        <div>
+          <div class="num">{{ r.summary.completion_pct }}%</div>
+          <div class="bab-muted">done</div>
+        </div>
+        <div>
+          <div class="num">{{ r.summary.sets_done }}/{{ r.summary.sets_planned }}</div>
+          <div class="bab-muted">sets</div>
+        </div>
+        <div>
+          <div class="num">{{ r.summary.targets_met }}</div>
+          <div class="bab-muted">on target</div>
+        </div>
+        <div>
+          <div class="num">{{ r.summary.total_reps }}</div>
+          <div class="bab-muted">reps</div>
+        </div>
+        @if (r.summary.total_seconds) {
+          <div>
+            <div class="num">{{ formatDuration(r.summary.total_seconds) }}</div>
+            <div class="bab-muted">held</div>
+          </div>
+        }
+      </div>
+      <p>
+        @if (r.summary.completion_pct >= 80) {
+          Strong session. Logged and counted.
+        } @else if (r.summary.completion_pct >= 50) {
+          Good work showing up. Every set builds the habit.
+        } @else {
+          Some is better than none. Next time, a little more.
+        }
+      </p>
+      <div class="finish-actions">
+        <a mat-flat-button routerLink="/train">Back to plan</a>
+        <a mat-button routerLink="/milestones">Milestones</a>
+      </div>
+    </div>
+  } @else if (session(); as s) {
+    <h1 class="bab-page-title">{{ s.title }}</h1>
+    <p class="bab-muted sub">
+      {{ title() }} &middot; about {{ s.est_minutes }} min
+      @if (hasLog()) {
+        &middot; editing your saved log
+      }
+    </p>
+    <div class="overall">
+      <mat-progress-bar mode="determinate" [value]="progress().pct" />
+      <span class="bab-muted">{{ progress().done }} of {{ progress().all }} sets</span>
+    </div>
+
+    <details class="drills">
+      <summary>Warm-up ({{ s.warmup.length }})</summary>
+      <ul>
+        @for (x of s.warmup; track x.code) {
+          <li>
+            <strong>{{ x.name }}</strong> &middot; {{ x.seconds }} s. {{ x.instructions }}
+          </li>
+        }
+      </ul>
+    </details>
+
+    @for (p of items(); track p.code; let i = $index) {
+      <div class="exercise" [class.skipped]="skipped().has(p.code)">
+        <div class="ex-head">
+          <div>
+            <div class="ex-name">{{ i + 1 }}. {{ p.name }}</div>
+            <div class="ex-target">{{ targetLine(p) }} &middot; rest {{ p.rest_s }} s</div>
+          </div>
+          <button
+            mat-icon-button
+            type="button"
+            (click)="openInfo.set(openInfo() === p.code ? null : p.code)"
+            [attr.aria-label]="'How to do ' + p.name"
+          >
+            <mat-icon>info</mat-icon>
+          </button>
+        </div>
+        @if (openInfo() === p.code) {
+          <p class="how">
+            <a [routerLink]="['/train/exercises', p.code]"
+              >How to do it, easier and harder options</a
+            >
+          </p>
+        }
+
+        @if (skipped().has(p.code)) {
+          <p class="bab-muted">
+            Skipped.
+            <button mat-button type="button" (click)="unskip(p.code)">Undo</button>
+          </p>
+        } @else {
+          @for (n of setNumbers(p); track n) {
+            @let e = entry(p.code, n);
+            <div class="set" [class.done]="e.done">
+              <span class="set-no">Set {{ n }}</span>
+              <label class="input">
+                <input
+                  type="number"
+                  inputmode="numeric"
+                  min="0"
+                  [value]="e.value ?? ''"
+                  (change)="setValue(p.code, n, $any($event.target).value)"
+                  [attr.aria-label]="'Set ' + n + (p.type === 'timed' ? ' seconds' : ' reps')"
+                />
+                <span>{{ p.type === 'timed' ? 's' : 'reps' }}</span>
+              </label>
+              @if (p.type === 'timed' && !e.done) {
+                <button
+                  mat-stroked-button
+                  type="button"
+                  class="timer-btn"
+                  (click)="startCountdown(p, n)"
+                >
+                  @if (isCounting(p.code, n)) {
+                    {{ countdown()!.left }}
+                  } @else {
+                    <mat-icon>timer</mat-icon>
+                  }
+                </button>
+              }
+              <button
+                mat-icon-button
+                type="button"
+                class="check"
+                (click)="toggleDone(p, n)"
+                [attr.aria-label]="
+                  e.done ? 'Mark set ' + n + ' not done' : 'Mark set ' + n + ' done'
+                "
+                [attr.aria-pressed]="e.done"
+              >
+                <mat-icon>{{ e.done ? 'check_circle' : 'radio_button_unchecked' }}</mat-icon>
+              </button>
+            </div>
+          }
+          <button mat-button type="button" class="skip" (click)="skipExercise(p.code)">
+            Skip exercise
+          </button>
+        }
+      </div>
+    }
+
+    <details class="drills">
+      <summary>Cool-down ({{ s.cooldown.length }})</summary>
+      <ul>
+        @for (x of s.cooldown; track x.code) {
+          <li>
+            <strong>{{ x.name }}</strong> &middot; {{ x.seconds }} s. {{ x.instructions }}
+          </li>
+        }
+      </ul>
+    </details>
+
+    @if (error()) {
+      <p class="bab-form-error" role="alert">{{ error() }}</p>
+    }
+    <button
+      mat-flat-button
+      type="button"
+      class="finish-btn"
+      (click)="finish()"
+      [disabled]="saving()"
+    >
+      {{ saving() ? 'Saving...' : 'Finish workout' }}
+    </button>
+    <p class="bab-disclaimer">General guidance, not medical advice. Stop if anything hurts.</p>
+
+    @if (rest(); as r) {
+      <div class="rest-bar" role="timer" aria-live="polite">
+        <div class="rest-fill" [style.width.%]="(100 * r.left) / r.total"></div>
+        <span class="rest-label">Rest {{ formatDuration(r.left) }}</span>
+        <button mat-button type="button" (click)="addRest(15)">+15 s</button>
+        <button mat-button type="button" (click)="skipRest()">Skip</button>
+      </div>
+    }
+  }
+</section>

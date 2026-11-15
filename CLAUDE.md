@@ -148,6 +148,7 @@ runs               id PK, user_id FK, day, started_at, distance_m, duration_s,
 run_points         id PK, run_id FK, seq, lat, lng, ele_m, recorded_at
 training_plans     id PK, user_id FK, week_start, plan_json, created_at
 workout_sessions   id PK, user_id FK, plan_id FK, day, status, finished_at
+                   UNIQUE (user_id, day)
 workout_sets       id PK, session_id FK, exercise_code, set_no, target_reps,
                    actual_reps, target_seconds, actual_seconds
 nutrition_targets  id PK, user_id FK, effective_from, calories_kcal, protein_g,

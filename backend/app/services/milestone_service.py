@@ -13,6 +13,7 @@ from app.repositories import (
     milestone_repo,
     profile_repo,
     run_repo,
+    training_repo,
 )
 from app.schemas.milestone import MilestoneBrief, MilestoneOut
 
@@ -33,6 +34,7 @@ async def gather_stats(session: AsyncSession, user_id: int) -> eng.ProgressStats
         total_run_m=total_run,
         longest_step_streak=streak,
         checkin_count=await checkin_repo.count(session, user_id),
+        workout_count=await training_repo.count_done(session, user_id),
     )
 
 

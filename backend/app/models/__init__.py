@@ -6,6 +6,7 @@ from app.models.checkin import Checkin
 from app.models.milestone import Milestone
 from app.models.profile import Profile
 from app.models.run import Run, RunPoint
+from app.models.training import TrainingPlan, WorkoutSession, WorkoutSet
 from app.models.user import RefreshToken, User
 
 __all__ = [
@@ -17,5 +18,8 @@ __all__ = [
     "RefreshToken",
     "Run",
     "RunPoint",
+    "TrainingPlan",
     "User",
+    "WorkoutSession",
+    "WorkoutSet",
 ]

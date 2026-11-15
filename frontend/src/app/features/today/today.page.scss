@@ -122,3 +122,16 @@ mat-card {
     }
   }
 }
+
+.workout-title {
+  font: var(--mat-sys-title-large);
+  margin: 8px 0 0;
+}
+
+.done-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--mat-sys-primary);
+  font: var(--mat-sys-label-large);
+}

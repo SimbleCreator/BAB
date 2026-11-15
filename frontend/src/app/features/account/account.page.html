@@ -23,9 +23,26 @@
           @if (profileError()) {
             <p class="bab-form-error" role="alert">{{ profileError() }}</p>
           }
-          <button mat-flat-button type="submit" [disabled]="saving() || form.pristine">
-            {{ saving() ? 'Saving...' : 'Save profile' }}
-          </button>
+          @if (confirmPlanChange()) {
+            <div class="confirm" role="alertdialog" aria-label="Confirm plan change">
+              <p>
+                This changes your training plan. Workouts up to today stay as they are; the new plan
+                starts tomorrow.
+              </p>
+              <div class="confirm-actions">
+                <button mat-flat-button type="button" (click)="saveProfile(true)">
+                  Save and update plan
+                </button>
+                <button mat-button type="button" (click)="confirmPlanChange.set(false)">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          } @else {
+            <button mat-flat-button type="submit" [disabled]="saving() || form.pristine">
+              {{ saving() ? 'Saving...' : 'Save profile' }}
+            </button>
+          }
         </form>
       }
     </mat-card-content>

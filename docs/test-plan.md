@@ -68,3 +68,20 @@
   short celebration once, then not again after reload.
 - Delete the run: the milestone stays unlocked.
 - Milestones shows progress bars for locked ones (steps, km, days).
+
+### M5
+- After onboarding, Train shows this week: the split matches your days per week and
+  rest days are marked. Sessions have warm-up, exercises with sets x reps or seconds,
+  a cardio finisher for fat loss, and cool-down.
+- 20 minutes gives 4 exercises, 40 gives 6, 60 gives 8.
+- Without a pull-up bar no exercise needs a bar; with one, bar exercises appear.
+- Start a workout: targets are pre-filled; ticking a set starts the rest timer
+  (+15 s and Skip work); timed sets have a countdown; Skip exercise works.
+- Finish: the summary shows % done, sets, sets on target and reps. Train shows Done.
+- Open the workout again: the saved values come back for editing.
+- Past days in this or earlier weeks can be logged; Skip day and Undo skip work.
+- Account: change days per week: a confirmation explains the plan changes from
+  tomorrow. Past days of this week stay as they were.
+- Exercise library: search, group filter, detail with easier and harder links.
+- Today shows the workout card or "Rest day"; the first finished workout unlocks
+  "First workout".

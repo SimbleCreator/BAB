@@ -128,3 +128,35 @@ Same line all day for a user; changes every day.
 - Streak milestones use the longest streak ever against the current step goal.
 - `unlocked_at` is set once and never cleared, even if the data is deleted later.
 - `seen_at` is set when the user has seen the celebration (`POST /milestones/seen`).
+
+## Training plan (`app/engines/training_engine.py`, `content/exercises.json`)
+
+| Rule | Value |
+| --- | --- |
+| Library | 71 bodyweight exercises (push, pull, legs, core, cardio), difficulty 1 to 5, reps or timed, easier/harder links, pull-up bar flag; 6 warm-up and 5 cool-down drills |
+| Split | 2-3 days: full body; 4 days: upper / lower / upper / lower; 5 days: push, pull, legs, push, pull; 6 days: push, pull, legs x 2 |
+| Training days | 2: Mon, Thu; 3: Mon, Wed, Fri; 4: Mon, Tue, Thu, Fri; 5: Mon, Tue, Wed, Fri, Sat; 6: Mon to Sat |
+| Session size | exercises = clamp(floor(minutes / 10 + 0.5) + 2, 4, 8): 20 min 4, 30 min 5, 40 min 6, 50 min 7, 60+ min 8 |
+| Slots | full body cycles push, pull, legs, core; upper: push, pull, push, pull, core; lower: legs, legs, core, legs, core; push/pull/legs days: main group twice, core, main group |
+| Difficulty | beginner 2, intermediate 3, advanced 4; build muscle +1 (max 5). Exercises are chosen from target-1 to target, nearest first |
+| Variety | no exercise repeats in a session; repeated session types in a week rotate through the choices |
+| No pull-up bar | exercises that need a bar are never chosen; pull slots use door, table and floor rows |
+| Reps | lose fat 3 x 12-15, rest 45 s; stay fit 3 x 10-12, rest 60 s; build muscle 4 x 6-10, rest 90 s. Beginners do one set fewer (min 2). Target starts at the bottom of the range |
+| Timed | beginner 20-40 s, intermediate 30-50 s, advanced 40-60 s; target starts at the bottom |
+| Fat-loss finisher | one cardio exercise, 3 rounds, rest 30 s (timed by level, or 8-15 reps) |
+| Warm-up / cool-down | 3 drills each, rotating per session |
+| Estimate | minutes = (sets x (work + rest) for every exercise + warm-up + cool-down) / 60; a rep counts as 3 s |
+| Weeks | a week starts Monday (profile timezone). Each week's plan is generated the first time it is needed; future weeks are not shown |
+| Plan changes | changing goal, level, minutes, days or pull-up bar (after confirming) keeps this week's sessions up to today and uses the new plan from tomorrow |
+
+## Workouts
+
+| Rule | Value |
+| --- | --- |
+| Logging | only on a planned day, today or earlier (including past weeks); one log per day, saving again replaces it |
+| Targets | taken from the plan, never from the client |
+| Status | done or skipped; a skipped day stores no sets |
+| Sets not sent | stored as not done |
+| Target met | actual reps >= target reps, or actual seconds >= target seconds |
+| Completion | sets done / sets planned (including the finisher), as a percentage |
+| Milestones | a "done" workout counts toward workout milestones; skipped days do not |

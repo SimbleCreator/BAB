@@ -66,11 +66,32 @@ export class AccountPage {
     });
   }
 
-  protected saveProfile(): void {
+  /** Set when a save would rebuild the training plan; the user must confirm first. */
+  protected readonly confirmPlanChange = signal(false);
+
+  private planFieldsChanged(): boolean {
+    const p = this.profile.value();
+    if (!p) return false;
+    const next = profileFromForm(this.form);
+    return (
+      p.goal !== next.goal ||
+      p.level !== next.level ||
+      p.minutes_per_day !== next.minutes_per_day ||
+      p.days_per_week !== next.days_per_week ||
+      p.has_pullup_bar !== next.has_pullup_bar
+    );
+  }
+
+  protected saveProfile(confirmed = false): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+    if (!confirmed && this.planFieldsChanged()) {
+      this.confirmPlanChange.set(true);
+      return;
+    }
+    this.confirmPlanChange.set(false);
     this.saving.set(true);
     this.profileError.set(null);
     this.profileApi.save(profileFromForm(this.form)).subscribe({

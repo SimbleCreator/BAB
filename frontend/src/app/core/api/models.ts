@@ -154,6 +154,8 @@ export interface TodayOut {
   checkin_due: boolean;
   /** Unlocked but not seen yet. */
   new_milestones: MilestoneBrief[];
+  /** Null on a rest day. */
+  workout: WorkoutBrief | null;
 }
 
 // runs router ---------------------------------------------------------------
@@ -253,4 +255,119 @@ export interface MilestoneOut {
 export interface MilestoneBrief {
   code: string;
   title: string;
+}
+
+// training router ------------------------------------------------------------
+
+export type Group = 'push' | 'pull' | 'legs' | 'core' | 'cardio';
+export type ExerciseType = 'reps' | 'timed';
+
+export interface ExerciseOut {
+  code: string;
+  name: string;
+  group: Group;
+  difficulty: number;
+  type: ExerciseType;
+  needs_bar: boolean;
+  easier: string | null;
+  harder: string | null;
+  instructions: string;
+}
+
+export interface DrillOut {
+  code: string;
+  name: string;
+  seconds: number;
+  instructions: string;
+}
+
+export interface PrescriptionOut {
+  code: string;
+  name: string;
+  group: Group;
+  type: ExerciseType;
+  sets: number;
+  rest_s: number;
+  reps_min: number | null;
+  reps_max: number | null;
+  target_reps: number | null;
+  seconds_min: number | null;
+  seconds_max: number | null;
+  target_seconds: number | null;
+}
+
+export interface PlannedSessionOut {
+  day: string;
+  kind: string;
+  title: string;
+  focus: Group[];
+  warmup: DrillOut[];
+  exercises: PrescriptionOut[];
+  finisher: PrescriptionOut | null;
+  cooldown: DrillOut[];
+  est_minutes: number;
+}
+
+export type DayStatus = 'rest' | 'planned' | 'not_logged' | 'done' | 'skipped';
+
+export interface PlanDayOut {
+  day: string;
+  status: DayStatus;
+  session: PlannedSessionOut | null;
+}
+
+export interface WeekOut {
+  week_start: string;
+  today: string;
+  split: string;
+  /** Seven days, Monday first. */
+  days: PlanDayOut[];
+}
+
+export interface SetIn {
+  exercise_code: string;
+  set_no: number;
+  actual_reps: number | null;
+  actual_seconds: number | null;
+}
+
+export interface WorkoutIn {
+  status: 'done' | 'skipped';
+  sets: SetIn[];
+}
+
+export interface SetOut {
+  exercise_code: string;
+  set_no: number;
+  target_reps: number | null;
+  actual_reps: number | null;
+  target_seconds: number | null;
+  actual_seconds: number | null;
+  target_met: boolean;
+}
+
+export interface WorkoutSummaryOut {
+  sets_planned: number;
+  sets_done: number;
+  targets_met: number;
+  total_reps: number;
+  total_seconds: number;
+  exercises_skipped: number;
+  completion_pct: number;
+}
+
+export interface WorkoutOut {
+  day: string;
+  status: 'done' | 'skipped';
+  finished_at: string | null;
+  sets: SetOut[];
+  summary: WorkoutSummaryOut;
+}
+
+export interface WorkoutBrief {
+  day: string;
+  title: string;
+  exercise_count: number;
+  est_minutes: number;
+  status: DayStatus;
 }

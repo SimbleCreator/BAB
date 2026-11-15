@@ -59,7 +59,14 @@ endpoints.
 | GET | `/milestones` | bearer | Every milestone with progress, `unlocked_at` and `seen` |
 | POST | `/milestones/seen` | bearer | Mark unlocked milestones as seen after celebrating |
 
-`/today` also returns `checkin_due` and `new_milestones` (unlocked, not yet seen).
+| GET | `/exercises` | bearer | Exercise library |
+| GET | `/exercises/{code}` | bearer | One exercise with easier and harder codes |
+| GET | `/training/week?day=` | bearer | The plan for the week containing `day` (default today) with each day's status |
+| GET | `/training/workouts/{day}` | bearer | The logged workout with sets and summary; 404 if none |
+| PUT | `/training/workouts/{day}` | bearer | Save `{status, sets:[{exercise_code, set_no, actual_reps, actual_seconds}]}` for a planned day |
+| DELETE | `/training/workouts/{day}` | bearer | Clear a day's log |
+
+`/today` also returns `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
 
 Activity responses return the value to show. When `distance_estimated` or
 `active_kcal_estimated` is true, that field was blank and the value is an estimate;

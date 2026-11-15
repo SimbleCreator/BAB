@@ -1,0 +1,856 @@
+{
+  "_note": "Original exercise descriptions written for B.A.B. Bodyweight only. Versioned with the code.",
+  "exercises": [
+    {
+      "code": "wall_pushup",
+      "name": "Wall push-up",
+      "group": "push",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "incline_pushup",
+      "instructions": "Stand an arm's length from a wall, hands at chest height. Bend your elbows to bring your chest toward the wall, then press back."
+    },
+    {
+      "code": "incline_pushup",
+      "name": "Incline push-up",
+      "group": "push",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "wall_pushup",
+      "harder": "pushup",
+      "instructions": "Hands on a sturdy table or bench, body in a straight line. Lower your chest to the edge and push away."
+    },
+    {
+      "code": "knee_pushup",
+      "name": "Knee push-up",
+      "group": "push",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "wall_pushup",
+      "harder": "pushup",
+      "instructions": "From your knees with hands under your shoulders, keep hips in line with your back and lower your chest to the floor."
+    },
+    {
+      "code": "chair_dip",
+      "name": "Chair dip",
+      "group": "push",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "raised_dip",
+      "instructions": "Hands on the front edge of a stable chair, feet on the floor with knees bent. Lower until elbows reach about 90 degrees, then press up."
+    },
+    {
+      "code": "pushup",
+      "name": "Push-up",
+      "group": "push",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "incline_pushup",
+      "harder": "decline_pushup",
+      "instructions": "Hands slightly wider than shoulders, body straight from head to heels. Lower until your chest is just above the floor, then press up."
+    },
+    {
+      "code": "wide_pushup",
+      "name": "Wide push-up",
+      "group": "push",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "knee_pushup",
+      "harder": "archer_pushup",
+      "instructions": "Place your hands wider than a normal push-up and keep elbows soft. Lower under control and press back up."
+    },
+    {
+      "code": "pike_pushup",
+      "name": "Pike push-up",
+      "group": "push",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "incline_pushup",
+      "harder": "elevated_pike_pushup",
+      "instructions": "Hips high so your body makes an upside-down V. Bend your elbows to bring the top of your head toward the floor, then push back."
+    },
+    {
+      "code": "raised_dip",
+      "name": "Feet-raised chair dip",
+      "group": "push",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "chair_dip",
+      "harder": "dive_pushup",
+      "instructions": "Like a chair dip but with legs straight and heels on a second chair. Lower slowly and press up without shrugging."
+    },
+    {
+      "code": "diamond_pushup",
+      "name": "Close-hand push-up",
+      "group": "push",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "pushup",
+      "harder": "archer_pushup",
+      "instructions": "Hands close together under your chest so thumbs and fingers nearly touch. Keep elbows tucked as you lower and press."
+    },
+    {
+      "code": "decline_pushup",
+      "name": "Decline push-up",
+      "group": "push",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "pushup",
+      "harder": "pseudo_planche_pushup",
+      "instructions": "Feet on a step or bench, hands on the floor. Keep your body rigid and lower your chest toward the floor."
+    },
+    {
+      "code": "dive_pushup",
+      "name": "Dive push-up",
+      "group": "push",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "pike_pushup",
+      "harder": "pseudo_planche_pushup",
+      "instructions": "Start in a high V. Swoop your chest forward close to the floor and up into a gentle back arch, then reverse the path."
+    },
+    {
+      "code": "elevated_pike_pushup",
+      "name": "Feet-raised pike push-up",
+      "group": "push",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "pike_pushup",
+      "harder": "wall_hspu_negative",
+      "instructions": "Feet on a bench with hips stacked high over your hands. Lower your head toward the floor and press back up."
+    },
+    {
+      "code": "archer_pushup",
+      "name": "Archer push-up",
+      "group": "push",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "wide_pushup",
+      "harder": null,
+      "instructions": "Hands very wide. Lower toward one hand while the other arm stays nearly straight, then switch sides each rep."
+    },
+    {
+      "code": "pseudo_planche_pushup",
+      "name": "Lean-forward push-up",
+      "group": "push",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "decline_pushup",
+      "harder": null,
+      "instructions": "Turn your fingers slightly out and lean your shoulders well past your hands. Keep that lean as you lower and press."
+    },
+    {
+      "code": "wall_hspu_negative",
+      "name": "Wall handstand lower",
+      "group": "push",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "elevated_pike_pushup",
+      "harder": null,
+      "instructions": "Kick up to a handstand facing away from a wall. Lower your head toward the floor as slowly as you can, then come down safely."
+    },
+    {
+      "code": "prone_ytw",
+      "name": "Lying Y-T-W raise",
+      "group": "pull",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "reverse_snow_angel",
+      "instructions": "Lie face down, arms overhead. Lift your arms into a Y, then a T, then a W, squeezing your shoulder blades each time. That is one rep."
+    },
+    {
+      "code": "superman_pull",
+      "name": "Lying pull-down",
+      "group": "pull",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "reverse_snow_angel",
+      "instructions": "Lie face down with arms overhead and chest slightly lifted. Pull your elbows down to your ribs as if pulling a bar, then reach back out."
+    },
+    {
+      "code": "reverse_snow_angel",
+      "name": "Reverse snow angel",
+      "group": "pull",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "prone_ytw",
+      "harder": "table_row",
+      "instructions": "Face down with chest lifted a little. Sweep straight arms from your hips to overhead and back without touching the floor."
+    },
+    {
+      "code": "towel_row",
+      "name": "Door towel row",
+      "group": "pull",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "superman_pull",
+      "harder": "single_arm_towel_row",
+      "instructions": "Loop a towel around both handles of a closed, locked door. Lean back holding the ends and row your chest toward the door."
+    },
+    {
+      "code": "table_row",
+      "name": "Table row",
+      "group": "pull",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "reverse_snow_angel",
+      "harder": "feet_elevated_table_row",
+      "instructions": "Lie under a sturdy table, grip the edge, body straight. Pull your chest up to the edge and lower slowly."
+    },
+    {
+      "code": "single_arm_towel_row",
+      "name": "One-arm door towel row",
+      "group": "pull",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "towel_row",
+      "harder": "feet_elevated_table_row",
+      "instructions": "Same as the door towel row, holding the towel with one hand. Keep hips square and switch arms each set."
+    },
+    {
+      "code": "feet_elevated_table_row",
+      "name": "Feet-raised table row",
+      "group": "pull",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "table_row",
+      "harder": "archer_table_row",
+      "instructions": "Table row with your heels on a chair so your body is level. Pull your chest to the table edge."
+    },
+    {
+      "code": "archer_table_row",
+      "name": "Archer table row",
+      "group": "pull",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "feet_elevated_table_row",
+      "harder": null,
+      "instructions": "Grip the table edge with hands wide. Row toward one hand while the other arm stays straight, alternating sides."
+    },
+    {
+      "code": "dead_hang",
+      "name": "Dead hang",
+      "group": "pull",
+      "difficulty": 1,
+      "type": "timed",
+      "needs_bar": true,
+      "easier": null,
+      "harder": "scapular_pullup",
+      "instructions": "Hang from the bar with straight arms and a firm grip. Breathe steadily and keep your shoulders active."
+    },
+    {
+      "code": "scapular_pullup",
+      "name": "Shoulder-blade pull-up",
+      "group": "pull",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "dead_hang",
+      "harder": "negative_pullup",
+      "instructions": "From a hang, pull your shoulder blades down and together so your body rises a little, without bending your elbows."
+    },
+    {
+      "code": "negative_pullup",
+      "name": "Slow pull-up lower",
+      "group": "pull",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "scapular_pullup",
+      "harder": "chin_up",
+      "instructions": "Jump or step up so your chin is over the bar. Lower yourself as slowly as you can to a full hang."
+    },
+    {
+      "code": "chin_up",
+      "name": "Chin-up",
+      "group": "pull",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "negative_pullup",
+      "harder": "pull_up",
+      "instructions": "Palms facing you, shoulder-width grip. Pull until your chin passes the bar, then lower under control."
+    },
+    {
+      "code": "pull_up",
+      "name": "Pull-up",
+      "group": "pull",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "chin_up",
+      "harder": "archer_pullup",
+      "instructions": "Palms facing away, slightly wider than shoulders. Pull your chest toward the bar and lower all the way down."
+    },
+    {
+      "code": "archer_pullup",
+      "name": "Archer pull-up",
+      "group": "pull",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "pull_up",
+      "harder": null,
+      "instructions": "Wide grip. Pull toward one hand while the other arm straightens along the bar, alternating sides."
+    },
+    {
+      "code": "chair_squat",
+      "name": "Chair sit-to-stand",
+      "group": "legs",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "bodyweight_squat",
+      "instructions": "Sit on the front of a chair, feet flat. Stand up without using your hands, then sit back down slowly."
+    },
+    {
+      "code": "glute_bridge",
+      "name": "Glute bridge",
+      "group": "legs",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "single_leg_glute_bridge",
+      "instructions": "Lie on your back with knees bent. Drive through your heels to lift your hips until your body is straight from knees to shoulders."
+    },
+    {
+      "code": "calf_raise",
+      "name": "Calf raise",
+      "group": "legs",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "single_leg_calf_raise",
+      "instructions": "Stand tall near a wall for balance. Rise onto the balls of your feet, pause, and lower slowly."
+    },
+    {
+      "code": "bodyweight_squat",
+      "name": "Bodyweight squat",
+      "group": "legs",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "chair_squat",
+      "harder": "split_squat",
+      "instructions": "Feet shoulder-width apart. Sit your hips back and down until thighs are about level with the floor, then stand."
+    },
+    {
+      "code": "reverse_lunge",
+      "name": "Reverse lunge",
+      "group": "legs",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "bodyweight_squat",
+      "harder": "walking_lunge",
+      "instructions": "Step one foot back and lower until both knees bend to about 90 degrees. Push through the front foot to return. Alternate legs."
+    },
+    {
+      "code": "wall_sit",
+      "name": "Wall sit",
+      "group": "legs",
+      "difficulty": 2,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "chair_squat",
+      "harder": "bulgarian_split_squat",
+      "instructions": "Back flat against a wall, slide down until knees are bent to about 90 degrees. Hold with weight in your heels."
+    },
+    {
+      "code": "step_up",
+      "name": "Step-up",
+      "group": "legs",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "chair_squat",
+      "harder": "bulgarian_split_squat",
+      "instructions": "Step onto a sturdy step or low bench with one foot and stand fully. Step down with control. Alternate legs."
+    },
+    {
+      "code": "single_leg_calf_raise",
+      "name": "Single-leg calf raise",
+      "group": "legs",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "calf_raise",
+      "harder": null,
+      "instructions": "Balance on one foot near a wall. Rise as high as you can, then lower slowly. Switch legs each set."
+    },
+    {
+      "code": "split_squat",
+      "name": "Split squat",
+      "group": "legs",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "reverse_lunge",
+      "harder": "bulgarian_split_squat",
+      "instructions": "One foot forward, one back, in a long stance. Lower the back knee toward the floor and rise, keeping your torso upright."
+    },
+    {
+      "code": "single_leg_glute_bridge",
+      "name": "Single-leg glute bridge",
+      "group": "legs",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "glute_bridge",
+      "harder": null,
+      "instructions": "Glute bridge with one foot on the floor and the other leg lifted. Keep your hips level as you lift and lower."
+    },
+    {
+      "code": "walking_lunge",
+      "name": "Walking lunge",
+      "group": "legs",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "reverse_lunge",
+      "harder": "jump_squat",
+      "instructions": "Lunge forward, then bring the back foot through into the next lunge. Keep each step controlled."
+    },
+    {
+      "code": "bulgarian_split_squat",
+      "name": "Rear-foot-raised split squat",
+      "group": "legs",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "split_squat",
+      "harder": "shrimp_squat",
+      "instructions": "Back foot resting on a chair behind you. Lower straight down until the front thigh is about level, then drive up."
+    },
+    {
+      "code": "jump_squat",
+      "name": "Jump squat",
+      "group": "legs",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "bodyweight_squat",
+      "harder": "shrimp_squat",
+      "instructions": "Squat down, then jump straight up. Land softly with bent knees and go straight into the next rep."
+    },
+    {
+      "code": "assisted_pistol",
+      "name": "Assisted one-leg squat",
+      "group": "legs",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "bulgarian_split_squat",
+      "harder": "pistol_squat",
+      "instructions": "Hold a door frame. Squat down on one leg with the other leg held forward, using your hands only as needed."
+    },
+    {
+      "code": "shrimp_squat",
+      "name": "Shrimp squat",
+      "group": "legs",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "bulgarian_split_squat",
+      "harder": null,
+      "instructions": "Stand on one leg holding the other foot behind you. Lower until the back knee touches the floor, then stand."
+    },
+    {
+      "code": "pistol_squat",
+      "name": "One-leg squat",
+      "group": "legs",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "assisted_pistol",
+      "harder": null,
+      "instructions": "Balance on one leg with the other straight in front. Squat all the way down and stand back up without help."
+    },
+    {
+      "code": "knee_plank",
+      "name": "Knee plank",
+      "group": "core",
+      "difficulty": 1,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "forearm_plank",
+      "instructions": "On forearms and knees, keep a straight line from head to knees. Squeeze your stomach and breathe."
+    },
+    {
+      "code": "dead_bug",
+      "name": "Dead bug",
+      "group": "core",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "hollow_hold",
+      "instructions": "On your back, arms up and knees over hips. Lower the opposite arm and leg toward the floor while your lower back stays down. Alternate."
+    },
+    {
+      "code": "bird_dog",
+      "name": "Bird dog",
+      "group": "core",
+      "difficulty": 1,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "plank_shoulder_tap",
+      "instructions": "On hands and knees, reach one arm forward and the opposite leg back. Hold briefly and switch sides."
+    },
+    {
+      "code": "forearm_plank",
+      "name": "Forearm plank",
+      "group": "core",
+      "difficulty": 2,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "knee_plank",
+      "harder": "side_plank",
+      "instructions": "On forearms and toes, body straight. Brace your stomach and avoid letting your hips sag or pike."
+    },
+    {
+      "code": "reverse_crunch",
+      "name": "Reverse crunch",
+      "group": "core",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "dead_bug",
+      "harder": "lying_leg_raise",
+      "instructions": "On your back with knees bent up. Curl your hips off the floor toward your chest, then lower slowly."
+    },
+    {
+      "code": "bicycle_crunch",
+      "name": "Bicycle crunch",
+      "group": "core",
+      "difficulty": 2,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "dead_bug",
+      "harder": "v_up",
+      "instructions": "On your back, hands lightly by your head. Bring one elbow toward the opposite knee while the other leg extends. Alternate."
+    },
+    {
+      "code": "side_plank",
+      "name": "Side plank",
+      "group": "core",
+      "difficulty": 3,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "forearm_plank",
+      "harder": null,
+      "instructions": "On one forearm with feet stacked, lift your hips into a straight line. Hold, then switch sides on the next set."
+    },
+    {
+      "code": "hollow_hold",
+      "name": "Hollow hold",
+      "group": "core",
+      "difficulty": 3,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "dead_bug",
+      "harder": "hollow_rock",
+      "instructions": "On your back, press your lower back down and lift shoulders and legs a little off the floor. Hold the shape."
+    },
+    {
+      "code": "plank_shoulder_tap",
+      "name": "Plank shoulder tap",
+      "group": "core",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "bird_dog",
+      "harder": null,
+      "instructions": "In a high plank with feet apart, tap one shoulder with the opposite hand without rocking your hips. Alternate."
+    },
+    {
+      "code": "lying_leg_raise",
+      "name": "Lying leg raise",
+      "group": "core",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "reverse_crunch",
+      "harder": "v_up",
+      "instructions": "On your back with legs straight. Raise your legs to vertical and lower them slowly, keeping your lower back down."
+    },
+    {
+      "code": "hanging_knee_raise",
+      "name": "Hanging knee raise",
+      "group": "core",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "reverse_crunch",
+      "harder": "hanging_leg_raise",
+      "instructions": "Hang from the bar. Lift your knees toward your chest without swinging, then lower slowly."
+    },
+    {
+      "code": "v_up",
+      "name": "V-up",
+      "group": "core",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "lying_leg_raise",
+      "harder": null,
+      "instructions": "From lying flat, lift straight legs and arms together to meet above your hips, then lower with control."
+    },
+    {
+      "code": "hollow_rock",
+      "name": "Hollow rock",
+      "group": "core",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "hollow_hold",
+      "harder": null,
+      "instructions": "Hold the hollow position and rock gently from shoulders to hips without losing the shape."
+    },
+    {
+      "code": "l_sit",
+      "name": "L-sit hold",
+      "group": "core",
+      "difficulty": 5,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "hollow_hold",
+      "harder": null,
+      "instructions": "Hands on two sturdy chairs or the floor. Press down to lift your hips and hold your legs straight out in front."
+    },
+    {
+      "code": "hanging_leg_raise",
+      "name": "Hanging leg raise",
+      "group": "core",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": true,
+      "easier": "hanging_knee_raise",
+      "harder": null,
+      "instructions": "Hang from the bar and raise straight legs until they are level or higher. Lower slowly without swinging."
+    },
+    {
+      "code": "marching_in_place",
+      "name": "Marching in place",
+      "group": "cardio",
+      "difficulty": 1,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "high_knees",
+      "instructions": "March on the spot, lifting knees and swinging your arms. Keep a steady, brisk rhythm."
+    },
+    {
+      "code": "step_jack",
+      "name": "Step jack",
+      "group": "cardio",
+      "difficulty": 1,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": null,
+      "harder": "jumping_jack",
+      "instructions": "Step one foot out to the side as your arms rise overhead, then bring it back. Alternate sides without jumping."
+    },
+    {
+      "code": "shadow_boxing",
+      "name": "Shadow boxing",
+      "group": "cardio",
+      "difficulty": 2,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "marching_in_place",
+      "harder": "fast_feet",
+      "instructions": "Light on your feet, throw quick straight punches and hooks into the air. Keep your guard up between punches."
+    },
+    {
+      "code": "jumping_jack",
+      "name": "Jumping jack",
+      "group": "cardio",
+      "difficulty": 2,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "step_jack",
+      "harder": "skater_hop",
+      "instructions": "Jump your feet apart while raising your arms overhead, then jump back together. Land softly."
+    },
+    {
+      "code": "high_knees",
+      "name": "High knees",
+      "group": "cardio",
+      "difficulty": 3,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "marching_in_place",
+      "harder": "fast_feet",
+      "instructions": "Run on the spot, driving your knees to hip height and pumping your arms."
+    },
+    {
+      "code": "mountain_climber",
+      "name": "Mountain climber",
+      "group": "cardio",
+      "difficulty": 3,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "marching_in_place",
+      "harder": "burpee",
+      "instructions": "From a high plank, drive your knees toward your chest one after the other at a quick pace."
+    },
+    {
+      "code": "skater_hop",
+      "name": "Skater hop",
+      "group": "cardio",
+      "difficulty": 3,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "jumping_jack",
+      "harder": "tuck_jump",
+      "instructions": "Hop sideways from one foot to the other, landing softly and swinging your arms across."
+    },
+    {
+      "code": "squat_thrust",
+      "name": "Squat thrust",
+      "group": "cardio",
+      "difficulty": 3,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "mountain_climber",
+      "harder": "burpee",
+      "instructions": "Squat, place hands on the floor, step or jump feet back to a plank, then return and stand."
+    },
+    {
+      "code": "fast_feet",
+      "name": "Fast feet",
+      "group": "cardio",
+      "difficulty": 4,
+      "type": "timed",
+      "needs_bar": false,
+      "easier": "high_knees",
+      "harder": null,
+      "instructions": "In a slight squat, patter your feet as quickly as you can on the balls of your feet."
+    },
+    {
+      "code": "burpee",
+      "name": "Burpee",
+      "group": "cardio",
+      "difficulty": 4,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "squat_thrust",
+      "harder": "tuck_jump",
+      "instructions": "Squat, jump your feet back to a plank, do a push-up, jump your feet in, then jump up with arms overhead."
+    },
+    {
+      "code": "tuck_jump",
+      "name": "Tuck jump",
+      "group": "cardio",
+      "difficulty": 5,
+      "type": "reps",
+      "needs_bar": false,
+      "easier": "jump_squat",
+      "harder": null,
+      "instructions": "Jump up and pull your knees toward your chest. Land softly and reset before the next jump."
+    }
+  ],
+  "warmup": [
+    {
+      "code": "arm_circles",
+      "name": "Arm circles",
+      "seconds": 40,
+      "instructions": "Arms out to the sides. Make small circles that grow larger, then reverse."
+    },
+    {
+      "code": "hip_circles",
+      "name": "Hip circles",
+      "seconds": 40,
+      "instructions": "Hands on hips, feet apart. Draw big slow circles with your hips in both directions."
+    },
+    {
+      "code": "leg_swings",
+      "name": "Leg swings",
+      "seconds": 40,
+      "instructions": "Hold a wall. Swing one leg forward and back, then side to side. Switch legs halfway."
+    },
+    {
+      "code": "march_warmup",
+      "name": "Brisk march",
+      "seconds": 60,
+      "instructions": "March on the spot or around the room, swinging your arms."
+    },
+    {
+      "code": "inchworm",
+      "name": "Inchworm walk-out",
+      "seconds": 45,
+      "instructions": "From standing, walk your hands out to a plank and back, then stand up tall."
+    },
+    {
+      "code": "cat_cow",
+      "name": "Cat and cow",
+      "seconds": 40,
+      "instructions": "On hands and knees, round your back up, then let it dip while lifting your chest."
+    }
+  ],
+  "cooldown": [
+    {
+      "code": "child_pose",
+      "name": "Child's pose",
+      "seconds": 45,
+      "instructions": "Knees wide, sit back toward your heels and reach your arms forward. Breathe slowly."
+    },
+    {
+      "code": "hamstring_stretch",
+      "name": "Hamstring stretch",
+      "seconds": 45,
+      "instructions": "Sit with one leg straight. Hinge forward from the hips toward that foot. Switch halfway."
+    },
+    {
+      "code": "quad_stretch",
+      "name": "Standing quad stretch",
+      "seconds": 40,
+      "instructions": "Hold a wall and pull one heel toward your seat. Keep knees together. Switch halfway."
+    },
+    {
+      "code": "doorway_chest_stretch",
+      "name": "Doorway chest stretch",
+      "seconds": 40,
+      "instructions": "Forearms on a door frame, step gently through until you feel a stretch across your chest."
+    },
+    {
+      "code": "calm_breathing",
+      "name": "Slow breathing",
+      "seconds": 60,
+      "instructions": "Lie or sit comfortably. Breathe in for four counts and out for six."
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+<section class="bab-page">
+  <div class="head">
+    <h1 class="bab-page-title">Train</h1>
+    <a mat-button routerLink="/train/exercises">
+      <mat-icon>menu_book</mat-icon>
+      Exercises
+    </a>
+  </div>
+
+  @if (week.isLoading() && !week.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (week.error()) {
+    <p class="bab-form-error">Could not load your plan.</p>
+    <button mat-button type="button" (click)="week.reload()">Try again</button>
+  } @else if (week.value(); as w) {
+    <div class="week-nav">
+      <button mat-icon-button type="button" (click)="shiftWeek(-1)" aria-label="Previous week">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="week-title">
+        <div>{{ w.split }}</div>
+        <div class="bab-muted small">
+          {{ isCurrentWeek() ? 'This week' : 'Week of ' + label(w.week_start) }}
+        </div>
+      </div>
+      @if (isCurrentWeek()) {
+        <span class="spacer"></span>
+      } @else {
+        <button
+          mat-icon-button
+          type="button"
+          (click)="backToThisWeek()"
+          aria-label="Back to this week"
+        >
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      }
+    </div>
+
+    <div class="strip" role="tablist" aria-label="Days of the week">
+      @for (d of w.days; track d.day) {
+        <button
+          type="button"
+          role="tab"
+          class="chip"
+          [class.selected]="d.day === day()?.day"
+          [class.today]="d.day === w.today"
+          [attr.aria-selected]="d.day === day()?.day"
+          [attr.data-status]="d.status"
+          (click)="selected.set(d.day)"
+        >
+          <span class="wd">{{ weekdayShort(d.day) }}</span>
+          <span class="dn">{{ dayNum(d.day) }}</span>
+          <span class="dot" [attr.aria-label]="statusLabel[d.status]"></span>
+        </button>
+      }
+    </div>
+
+    @if (day(); as d) {
+      <div class="day-head">
+        <h2>{{ label(d.day) }}</h2>
+        <span class="status" [attr.data-status]="d.status">{{ statusLabel[d.status] }}</span>
+      </div>
+
+      @if (!d.session) {
+        <mat-card appearance="outlined">
+          <mat-card-content class="rest">
+            <mat-icon>self_improvement</mat-icon>
+            <p>Rest day. Muscles grow while you recover. An easy walk still counts.</p>
+          </mat-card-content>
+        </mat-card>
+      } @else {
+        @let s = d.session;
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ s.title }}</mat-card-title>
+            <mat-card-subtitle>
+              About {{ s.est_minutes }} min &middot; {{ s.exercises.length }} exercises
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            @if (d.status === 'done' && log.value(); as l) {
+              <div class="summary">
+                <mat-icon>check_circle</mat-icon>
+                <span>
+                  {{ l.summary.completion_pct }}% done &middot; {{ l.summary.sets_done }} of
+                  {{ l.summary.sets_planned }} sets &middot; {{ l.summary.targets_met }} on target
+                </span>
+              </div>
+            }
+
+            <h3>Warm-up</h3>
+            <ul class="drills">
+              @for (x of s.warmup; track x.code) {
+                <li>
+                  {{ x.name }} <span class="bab-muted">{{ x.seconds }} s</span>
+                </li>
+              }
+            </ul>
+
+            <h3>Workout</h3>
+            <ol class="exercises">
+              @for (p of s.exercises; track p.code) {
+                <li>
+                  <a [routerLink]="['/train/exercises', p.code]">{{ p.name }}</a>
+                  <span class="target">{{ targetLine(p) }}</span>
+                  <span class="bab-muted group"
+                    >{{ groupLabel[p.group] }} &middot; rest {{ p.rest_s }} s</span
+                  >
+                </li>
+              }
+            </ol>
+            @if (s.finisher; as f) {
+              <h3>Finisher</h3>
+              <ol class="exercises">
+                <li>
+                  <a [routerLink]="['/train/exercises', f.code]">{{ f.name }}</a>
+                  <span class="target">{{ targetLine(f) }}</span>
+                  <span class="bab-muted group">Cardio &middot; rest {{ f.rest_s }} s</span>
+                </li>
+              </ol>
+            }
+
+            <h3>Cool-down</h3>
+            <ul class="drills">
+              @for (x of s.cooldown; track x.code) {
+                <li>
+                  {{ x.name }} <span class="bab-muted">{{ x.seconds }} s</span>
+                </li>
+              }
+            </ul>
+          </mat-card-content>
+          <mat-card-actions class="actions">
+            @if (canLog(d)) {
+              @if (d.status === 'done') {
+                <a mat-stroked-button [routerLink]="['/train/workout', d.day]">
+                  <mat-icon>edit</mat-icon>
+                  Edit log
+                </a>
+                <button mat-button type="button" (click)="clearLog(d)" [disabled]="busy()">
+                  Clear log
+                </button>
+              } @else if (d.status === 'skipped') {
+                <a mat-flat-button [routerLink]="['/train/workout', d.day]">Log it after all</a>
+                <button mat-button type="button" (click)="clearLog(d)" [disabled]="busy()">
+                  Undo skip
+                </button>
+              } @else {
+                <a mat-flat-button class="start" [routerLink]="['/train/workout', d.day]">
+                  <mat-icon>play_arrow</mat-icon>
+                  {{ d.status === 'planned' ? 'Start workout' : 'Log this workout' }}
+                </a>
+                <button mat-button type="button" (click)="skipDay(d)" [disabled]="busy()">
+                  Skip day
+                </button>
+              }
+            } @else {
+              <p class="bab-muted">Ready on {{ label(d.day) }}.</p>
+            }
+          </mat-card-actions>
+        </mat-card>
+      }
+    }
+    <p class="bab-disclaimer">
+      Plans are general guidance, not medical advice. Stop if anything hurts and pick an easier
+      variation.
+    </p>
+  }
+</section>

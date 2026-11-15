@@ -4,6 +4,7 @@ from pydantic import BaseModel, Field
 
 from app.schemas.activity import ActivityOut
 from app.schemas.milestone import MilestoneBrief
+from app.schemas.training import WorkoutBrief
 
 
 class TodayOut(BaseModel):
@@ -17,3 +18,4 @@ class TodayOut(BaseModel):
     activity: ActivityOut | None = Field(description="Null when nothing is logged yet today")
     checkin_due: bool = Field(description="No check-in in the last 7 days")
     new_milestones: list[MilestoneBrief] = Field(description="Unlocked but not seen yet")
+    workout: WorkoutBrief | None = Field(description="Today's planned workout; null on a rest day")
