@@ -66,7 +66,18 @@ endpoints.
 | PUT | `/training/workouts/{day}` | bearer | Save `{status, sets:[{exercise_code, set_no, actual_reps, actual_seconds}]}` for a planned day |
 | DELETE | `/training/workouts/{day}` | bearer | Clear a day's log |
 
-`/today` also returns `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
+| GET | `/nutrition/targets` | bearer | Current target, how it is calculated, and target history |
+| GET | `/nutrition/days/{day}` | bearer | Target, eaten totals, remaining and the four meals with items |
+| POST | `/nutrition/days/{day}/items` | bearer | Log `{meal_type, food_code or custom_food_id, servings}`; returns the day |
+| PATCH | `/nutrition/items/{id}` | bearer | Change servings; returns the day |
+| DELETE | `/nutrition/items/{id}` | bearer | Remove an item; returns the day |
+| GET | `/nutrition/days/{day}/suggestions` | bearer | 3 options per meal within each meal's calorie budget |
+| GET | `/nutrition/summary?days=7` | bearer | Calories eaten and target per day |
+| GET | `/foods?q=&meal_type=` | bearer | Built-in foods for the user's diet and their custom foods, recent first |
+| GET/POST | `/foods/custom` | bearer | List or create custom foods |
+| PUT/DELETE | `/foods/custom/{id}` | bearer | Edit or delete a custom food |
+
+`/today` also returns `nutrition` (target, eaten, remaining, protein), `workout` (today's planned session, or null on a rest day) `checkin_due` and `new_milestones` (unlocked, not yet seen).
 
 Activity responses return the value to show. When `distance_estimated` or
 `active_kcal_estimated` is true, that field was blank and the value is an estimate;

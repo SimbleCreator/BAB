@@ -17,6 +17,7 @@ from app.routers import (
     checkins,
     health,
     milestones,
+    nutrition,
     profile,
     runs,
     today,
@@ -66,6 +67,7 @@ def create_app() -> FastAPI:
         checkins.router,
         milestones.router,
         training.router,
+        nutrition.router,
     ):
         app.include_router(r, prefix=settings.api_prefix)
     return app

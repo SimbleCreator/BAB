@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { TodayApi } from '../../core/api/today.api';
 import { EstimateBadgeComponent } from '../../shared/components/estimate-badge.component';
 import { IntPipe, KmPipe } from '../../shared/format/format.pipes';
+import { mealForNow } from '../nutrition/meals';
 
 @Component({
   selector: 'app-today-page',
@@ -43,6 +44,12 @@ export class TodayPage {
     const t = this.today.value();
     return t ? Math.max(0, t.step_goal - (t.activity?.steps ?? 0)) : 0;
   });
+
+  protected readonly foodPercent = computed(() => {
+    const n = this.today.value()?.nutrition;
+    return n && n.target_kcal ? Math.min(100, Math.round((100 * n.eaten_kcal) / n.target_kcal)) : 0;
+  });
+  protected readonly mealNow = mealForNow;
 
   protected readonly milestoneTitles = computed(() =>
     (this.today.value()?.new_milestones ?? []).map((m) => m.title).join(', '),

@@ -11,6 +11,7 @@ from app.repositories import (
     activity_repo,
     checkin_repo,
     milestone_repo,
+    nutrition_repo,
     profile_repo,
     run_repo,
     training_repo,
@@ -35,6 +36,7 @@ async def gather_stats(session: AsyncSession, user_id: int) -> eng.ProgressStats
         longest_step_streak=streak,
         checkin_count=await checkin_repo.count(session, user_id),
         workout_count=await training_repo.count_done(session, user_id),
+        meal_days=await nutrition_repo.meal_days(session, user_id),
     )
 
 

@@ -1,0 +1,220 @@
+<section class="bab-page">
+  <div class="head">
+    <h1 class="bab-page-title">Eat</h1>
+    <a mat-button routerLink="/eat/foods">
+      <mat-icon>bookmarks</mat-icon>
+      My foods
+    </a>
+  </div>
+
+  @if (data.isLoading() && !data.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (data.error() || todayRes.error()) {
+    <p class="bab-form-error">Could not load this day.</p>
+    <button mat-button type="button" (click)="data.reload(); todayRes.reload()">Try again</button>
+  } @else if (data.value(); as d) {
+    <div class="day-nav">
+      <button mat-icon-button type="button" (click)="goDay(-1)" aria-label="Previous day">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="day-title">{{ title() }}</span>
+      <button
+        mat-icon-button
+        type="button"
+        (click)="goDay(1)"
+        [disabled]="isToday()"
+        aria-label="Next day"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="kcal-row">
+          <div>
+            <div class="bab-stat">{{ d.eaten.calories_kcal | int }}</div>
+            <div class="bab-muted">of {{ d.target.calories_kcal | int }} kcal <app-estimate /></div>
+          </div>
+          <div class="left" [class.over]="d.remaining_kcal < 0">
+            <div class="left-num">
+              {{ (d.remaining_kcal < 0 ? -d.remaining_kcal : d.remaining_kcal) | int }}
+            </div>
+            <div class="bab-muted">{{ d.remaining_kcal < 0 ? 'over' : 'left' }}</div>
+          </div>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="percent()" />
+        <div class="macros">
+          @for (m of macros(); track m.label) {
+            <div class="macro">
+              <div class="macro-head">
+                <span>{{ m.label }}</span>
+                <span class="bab-muted">{{ m.eaten }} / {{ m.target }} g</span>
+              </div>
+              <mat-progress-bar mode="determinate" [value]="m.pct" />
+            </div>
+          }
+        </div>
+        <button mat-button type="button" class="how-btn" (click)="showHow.set(!showHow())">
+          <mat-icon>{{ showHow() ? 'expand_less' : 'info' }}</mat-icon>
+          How your target is set
+        </button>
+        @if (showHow()) {
+          @if (targets.value(); as t) {
+            <div class="how">
+              <p>{{ t.current.reason }}</p>
+              <ul>
+                <li>Resting burn (BMR): {{ t.breakdown.bmr | int }} kcal</li>
+                <li>
+                  x {{ t.breakdown.activity_factor }} for your training days =
+                  {{ t.breakdown.maintenance | int }} kcal to stay the same
+                </li>
+                <li>
+                  Goal adjustment: {{ t.breakdown.goal_adjustment > 0 ? '+' : ''
+                  }}{{ t.breakdown.goal_adjustment }}
+                  kcal
+                </li>
+                @if (t.breakdown.floor_applied) {
+                  <li>Raised to the safe minimum of {{ t.breakdown.floor | int }} kcal</li>
+                }
+              </ul>
+              <p class="bab-muted">
+                Protein is set by your body weight, fat is a quarter of calories and carbs fill the
+                rest.
+              </p>
+            </div>
+          } @else {
+            <mat-progress-bar mode="indeterminate" />
+          }
+        }
+      </mat-card-content>
+    </mat-card>
+
+    @for (m of meals; track m.type) {
+      @let meal = mealOf(d, m.type);
+      <div class="meal">
+        <div class="meal-head">
+          <mat-icon>{{ m.icon }}</mat-icon>
+          <h2>{{ m.label }}</h2>
+          <span class="bab-muted">{{ meal.totals.calories_kcal | int }} kcal</span>
+        </div>
+        @for (item of meal.items; track item.id) {
+          <button
+            type="button"
+            class="item"
+            (click)="startEdit(item)"
+            [attr.aria-expanded]="editing() === item.id"
+          >
+            <span class="item-name">{{ item.name }}</span>
+            <span class="bab-muted item-sub">{{
+              servingsLabel(item.servings, item.serving_label)
+            }}</span>
+            <span class="item-kcal">{{ item.calories_kcal | int }}</span>
+          </button>
+          @if (editing() === item.id) {
+            <div class="edit">
+              <div class="stepper">
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="stepServings(-0.5)"
+                  aria-label="Fewer servings"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span>{{ editServings() }} x</span>
+                <button
+                  mat-icon-button
+                  type="button"
+                  (click)="stepServings(0.5)"
+                  aria-label="More servings"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <button mat-flat-button type="button" (click)="saveEdit(item)" [disabled]="busy()">
+                Save
+              </button>
+              <button
+                mat-button
+                type="button"
+                class="danger"
+                (click)="remove(item)"
+                [disabled]="busy()"
+              >
+                Remove
+              </button>
+            </div>
+          }
+        }
+        <div class="meal-actions">
+          <a
+            mat-stroked-button
+            [routerLink]="['/eat/add']"
+            [queryParams]="{ day: d.day, meal: m.type }"
+          >
+            <mat-icon>add</mat-icon>
+            Add food
+          </a>
+          <button
+            mat-button
+            type="button"
+            (click)="openIdeas.set(openIdeas() === m.type ? null : m.type)"
+          >
+            <mat-icon>lightbulb</mat-icon>
+            Ideas
+          </button>
+        </div>
+        @if (openIdeas() === m.type) {
+          @let mi = ideasFor(m.type);
+          <div class="ideas">
+            @if (!mi) {
+              <mat-progress-bar mode="indeterminate" />
+            } @else if (mi.options.length === 0) {
+              <p class="bab-muted">
+                You're at your target for today. Water, tea without sugar or a short walk are good
+                options.
+              </p>
+            } @else {
+              <p class="bab-muted small">
+                Fits about {{ mi.budget_kcal | int }} kcal for your diet.
+              </p>
+              @for (o of mi.options; track o.food_code) {
+                <div class="idea">
+                  <div>
+                    <div>{{ o.name }}</div>
+                    <div class="bab-muted small">
+                      {{ servingsLabel(o.servings, o.serving_label) }} &middot;
+                      {{ o.calories_kcal | int }} kcal &middot; {{ o.protein_g }} g protein
+                    </div>
+                  </div>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    (click)="addIdea(m.type, o)"
+                    [disabled]="busy()"
+                    [attr.aria-label]="'Add ' + o.name"
+                  >
+                    <mat-icon>add_circle</mat-icon>
+                  </button>
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (week.value(); as w) {
+      <mat-card appearance="outlined" class="week">
+        <mat-card-header>
+          <mat-card-title>Last 7 days</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-calories-chart [days]="w.days" />
+        </mat-card-content>
+      </mat-card>
+    }
+    <p class="bab-disclaimer">Calorie and food values are estimates only, not medical advice.</p>
+  }
+</section>

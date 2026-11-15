@@ -160,3 +160,35 @@ Same line all day for a user; changes every day.
 | Target met | actual reps >= target reps, or actual seconds >= target seconds |
 | Completion | sets done / sets planned (including the finisher), as a percentage |
 | Milestones | a "done" workout counts toward workout milestones; skipped days do not |
+
+## Nutrition (`app/engines/nutrition_engine.py`, `content/foods.json`)
+
+| Rule | Value |
+| --- | --- |
+| BMR (Mifflin-St Jeor) | 10 x kg + 6.25 x cm - 5 x age, +5 for men, -161 for women |
+| Activity factor | training days 0-2: 1.375; 3-4: 1.55; 5+: 1.725 |
+| Maintenance | BMR x activity factor |
+| Goal adjustment | lose fat -400 kcal; build muscle +250 kcal; stay fit 0 |
+| Calorie floor | never below 1,500 kcal for men or 1,200 kcal for women |
+| Protein | 1.8 g per kg for fat loss; 1.6 g per kg otherwise |
+| Fat | 25% of calories / 9 |
+| Carbs | (calories - protein x 4 - fat x 9) / 4, never below 0 |
+| Rounding | calories, grams rounded to whole numbers |
+| When targets are set | at the end of onboarding, and when sex, age, height, weight, goal or training days change in the profile; effective from today (a second change on the same day replaces the first). Weekly adjustments arrive in M7 |
+| Target for a day | the newest target effective on or before that day; days before the first target use the first |
+| Foods | 198 foods with an Indian focus, approximate values per serving, marked "to be verified by the owner"; shown as estimates |
+| Diet filter | veg sees veg foods; egg sees veg and egg; non-veg sees all. Applies to search and suggestions |
+| Logging | any day up to today; one meal per type per day with any number of items; nutrients are saved as eaten |
+| Custom foods | per user; editing or deleting one does not change logged items |
+| Search order | foods the user has logged (most recent day, then most times) first, then A-Z; up to 50 |
+
+## Meal suggestions
+
+| Rule | Value |
+| --- | --- |
+| Meal shares of the day | breakfast 25%, lunch 35%, snack 10%, dinner 30% |
+| Budget | min(remaining calories for the day, target x meal share), never below 0 |
+| Candidates | foods for the user's diet that list the meal type |
+| Servings | 0.5, 1 or 1.5, never over budget; chosen to minimise unused budget + 12.5% for each half serving away from 1 |
+| Ranking | lowest cost, then most protein per kcal |
+| Options | 3 per meal, picked from the best 9 and rotated by day so ideas change daily |

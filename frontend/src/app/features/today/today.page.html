@@ -135,6 +135,42 @@
       </mat-card-content>
     </mat-card>
 
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="card-head">
+          <h2>Food today</h2>
+          <a mat-button routerLink="/eat">Details</a>
+        </div>
+        <div class="food-row">
+          <div>
+            <span class="num">{{ t.nutrition.eaten_kcal | int }}</span>
+            <span class="bab-muted">
+              / {{ t.nutrition.target_kcal | int }} kcal <app-estimate
+            /></span>
+          </div>
+          <span class="bab-muted">
+            {{
+              t.nutrition.remaining_kcal >= 0
+                ? (t.nutrition.remaining_kcal | int) + ' left'
+                : (-t.nutrition.remaining_kcal | int) + ' over'
+            }}
+          </span>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="foodPercent()" />
+        <p class="bab-muted small">
+          Protein {{ t.nutrition.protein_g }} / {{ t.nutrition.target_protein_g }} g
+        </p>
+        <a
+          mat-stroked-button
+          [routerLink]="['/eat/add']"
+          [queryParams]="{ day: t.day, meal: mealNow() }"
+        >
+          <mat-icon>add</mat-icon>
+          Quick add
+        </a>
+      </mat-card-content>
+    </mat-card>
+
     <p class="bab-disclaimer">
       Calories and distance marked "estimate" are estimates only, not medical advice.
     </p>

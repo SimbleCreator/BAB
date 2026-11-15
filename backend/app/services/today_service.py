@@ -6,8 +6,8 @@ from app.engines import activity_engine, checkin_engine
 from app.engines.lines_engine import line_of_the_day
 from app.models.user import User
 from app.repositories import activity_repo, checkin_repo
-from app.schemas.today import TodayOut
-from app.services import milestone_service, training_service
+from app.schemas.today import TodayNutrition, TodayOut
+from app.services import milestone_service, nutrition_service, training_service
 from app.services.activity_service import to_out
 from app.services.common import require_profile
 
@@ -21,6 +21,7 @@ async def get_today(session: AsyncSession, user: User) -> TodayOut:
     last_checkin = await checkin_repo.latest(session, user.id)
     workout = await training_service.today_brief(session, user, profile, today)
     await session.commit()  # today_brief may have generated this week's plan
+    food = await nutrition_service.get_day(session, user, today)
     return TodayOut(
         day=today,
         name=profile.name,
@@ -31,4 +32,11 @@ async def get_today(session: AsyncSession, user: User) -> TodayOut:
         checkin_due=checkin_engine.checkin_due(last_checkin.day if last_checkin else None, today),
         new_milestones=await milestone_service.unseen(session, user.id),
         workout=workout,
+        nutrition=TodayNutrition(
+            target_kcal=food.target.calories_kcal,
+            eaten_kcal=food.eaten.calories_kcal,
+            remaining_kcal=food.remaining_kcal,
+            protein_g=food.eaten.protein_g,
+            target_protein_g=food.target.protein_g,
+        ),
     )

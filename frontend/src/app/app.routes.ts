@@ -101,12 +101,19 @@ export const routes: Routes = [
       {
         path: 'eat',
         title: 'Eat - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Eat',
-          icon: 'restaurant',
-          blurb: 'Daily calorie and protein targets with meal logging.',
-        },
+        loadComponent: () => import('./features/nutrition/eat.page').then((m) => m.EatPage),
+      },
+      {
+        path: 'eat/add',
+        title: 'Add food - B.A.B',
+        loadComponent: () =>
+          import('./features/nutrition/add-food.page').then((m) => m.AddFoodPage),
+      },
+      {
+        path: 'eat/foods',
+        title: 'My foods - B.A.B',
+        loadComponent: () =>
+          import('./features/nutrition/my-foods.page').then((m) => m.MyFoodsPage),
       },
       {
         path: 'more',

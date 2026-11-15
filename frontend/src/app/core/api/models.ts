@@ -156,6 +156,15 @@ export interface TodayOut {
   new_milestones: MilestoneBrief[];
   /** Null on a rest day. */
   workout: WorkoutBrief | null;
+  nutrition: TodayNutrition;
+}
+
+export interface TodayNutrition {
+  target_kcal: number;
+  eaten_kcal: number;
+  remaining_kcal: number;
+  protein_g: number;
+  target_protein_g: number;
 }
 
 // runs router ---------------------------------------------------------------
@@ -370,4 +379,138 @@ export interface WorkoutBrief {
   exercise_count: number;
   est_minutes: number;
   status: DayStatus;
+}
+
+// nutrition router -----------------------------------------------------------
+
+export type MealType = 'breakfast' | 'lunch' | 'snack' | 'dinner';
+
+export interface TargetOut {
+  effective_from: string;
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+  reason: string;
+}
+
+export interface TargetBreakdownOut {
+  bmr: number;
+  activity_factor: number;
+  maintenance: number;
+  goal_adjustment: number;
+  floor: number;
+  floor_applied: boolean;
+  calories_kcal: number;
+}
+
+export interface TargetsOut {
+  current: TargetOut;
+  breakdown: TargetBreakdownOut;
+  history: TargetOut[];
+}
+
+export interface FoodOut {
+  kind: 'builtin' | 'custom';
+  food_code: string | null;
+  custom_food_id: number | null;
+  name: string;
+  serving_label: string;
+  /** Per serving, an estimate. */
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+  diet_type: string | null;
+  meal_types: string[];
+  uses: number;
+}
+
+export interface CustomFoodIn {
+  name: string;
+  serving_label: string;
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+}
+
+export interface CustomFoodOut extends CustomFoodIn {
+  id: number;
+}
+
+export interface ItemIn {
+  meal_type: MealType;
+  food_code: string | null;
+  custom_food_id: number | null;
+  servings: number;
+}
+
+export interface ItemOut {
+  id: number;
+  food_code: string | null;
+  custom_food_id: number | null;
+  name: string;
+  serving_label: string;
+  servings: number;
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+}
+
+export interface Totals {
+  calories_kcal: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+}
+
+export interface MealOut {
+  meal_type: MealType;
+  items: ItemOut[];
+  totals: Totals;
+}
+
+export interface DayNutritionOut {
+  day: string;
+  today: string;
+  target: TargetOut;
+  eaten: Totals;
+  /** Negative when over. */
+  remaining_kcal: number;
+  meals: MealOut[];
+}
+
+export interface SuggestionOut {
+  food_code: string;
+  name: string;
+  serving_label: string;
+  servings: number;
+  calories_kcal: number;
+  protein_g: number;
+}
+
+export interface MealSuggestionsOut {
+  meal_type: MealType;
+  budget_kcal: number;
+  options: SuggestionOut[];
+}
+
+export interface SuggestionsOut {
+  day: string;
+  remaining_kcal: number;
+  meals: MealSuggestionsOut[];
+}
+
+export interface NutritionDayPoint {
+  day: string;
+  calories_kcal: number;
+  target_kcal: number;
+  protein_g: number;
+  has_meals: boolean;
+}
+
+export interface NutritionSummaryOut {
+  days: NutritionDayPoint[];
 }

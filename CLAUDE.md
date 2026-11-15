@@ -154,8 +154,10 @@ workout_sets       id PK, session_id FK, exercise_code, set_no, target_reps,
 nutrition_targets  id PK, user_id FK, effective_from, calories_kcal, protein_g,
                    carbs_g, fat_g, reason
 meals              id PK, user_id FK, day, meal_type, created_at
-meal_items         id PK, meal_id FK, food_code, custom_food_id, servings,
-                   calories_kcal, protein_g, carbs_g, fat_g
+                   UNIQUE (user_id, day, meal_type)
+meal_items         id PK, meal_id FK, food_code, custom_food_id, name,
+                   serving_label, servings, calories_kcal, protein_g, carbs_g, fat_g
+                   (values saved as eaten)
 custom_foods       id PK, user_id FK, name, serving_label, calories_kcal, protein_g,
                    carbs_g, fat_g
 checkins           id PK, user_id FK, day, weight_kg, waist_cm, chest_cm, arms_cm,

@@ -1,0 +1,2755 @@
+{
+  "_note": "Approximate values per serving, to be verified by the owner. Shown to users as estimates.",
+  "foods": [
+    {
+      "code": "idli",
+      "name": "Idli",
+      "serving_label": "2 pieces",
+      "calories_kcal": 120,
+      "protein_g": 4,
+      "carbs_g": 24,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "plain_dosa",
+      "name": "Plain dosa",
+      "serving_label": "1 dosa",
+      "calories_kcal": 170,
+      "protein_g": 4,
+      "carbs_g": 28,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "masala_dosa",
+      "name": "Masala dosa",
+      "serving_label": "1 dosa",
+      "calories_kcal": 300,
+      "protein_g": 6,
+      "carbs_g": 42,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "rava_upma",
+      "name": "Rava upma",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 6,
+      "carbs_g": 38,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "poha",
+      "name": "Poha",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 5,
+      "carbs_g": 45,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "onion_uttapam",
+      "name": "Onion uttapam",
+      "serving_label": "1 uttapam",
+      "calories_kcal": 220,
+      "protein_g": 6,
+      "carbs_g": 34,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "medu_vada",
+      "name": "Medu vada",
+      "serving_label": "2 pieces",
+      "calories_kcal": 280,
+      "protein_g": 8,
+      "carbs_g": 28,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "ven_pongal",
+      "name": "Ven pongal",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 8,
+      "carbs_g": 40,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "aloo_paratha",
+      "name": "Aloo paratha",
+      "serving_label": "1 paratha",
+      "calories_kcal": 300,
+      "protein_g": 6,
+      "carbs_g": 40,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ]
+    },
+    {
+      "code": "plain_paratha",
+      "name": "Plain paratha",
+      "serving_label": "1 paratha",
+      "calories_kcal": 260,
+      "protein_g": 5,
+      "carbs_g": 32,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "methi_thepla",
+      "name": "Methi thepla",
+      "serving_label": "2 pieces",
+      "calories_kcal": 220,
+      "protein_g": 6,
+      "carbs_g": 28,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "besan_chilla",
+      "name": "Besan chilla",
+      "serving_label": "2 pieces",
+      "calories_kcal": 220,
+      "protein_g": 12,
+      "carbs_g": 26,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "moong_dal_chilla",
+      "name": "Moong dal chilla",
+      "serving_label": "2 pieces",
+      "calories_kcal": 220,
+      "protein_g": 14,
+      "carbs_g": 28,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "oats_porridge_with_milk",
+      "name": "Oats porridge with milk",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 10,
+      "carbs_g": 38,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "masala_oats",
+      "name": "Masala oats",
+      "serving_label": "1 bowl",
+      "calories_kcal": 200,
+      "protein_g": 6,
+      "carbs_g": 32,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "cornflakes_with_milk",
+      "name": "Cornflakes with milk",
+      "serving_label": "1 bowl",
+      "calories_kcal": 220,
+      "protein_g": 7,
+      "carbs_g": 40,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "muesli_with_milk",
+      "name": "Muesli with milk",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 10,
+      "carbs_g": 48,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "buttered_toast",
+      "name": "Buttered toast",
+      "serving_label": "2 slices",
+      "calories_kcal": 220,
+      "protein_g": 6,
+      "carbs_g": 28,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "peanut_butter_toast",
+      "name": "Peanut butter toast",
+      "serving_label": "2 slices",
+      "calories_kcal": 350,
+      "protein_g": 12,
+      "carbs_g": 30,
+      "fat_g": 18,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "vegetable_sandwich",
+      "name": "Vegetable sandwich",
+      "serving_label": "1 sandwich",
+      "calories_kcal": 250,
+      "protein_g": 7,
+      "carbs_g": 36,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "paneer_sandwich",
+      "name": "Paneer sandwich",
+      "serving_label": "1 sandwich",
+      "calories_kcal": 330,
+      "protein_g": 15,
+      "carbs_g": 34,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ]
+    },
+    {
+      "code": "sabudana_khichdi",
+      "name": "Sabudana khichdi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 350,
+      "protein_g": 4,
+      "carbs_g": 60,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "khaman_dhokla",
+      "name": "Khaman dhokla",
+      "serving_label": "4 pieces",
+      "calories_kcal": 160,
+      "protein_g": 6,
+      "carbs_g": 24,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "puri_bhaji",
+      "name": "Puri bhaji",
+      "serving_label": "2 puris with bhaji",
+      "calories_kcal": 400,
+      "protein_g": 7,
+      "carbs_g": 50,
+      "fat_g": 20,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "ragi_dosa",
+      "name": "Ragi dosa",
+      "serving_label": "1 dosa",
+      "calories_kcal": 150,
+      "protein_g": 4,
+      "carbs_g": 26,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "appam",
+      "name": "Appam",
+      "serving_label": "2 appams",
+      "calories_kcal": 220,
+      "protein_g": 4,
+      "carbs_g": 44,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "idiyappam",
+      "name": "Idiyappam",
+      "serving_label": "2 pieces",
+      "calories_kcal": 200,
+      "protein_g": 3,
+      "carbs_g": 44,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "pesarattu",
+      "name": "Pesarattu",
+      "serving_label": "1 dosa",
+      "calories_kcal": 200,
+      "protein_g": 10,
+      "carbs_g": 28,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "vermicelli_upma",
+      "name": "Vermicelli upma",
+      "serving_label": "1 bowl",
+      "calories_kcal": 230,
+      "protein_g": 5,
+      "carbs_g": 42,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "misal_pav",
+      "name": "Misal pav",
+      "serving_label": "1 plate",
+      "calories_kcal": 450,
+      "protein_g": 15,
+      "carbs_g": 55,
+      "fat_g": 18,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ]
+    },
+    {
+      "code": "vegetable_daliya",
+      "name": "Vegetable daliya",
+      "serving_label": "1 bowl",
+      "calories_kcal": 220,
+      "protein_g": 7,
+      "carbs_g": 40,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "paneer_paratha",
+      "name": "Paneer paratha",
+      "serving_label": "1 paratha",
+      "calories_kcal": 320,
+      "protein_g": 12,
+      "carbs_g": 36,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ]
+    },
+    {
+      "code": "boiled_egg",
+      "name": "Boiled egg",
+      "serving_label": "1 large egg",
+      "calories_kcal": 78,
+      "protein_g": 6.3,
+      "carbs_g": 0.6,
+      "fat_g": 5.3,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "plain_omelette",
+      "name": "Plain omelette",
+      "serving_label": "2 eggs",
+      "calories_kcal": 190,
+      "protein_g": 13,
+      "carbs_g": 2,
+      "fat_g": 14,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "egg_bhurji",
+      "name": "Egg bhurji",
+      "serving_label": "2 eggs",
+      "calories_kcal": 210,
+      "protein_g": 13,
+      "carbs_g": 4,
+      "fat_g": 16,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "egg_white_omelette",
+      "name": "Egg white omelette",
+      "serving_label": "3 egg whites",
+      "calories_kcal": 60,
+      "protein_g": 11,
+      "carbs_g": 1,
+      "fat_g": 0.5,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "egg_sandwich",
+      "name": "Egg sandwich",
+      "serving_label": "1 sandwich",
+      "calories_kcal": 300,
+      "protein_g": 14,
+      "carbs_g": 30,
+      "fat_g": 13,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "egg_dosa",
+      "name": "Egg dosa",
+      "serving_label": "1 dosa",
+      "calories_kcal": 260,
+      "protein_g": 11,
+      "carbs_g": 28,
+      "fat_g": 11,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ]
+    },
+    {
+      "code": "poached_egg",
+      "name": "Poached egg",
+      "serving_label": "1 egg",
+      "calories_kcal": 72,
+      "protein_g": 6,
+      "carbs_g": 0,
+      "fat_g": 5,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "egg_paratha",
+      "name": "Egg paratha",
+      "serving_label": "1 paratha",
+      "calories_kcal": 330,
+      "protein_g": 12,
+      "carbs_g": 32,
+      "fat_g": 17,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ]
+    },
+    {
+      "code": "french_toast",
+      "name": "French toast",
+      "serving_label": "2 slices",
+      "calories_kcal": 300,
+      "protein_g": 12,
+      "carbs_g": 30,
+      "fat_g": 14,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast"
+      ]
+    },
+    {
+      "code": "steamed_rice",
+      "name": "Steamed rice",
+      "serving_label": "1 cup cooked",
+      "calories_kcal": 205,
+      "protein_g": 4,
+      "carbs_g": 45,
+      "fat_g": 0.4,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "brown_rice",
+      "name": "Brown rice",
+      "serving_label": "1 cup cooked",
+      "calories_kcal": 215,
+      "protein_g": 5,
+      "carbs_g": 45,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "jeera_rice",
+      "name": "Jeera rice",
+      "serving_label": "1 cup",
+      "calories_kcal": 250,
+      "protein_g": 4,
+      "carbs_g": 44,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chapati",
+      "name": "Chapati",
+      "serving_label": "1 medium",
+      "calories_kcal": 110,
+      "protein_g": 3,
+      "carbs_g": 18,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "phulka",
+      "name": "Phulka",
+      "serving_label": "1 phulka",
+      "calories_kcal": 80,
+      "protein_g": 3,
+      "carbs_g": 16,
+      "fat_g": 0.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "naan",
+      "name": "Naan",
+      "serving_label": "1 naan",
+      "calories_kcal": 260,
+      "protein_g": 8,
+      "carbs_g": 45,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "bajra_roti",
+      "name": "Bajra roti",
+      "serving_label": "1 roti",
+      "calories_kcal": 120,
+      "protein_g": 3,
+      "carbs_g": 22,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "jowar_roti",
+      "name": "Jowar roti",
+      "serving_label": "1 roti",
+      "calories_kcal": 110,
+      "protein_g": 3,
+      "carbs_g": 22,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "ragi_mudde",
+      "name": "Ragi mudde",
+      "serving_label": "1 ball",
+      "calories_kcal": 230,
+      "protein_g": 5,
+      "carbs_g": 50,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "quinoa_pulao",
+      "name": "Quinoa pulao",
+      "serving_label": "1 cup",
+      "calories_kcal": 250,
+      "protein_g": 8,
+      "carbs_g": 40,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "brown_bread",
+      "name": "Brown bread",
+      "serving_label": "2 slices",
+      "calories_kcal": 140,
+      "protein_g": 6,
+      "carbs_g": 24,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "dal_tadka",
+      "name": "Dal tadka",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 9,
+      "carbs_g": 22,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "moong_dal",
+      "name": "Moong dal",
+      "serving_label": "1 bowl",
+      "calories_kcal": 150,
+      "protein_g": 9,
+      "carbs_g": 20,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "masoor_dal",
+      "name": "Masoor dal",
+      "serving_label": "1 bowl",
+      "calories_kcal": 160,
+      "protein_g": 10,
+      "carbs_g": 22,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "sambar",
+      "name": "Sambar",
+      "serving_label": "1 bowl",
+      "calories_kcal": 140,
+      "protein_g": 6,
+      "carbs_g": 20,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "rasam",
+      "name": "Rasam",
+      "serving_label": "1 bowl",
+      "calories_kcal": 60,
+      "protein_g": 2,
+      "carbs_g": 10,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "rajma",
+      "name": "Rajma",
+      "serving_label": "1 bowl",
+      "calories_kcal": 220,
+      "protein_g": 11,
+      "carbs_g": 30,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chole",
+      "name": "Chole",
+      "serving_label": "1 bowl",
+      "calories_kcal": 240,
+      "protein_g": 11,
+      "carbs_g": 32,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "kadhi",
+      "name": "Kadhi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 6,
+      "carbs_g": 14,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "dal_makhani",
+      "name": "Dal makhani",
+      "serving_label": "1 bowl",
+      "calories_kcal": 330,
+      "protein_g": 12,
+      "carbs_g": 28,
+      "fat_g": 18,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "palak_paneer",
+      "name": "Palak paneer",
+      "serving_label": "1 bowl",
+      "calories_kcal": 280,
+      "protein_g": 14,
+      "carbs_g": 10,
+      "fat_g": 20,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "paneer_butter_masala",
+      "name": "Paneer butter masala",
+      "serving_label": "1 bowl",
+      "calories_kcal": 380,
+      "protein_g": 15,
+      "carbs_g": 14,
+      "fat_g": 30,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "matar_paneer",
+      "name": "Matar paneer",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 14,
+      "carbs_g": 16,
+      "fat_g": 20,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "paneer_bhurji",
+      "name": "Paneer bhurji",
+      "serving_label": "1 bowl",
+      "calories_kcal": 280,
+      "protein_g": 18,
+      "carbs_g": 8,
+      "fat_g": 20,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "paneer_tikka",
+      "name": "Paneer tikka",
+      "serving_label": "6 pieces",
+      "calories_kcal": 300,
+      "protein_g": 20,
+      "carbs_g": 8,
+      "fat_g": 21,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "aloo_gobi",
+      "name": "Aloo gobi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 4,
+      "carbs_g": 20,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "bhindi_masala",
+      "name": "Bhindi masala",
+      "serving_label": "1 bowl",
+      "calories_kcal": 160,
+      "protein_g": 3,
+      "carbs_g": 14,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "baingan_bharta",
+      "name": "Baingan bharta",
+      "serving_label": "1 bowl",
+      "calories_kcal": 150,
+      "protein_g": 3,
+      "carbs_g": 14,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "mixed_vegetable_curry",
+      "name": "Mixed vegetable curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 5,
+      "carbs_g": 18,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "potato_sabzi",
+      "name": "Potato sabzi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 200,
+      "protein_g": 3,
+      "carbs_g": 26,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "cabbage_poriyal",
+      "name": "Cabbage poriyal",
+      "serving_label": "1 bowl",
+      "calories_kcal": 110,
+      "protein_g": 3,
+      "carbs_g": 12,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "beans_thoran",
+      "name": "Beans thoran",
+      "serving_label": "1 bowl",
+      "calories_kcal": 120,
+      "protein_g": 3,
+      "carbs_g": 12,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "avial",
+      "name": "Avial",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 4,
+      "carbs_g": 14,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "mushroom_masala",
+      "name": "Mushroom masala",
+      "serving_label": "1 bowl",
+      "calories_kcal": 180,
+      "protein_g": 6,
+      "carbs_g": 12,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "lauki_sabzi",
+      "name": "Lauki sabzi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 100,
+      "protein_g": 2,
+      "carbs_g": 10,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "soya_chunks_curry",
+      "name": "Soya chunks curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 22,
+      "carbs_g": 18,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "tofu_stir_fry",
+      "name": "Tofu stir-fry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 220,
+      "protein_g": 16,
+      "carbs_g": 10,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "methi_aloo",
+      "name": "Methi aloo",
+      "serving_label": "1 bowl",
+      "calories_kcal": 170,
+      "protein_g": 3,
+      "carbs_g": 20,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chana_dal",
+      "name": "Chana dal",
+      "serving_label": "1 bowl",
+      "calories_kcal": 200,
+      "protein_g": 11,
+      "carbs_g": 28,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "vegetable_biryani",
+      "name": "Vegetable biryani",
+      "serving_label": "1 plate",
+      "calories_kcal": 400,
+      "protein_g": 9,
+      "carbs_g": 60,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "vegetable_pulao",
+      "name": "Vegetable pulao",
+      "serving_label": "1 plate",
+      "calories_kcal": 330,
+      "protein_g": 7,
+      "carbs_g": 52,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "curd_rice",
+      "name": "Curd rice",
+      "serving_label": "1 bowl",
+      "calories_kcal": 280,
+      "protein_g": 8,
+      "carbs_g": 42,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "lemon_rice",
+      "name": "Lemon rice",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 5,
+      "carbs_g": 48,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "moong_dal_khichdi",
+      "name": "Moong dal khichdi",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 11,
+      "carbs_g": 48,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "pav_bhaji",
+      "name": "Pav bhaji",
+      "serving_label": "2 pav with bhaji",
+      "calories_kcal": 450,
+      "protein_g": 11,
+      "carbs_g": 60,
+      "fat_g": 18,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "vegetable_fried_rice",
+      "name": "Vegetable fried rice",
+      "serving_label": "1 plate",
+      "calories_kcal": 350,
+      "protein_g": 7,
+      "carbs_g": 55,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "vegetable_hakka_noodles",
+      "name": "Vegetable hakka noodles",
+      "serving_label": "1 plate",
+      "calories_kcal": 380,
+      "protein_g": 8,
+      "carbs_g": 58,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "vegetable_momos",
+      "name": "Vegetable momos",
+      "serving_label": "6 pieces",
+      "calories_kcal": 250,
+      "protein_g": 7,
+      "carbs_g": 40,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "bisi_bele_bath",
+      "name": "Bisi bele bath",
+      "serving_label": "1 bowl",
+      "calories_kcal": 330,
+      "protein_g": 9,
+      "carbs_g": 52,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "tomato_rice",
+      "name": "Tomato rice",
+      "serving_label": "1 bowl",
+      "calories_kcal": 290,
+      "protein_g": 5,
+      "carbs_g": 48,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "sprouts_salad",
+      "name": "Sprouts salad",
+      "serving_label": "1 bowl",
+      "calories_kcal": 150,
+      "protein_g": 10,
+      "carbs_g": 22,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "green_salad",
+      "name": "Green salad",
+      "serving_label": "1 bowl",
+      "calories_kcal": 50,
+      "protein_g": 2,
+      "carbs_g": 9,
+      "fat_g": 0.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "kachumber_salad",
+      "name": "Kachumber salad",
+      "serving_label": "1 bowl",
+      "calories_kcal": 60,
+      "protein_g": 2,
+      "carbs_g": 10,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "cucumber_raita",
+      "name": "Cucumber raita",
+      "serving_label": "1 bowl",
+      "calories_kcal": 100,
+      "protein_g": 4,
+      "carbs_g": 8,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "plain_curd",
+      "name": "Plain curd",
+      "serving_label": "1 bowl (150 g)",
+      "calories_kcal": 90,
+      "protein_g": 5,
+      "carbs_g": 7,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "greek_yogurt",
+      "name": "Greek yogurt",
+      "serving_label": "150 g",
+      "calories_kcal": 130,
+      "protein_g": 15,
+      "carbs_g": 6,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "buttermilk",
+      "name": "Buttermilk",
+      "serving_label": "1 glass",
+      "calories_kcal": 40,
+      "protein_g": 2,
+      "carbs_g": 5,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "roasted_papad",
+      "name": "Roasted papad",
+      "serving_label": "1 papad",
+      "calories_kcal": 35,
+      "protein_g": 2,
+      "carbs_g": 6,
+      "fat_g": 0.3,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "ghee",
+      "name": "Ghee",
+      "serving_label": "1 teaspoon",
+      "calories_kcal": 45,
+      "protein_g": 0,
+      "carbs_g": 0,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "tomato_soup",
+      "name": "Tomato soup",
+      "serving_label": "1 bowl",
+      "calories_kcal": 90,
+      "protein_g": 2,
+      "carbs_g": 14,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "snack"
+      ]
+    },
+    {
+      "code": "paneer",
+      "name": "Paneer",
+      "serving_label": "100 g",
+      "calories_kcal": 265,
+      "protein_g": 18,
+      "carbs_g": 3,
+      "fat_g": 20,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "tofu",
+      "name": "Tofu",
+      "serving_label": "100 g",
+      "calories_kcal": 76,
+      "protein_g": 8,
+      "carbs_g": 2,
+      "fat_g": 4.8,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "toned_milk",
+      "name": "Toned milk",
+      "serving_label": "1 glass (250 ml)",
+      "calories_kcal": 150,
+      "protein_g": 8,
+      "carbs_g": 12,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "skimmed_milk",
+      "name": "Skimmed milk",
+      "serving_label": "1 glass (250 ml)",
+      "calories_kcal": 90,
+      "protein_g": 9,
+      "carbs_g": 12,
+      "fat_g": 0.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "soy_milk",
+      "name": "Soy milk",
+      "serving_label": "1 glass (250 ml)",
+      "calories_kcal": 100,
+      "protein_g": 7,
+      "carbs_g": 8,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "whey_protein_in_water",
+      "name": "Whey protein in water",
+      "serving_label": "1 scoop",
+      "calories_kcal": 120,
+      "protein_g": 24,
+      "carbs_g": 3,
+      "fat_g": 1.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_curry",
+      "name": "Chicken curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 26,
+      "carbs_g": 8,
+      "fat_g": 18,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "butter_chicken",
+      "name": "Butter chicken",
+      "serving_label": "1 bowl",
+      "calories_kcal": 450,
+      "protein_g": 28,
+      "carbs_g": 12,
+      "fat_g": 32,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "tandoori_chicken",
+      "name": "Tandoori chicken",
+      "serving_label": "2 pieces",
+      "calories_kcal": 260,
+      "protein_g": 32,
+      "carbs_g": 4,
+      "fat_g": 13,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "grilled_chicken_breast",
+      "name": "Grilled chicken breast",
+      "serving_label": "100 g",
+      "calories_kcal": 165,
+      "protein_g": 31,
+      "carbs_g": 0,
+      "fat_g": 4,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chicken_tikka",
+      "name": "Chicken tikka",
+      "serving_label": "6 pieces",
+      "calories_kcal": 280,
+      "protein_g": 34,
+      "carbs_g": 6,
+      "fat_g": 13,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_biryani",
+      "name": "Chicken biryani",
+      "serving_label": "1 plate",
+      "calories_kcal": 500,
+      "protein_g": 25,
+      "carbs_g": 60,
+      "fat_g": 17,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chicken_65",
+      "name": "Chicken 65",
+      "serving_label": "8 pieces",
+      "calories_kcal": 380,
+      "protein_g": 26,
+      "carbs_g": 14,
+      "fat_g": 25,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_soup",
+      "name": "Chicken soup",
+      "serving_label": "1 bowl",
+      "calories_kcal": 120,
+      "protein_g": 12,
+      "carbs_g": 8,
+      "fat_g": 4,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_fried_rice",
+      "name": "Chicken fried rice",
+      "serving_label": "1 plate",
+      "calories_kcal": 450,
+      "protein_g": 18,
+      "carbs_g": 58,
+      "fat_g": 15,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chicken_shawarma_roll",
+      "name": "Chicken shawarma roll",
+      "serving_label": "1 roll",
+      "calories_kcal": 450,
+      "protein_g": 25,
+      "carbs_g": 45,
+      "fat_g": 18,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chicken_sandwich",
+      "name": "Chicken sandwich",
+      "serving_label": "1 sandwich",
+      "calories_kcal": 350,
+      "protein_g": 22,
+      "carbs_g": 34,
+      "fat_g": 13,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "breakfast",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_salad_bowl",
+      "name": "Chicken salad bowl",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 28,
+      "carbs_g": 10,
+      "fat_g": 11,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "chicken_momos",
+      "name": "Chicken momos",
+      "serving_label": "6 pieces",
+      "calories_kcal": 290,
+      "protein_g": 16,
+      "carbs_g": 34,
+      "fat_g": 10,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_keema",
+      "name": "Chicken keema",
+      "serving_label": "1 bowl",
+      "calories_kcal": 320,
+      "protein_g": 26,
+      "carbs_g": 8,
+      "fat_g": 20,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "mutton_curry",
+      "name": "Mutton curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 380,
+      "protein_g": 25,
+      "carbs_g": 8,
+      "fat_g": 28,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "mutton_biryani",
+      "name": "Mutton biryani",
+      "serving_label": "1 plate",
+      "calories_kcal": 550,
+      "protein_g": 25,
+      "carbs_g": 60,
+      "fat_g": 22,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "mutton_keema",
+      "name": "Mutton keema",
+      "serving_label": "1 bowl",
+      "calories_kcal": 350,
+      "protein_g": 22,
+      "carbs_g": 10,
+      "fat_g": 25,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "fish_curry",
+      "name": "Fish curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 22,
+      "carbs_g": 8,
+      "fat_g": 14,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "fish_fry",
+      "name": "Fish fry",
+      "serving_label": "2 pieces",
+      "calories_kcal": 280,
+      "protein_g": 24,
+      "carbs_g": 8,
+      "fat_g": 17,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "grilled_fish",
+      "name": "Grilled fish",
+      "serving_label": "150 g",
+      "calories_kcal": 200,
+      "protein_g": 34,
+      "carbs_g": 0,
+      "fat_g": 6,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "fish_tikka",
+      "name": "Fish tikka",
+      "serving_label": "6 pieces",
+      "calories_kcal": 250,
+      "protein_g": 30,
+      "carbs_g": 6,
+      "fat_g": 11,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "prawn_curry",
+      "name": "Prawn curry",
+      "serving_label": "1 bowl",
+      "calories_kcal": 230,
+      "protein_g": 22,
+      "carbs_g": 8,
+      "fat_g": 12,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "tuna_in_water",
+      "name": "Tuna in water",
+      "serving_label": "100 g",
+      "calories_kcal": 116,
+      "protein_g": 26,
+      "carbs_g": 0,
+      "fat_g": 1,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "chicken_sausage",
+      "name": "Chicken sausage",
+      "serving_label": "2 sausages",
+      "calories_kcal": 160,
+      "protein_g": 10,
+      "carbs_g": 4,
+      "fat_g": 12,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "egg_curry",
+      "name": "Egg curry",
+      "serving_label": "2 eggs",
+      "calories_kcal": 260,
+      "protein_g": 14,
+      "carbs_g": 8,
+      "fat_g": 19,
+      "diet_type": "egg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "egg_fried_rice",
+      "name": "Egg fried rice",
+      "serving_label": "1 plate",
+      "calories_kcal": 420,
+      "protein_g": 13,
+      "carbs_g": 58,
+      "fat_g": 15,
+      "diet_type": "egg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "egg_biryani",
+      "name": "Egg biryani",
+      "serving_label": "1 plate",
+      "calories_kcal": 450,
+      "protein_g": 17,
+      "carbs_g": 60,
+      "fat_g": 16,
+      "diet_type": "egg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    },
+    {
+      "code": "egg_roll",
+      "name": "Egg roll",
+      "serving_label": "1 roll",
+      "calories_kcal": 400,
+      "protein_g": 14,
+      "carbs_g": 40,
+      "fat_g": 20,
+      "diet_type": "egg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "banana",
+      "name": "Banana",
+      "serving_label": "1 medium",
+      "calories_kcal": 105,
+      "protein_g": 1.3,
+      "carbs_g": 27,
+      "fat_g": 0.4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "apple",
+      "name": "Apple",
+      "serving_label": "1 medium",
+      "calories_kcal": 95,
+      "protein_g": 0.5,
+      "carbs_g": 25,
+      "fat_g": 0.3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "orange",
+      "name": "Orange",
+      "serving_label": "1 medium",
+      "calories_kcal": 62,
+      "protein_g": 1.2,
+      "carbs_g": 15,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "papaya",
+      "name": "Papaya",
+      "serving_label": "1 cup",
+      "calories_kcal": 60,
+      "protein_g": 0.7,
+      "carbs_g": 15,
+      "fat_g": 0.4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "mango",
+      "name": "Mango",
+      "serving_label": "1 cup",
+      "calories_kcal": 100,
+      "protein_g": 1.4,
+      "carbs_g": 25,
+      "fat_g": 0.6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "guava",
+      "name": "Guava",
+      "serving_label": "1 medium",
+      "calories_kcal": 70,
+      "protein_g": 2.6,
+      "carbs_g": 14,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "watermelon",
+      "name": "Watermelon",
+      "serving_label": "1 cup",
+      "calories_kcal": 46,
+      "protein_g": 1,
+      "carbs_g": 12,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "pomegranate",
+      "name": "Pomegranate",
+      "serving_label": "1/2 cup seeds",
+      "calories_kcal": 72,
+      "protein_g": 1.5,
+      "carbs_g": 16,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "grapes",
+      "name": "Grapes",
+      "serving_label": "1 cup",
+      "calories_kcal": 104,
+      "protein_g": 1,
+      "carbs_g": 27,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "chikoo",
+      "name": "Chikoo",
+      "serving_label": "1 medium",
+      "calories_kcal": 95,
+      "protein_g": 0.5,
+      "carbs_g": 24,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "pear",
+      "name": "Pear",
+      "serving_label": "1 medium",
+      "calories_kcal": 100,
+      "protein_g": 0.6,
+      "carbs_g": 27,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "dates",
+      "name": "Dates",
+      "serving_label": "3 dates",
+      "calories_kcal": 70,
+      "protein_g": 0.6,
+      "carbs_g": 19,
+      "fat_g": 0.1,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "roasted_chana",
+      "name": "Roasted chana",
+      "serving_label": "30 g",
+      "calories_kcal": 110,
+      "protein_g": 6,
+      "carbs_g": 18,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "roasted_peanuts",
+      "name": "Roasted peanuts",
+      "serving_label": "30 g",
+      "calories_kcal": 170,
+      "protein_g": 7,
+      "carbs_g": 5,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "almonds",
+      "name": "Almonds",
+      "serving_label": "10 almonds",
+      "calories_kcal": 70,
+      "protein_g": 2.6,
+      "carbs_g": 2.5,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "cashews",
+      "name": "Cashews",
+      "serving_label": "10 cashews",
+      "calories_kcal": 90,
+      "protein_g": 3,
+      "carbs_g": 5,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "walnuts",
+      "name": "Walnuts",
+      "serving_label": "5 halves",
+      "calories_kcal": 65,
+      "protein_g": 1.5,
+      "carbs_g": 1.4,
+      "fat_g": 6.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "mixed_nuts",
+      "name": "Mixed nuts",
+      "serving_label": "30 g",
+      "calories_kcal": 180,
+      "protein_g": 5,
+      "carbs_g": 6,
+      "fat_g": 16,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "roasted_makhana",
+      "name": "Roasted makhana",
+      "serving_label": "1 cup",
+      "calories_kcal": 100,
+      "protein_g": 3,
+      "carbs_g": 20,
+      "fat_g": 0.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "bhel_puri",
+      "name": "Bhel puri",
+      "serving_label": "1 plate",
+      "calories_kcal": 250,
+      "protein_g": 6,
+      "carbs_g": 40,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "sev_puri",
+      "name": "Sev puri",
+      "serving_label": "6 pieces",
+      "calories_kcal": 300,
+      "protein_g": 6,
+      "carbs_g": 36,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "pani_puri",
+      "name": "Pani puri",
+      "serving_label": "6 pieces",
+      "calories_kcal": 200,
+      "protein_g": 4,
+      "carbs_g": 34,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "samosa",
+      "name": "Samosa",
+      "serving_label": "1 samosa",
+      "calories_kcal": 260,
+      "protein_g": 4,
+      "carbs_g": 30,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "vegetable_pakora",
+      "name": "Vegetable pakora",
+      "serving_label": "6 pieces",
+      "calories_kcal": 270,
+      "protein_g": 5,
+      "carbs_g": 24,
+      "fat_g": 17,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "kachori",
+      "name": "Kachori",
+      "serving_label": "1 kachori",
+      "calories_kcal": 190,
+      "protein_g": 4,
+      "carbs_g": 20,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "vada_pav",
+      "name": "Vada pav",
+      "serving_label": "1 vada pav",
+      "calories_kcal": 300,
+      "protein_g": 7,
+      "carbs_g": 42,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "peanut_chikki",
+      "name": "Peanut chikki",
+      "serving_label": "1 piece",
+      "calories_kcal": 120,
+      "protein_g": 3,
+      "carbs_g": 14,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "murmura_chivda",
+      "name": "Murmura chivda",
+      "serving_label": "1 cup",
+      "calories_kcal": 150,
+      "protein_g": 3,
+      "carbs_g": 20,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "khakhra",
+      "name": "Khakhra",
+      "serving_label": "2 pieces",
+      "calories_kcal": 120,
+      "protein_g": 4,
+      "carbs_g": 18,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "marie_biscuits",
+      "name": "Marie biscuits",
+      "serving_label": "4 biscuits",
+      "calories_kcal": 120,
+      "protein_g": 2,
+      "carbs_g": 22,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "digestive_biscuits",
+      "name": "Digestive biscuits",
+      "serving_label": "2 biscuits",
+      "calories_kcal": 140,
+      "protein_g": 2,
+      "carbs_g": 20,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "rusk",
+      "name": "Rusk",
+      "serving_label": "2 pieces",
+      "calories_kcal": 100,
+      "protein_g": 3,
+      "carbs_g": 18,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "corn_chaat",
+      "name": "Corn chaat",
+      "serving_label": "1 cup",
+      "calories_kcal": 150,
+      "protein_g": 4,
+      "carbs_g": 30,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "boiled_sweet_corn",
+      "name": "Boiled sweet corn",
+      "serving_label": "1 cup",
+      "calories_kcal": 130,
+      "protein_g": 5,
+      "carbs_g": 29,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "popcorn_plain",
+      "name": "Popcorn (plain)",
+      "serving_label": "2 cups",
+      "calories_kcal": 60,
+      "protein_g": 2,
+      "carbs_g": 12,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "potato_chips",
+      "name": "Potato chips",
+      "serving_label": "30 g",
+      "calories_kcal": 160,
+      "protein_g": 2,
+      "carbs_g": 15,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "boiled_sweet_potato",
+      "name": "Boiled sweet potato",
+      "serving_label": "1 medium",
+      "calories_kcal": 115,
+      "protein_g": 2,
+      "carbs_g": 27,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "boiled_potato",
+      "name": "Boiled potato",
+      "serving_label": "1 medium",
+      "calories_kcal": 130,
+      "protein_g": 3,
+      "carbs_g": 30,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "chana_chaat",
+      "name": "Chana chaat",
+      "serving_label": "1 bowl",
+      "calories_kcal": 200,
+      "protein_g": 10,
+      "carbs_g": 30,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "sprouted_moong",
+      "name": "Sprouted moong",
+      "serving_label": "1 cup",
+      "calories_kcal": 100,
+      "protein_g": 8,
+      "carbs_g": 18,
+      "fat_g": 0.5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "cucumber",
+      "name": "Cucumber",
+      "serving_label": "1 medium",
+      "calories_kcal": 16,
+      "protein_g": 0.7,
+      "carbs_g": 3.6,
+      "fat_g": 0.1,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "carrot",
+      "name": "Carrot",
+      "serving_label": "1 medium",
+      "calories_kcal": 25,
+      "protein_g": 0.6,
+      "carbs_g": 6,
+      "fat_g": 0.1,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "dark_chocolate",
+      "name": "Dark chocolate",
+      "serving_label": "20 g",
+      "calories_kcal": 110,
+      "protein_g": 1.5,
+      "carbs_g": 9,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "masala_chai_with_sugar",
+      "name": "Masala chai with sugar",
+      "serving_label": "1 cup",
+      "calories_kcal": 90,
+      "protein_g": 3,
+      "carbs_g": 13,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "tea_with_milk_no_sugar",
+      "name": "Tea with milk, no sugar",
+      "serving_label": "1 cup",
+      "calories_kcal": 40,
+      "protein_g": 2,
+      "carbs_g": 4,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "black_coffee",
+      "name": "Black coffee",
+      "serving_label": "1 cup",
+      "calories_kcal": 5,
+      "protein_g": 0.3,
+      "carbs_g": 0,
+      "fat_g": 0,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "coffee_with_milk_and_sugar",
+      "name": "Coffee with milk and sugar",
+      "serving_label": "1 cup",
+      "calories_kcal": 100,
+      "protein_g": 3,
+      "carbs_g": 14,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "sweet_lassi",
+      "name": "Sweet lassi",
+      "serving_label": "1 glass",
+      "calories_kcal": 220,
+      "protein_g": 7,
+      "carbs_g": 34,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "snack"
+      ]
+    },
+    {
+      "code": "coconut_water",
+      "name": "Coconut water",
+      "serving_label": "1 glass",
+      "calories_kcal": 45,
+      "protein_g": 0.5,
+      "carbs_g": 10,
+      "fat_g": 0.2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "fresh_lime_soda_sweet",
+      "name": "Fresh lime soda (sweet)",
+      "serving_label": "1 glass",
+      "calories_kcal": 60,
+      "protein_g": 0,
+      "carbs_g": 15,
+      "fat_g": 0,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "fruit_smoothie",
+      "name": "Fruit smoothie",
+      "serving_label": "1 glass",
+      "calories_kcal": 200,
+      "protein_g": 6,
+      "carbs_g": 36,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "banana_milkshake",
+      "name": "Banana milkshake",
+      "serving_label": "1 glass",
+      "calories_kcal": 240,
+      "protein_g": 8,
+      "carbs_g": 40,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "gulab_jamun",
+      "name": "Gulab jamun",
+      "serving_label": "2 pieces",
+      "calories_kcal": 300,
+      "protein_g": 4,
+      "carbs_g": 40,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "jalebi",
+      "name": "Jalebi",
+      "serving_label": "2 pieces",
+      "calories_kcal": 300,
+      "protein_g": 2,
+      "carbs_g": 46,
+      "fat_g": 12,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "rasgulla",
+      "name": "Rasgulla",
+      "serving_label": "2 pieces",
+      "calories_kcal": 240,
+      "protein_g": 4,
+      "carbs_g": 50,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "rice_kheer",
+      "name": "Rice kheer",
+      "serving_label": "1 bowl",
+      "calories_kcal": 250,
+      "protein_g": 7,
+      "carbs_g": 38,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "snack"
+      ]
+    },
+    {
+      "code": "besan_ladoo",
+      "name": "Besan ladoo",
+      "serving_label": "1 ladoo",
+      "calories_kcal": 180,
+      "protein_g": 3,
+      "carbs_g": 20,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "sooji_halwa",
+      "name": "Sooji halwa",
+      "serving_label": "1 bowl",
+      "calories_kcal": 300,
+      "protein_g": 4,
+      "carbs_g": 40,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "ice_cream",
+      "name": "Ice cream",
+      "serving_label": "1 scoop",
+      "calories_kcal": 140,
+      "protein_g": 2,
+      "carbs_g": 16,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ]
+    },
+    {
+      "code": "honey",
+      "name": "Honey",
+      "serving_label": "1 tablespoon",
+      "calories_kcal": 64,
+      "protein_g": 0,
+      "carbs_g": 17,
+      "fat_g": 0,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "jaggery",
+      "name": "Jaggery",
+      "serving_label": "10 g",
+      "calories_kcal": 38,
+      "protein_g": 0,
+      "carbs_g": 10,
+      "fat_g": 0,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "sugar",
+      "name": "Sugar",
+      "serving_label": "1 teaspoon",
+      "calories_kcal": 16,
+      "protein_g": 0,
+      "carbs_g": 4,
+      "fat_g": 0,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ]
+    },
+    {
+      "code": "pickle",
+      "name": "Pickle",
+      "serving_label": "1 tablespoon",
+      "calories_kcal": 30,
+      "protein_g": 0.2,
+      "carbs_g": 1,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ]
+    }
+  ]
+}

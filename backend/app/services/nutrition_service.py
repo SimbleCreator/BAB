@@ -1,0 +1,422 @@
+"""Nutrition targets, foods, meal logging and suggestions."""
+
+from datetime import date, timedelta
+
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.content import food_list, foods_by_code
+from app.core.errors import AppError, NotFoundError
+from app.core.timeutil import local_today
+from app.engines import nutrition_engine as eng
+from app.models.nutrition import CustomFood, Meal, MealItem, NutritionTarget
+from app.models.profile import Profile
+from app.models.user import User
+from app.repositories import nutrition_repo as repo
+from app.schemas.nutrition import (
+    CustomFoodIn,
+    CustomFoodOut,
+    DayNutritionOut,
+    FoodOut,
+    ItemIn,
+    ItemOut,
+    ItemPatch,
+    MealOut,
+    MealSuggestionsOut,
+    NutritionDayPoint,
+    NutritionSummaryOut,
+    SuggestionOut,
+    SuggestionsOut,
+    TargetBreakdownOut,
+    TargetOut,
+    TargetsOut,
+    Totals,
+)
+from app.services import milestone_service
+from app.services.common import require_profile
+
+TARGET_FIELDS = ("sex", "age", "height_cm", "weight_kg", "goal", "days_per_week")
+SEARCH_LIMIT = 50
+
+
+# Targets ----------------------------------------------------------------------
+
+
+def breakdown(profile: Profile) -> eng.TargetBreakdown:
+    return eng.targets(
+        profile.sex,  # type: ignore[arg-type]
+        float(profile.weight_kg),
+        float(profile.height_cm),
+        profile.age,
+        profile.days_per_week,
+        profile.goal,
+    )
+
+
+async def set_targets_from_profile(
+    session: AsyncSession, user: User, profile: Profile, reason: str
+) -> NutritionTarget:
+    """Recalculate from the profile, effective today. Replaces a row already set today.
+    Does not commit."""
+    t = breakdown(profile).targets
+    today = local_today(profile.timezone)
+    row = await repo.target_on(session, user.id, today)
+    if row is None:
+        row = NutritionTarget(user_id=user.id, effective_from=today)
+        repo.add(session, row)
+    row.calories_kcal, row.protein_g = t.calories_kcal, t.protein_g
+    row.carbs_g, row.fat_g = t.carbs_g, t.fat_g
+    row.reason = reason
+    await session.flush()
+    return row
+
+
+def _target_out(row: NutritionTarget) -> TargetOut:
+    return TargetOut(
+        effective_from=row.effective_from,
+        calories_kcal=row.calories_kcal,
+        protein_g=row.protein_g,
+        carbs_g=row.carbs_g,
+        fat_g=row.fat_g,
+        reason=row.reason,
+    )
+
+
+async def _target_row(
+    session: AsyncSession, user: User, profile: Profile, day: date
+) -> NutritionTarget:
+    row = await repo.target_for_day(session, user.id, day)
+    if row is None:  # profiles created before targets existed
+        row = await set_targets_from_profile(
+            session, user, profile, "Starting targets from your profile."
+        )
+        await session.commit()
+    return row
+
+
+async def get_targets(session: AsyncSession, user: User) -> TargetsOut:
+    profile = await require_profile(session, user)
+    current = await _target_row(session, user, profile, local_today(profile.timezone))
+    b = breakdown(profile)
+    return TargetsOut(
+        current=_target_out(current),
+        breakdown=TargetBreakdownOut(
+            bmr=b.bmr,
+            activity_factor=b.activity_factor,
+            maintenance=b.maintenance,
+            goal_adjustment=b.goal_adjustment,
+            floor=b.floor,
+            floor_applied=b.floor_applied,
+            calories_kcal=b.targets.calories_kcal,
+        ),
+        history=[_target_out(r) for r in await repo.targets(session, user.id)],
+    )
+
+
+# Foods ------------------------------------------------------------------------
+
+
+def _builtin_out(f: eng.Food, uses: int) -> FoodOut:
+    return FoodOut(
+        kind="builtin",
+        food_code=f.code,
+        custom_food_id=None,
+        name=f.name,
+        serving_label=f.serving_label,
+        calories_kcal=f.calories_kcal,
+        protein_g=f.protein_g,
+        carbs_g=f.carbs_g,
+        fat_g=f.fat_g,
+        diet_type=f.diet_type,
+        meal_types=list(f.meal_types),
+        uses=uses,
+    )
+
+
+def _custom_out(c: CustomFood, uses: int) -> FoodOut:
+    return FoodOut(
+        kind="custom",
+        food_code=None,
+        custom_food_id=c.id,
+        name=c.name,
+        serving_label=c.serving_label,
+        calories_kcal=float(c.calories_kcal),
+        protein_g=float(c.protein_g),
+        carbs_g=float(c.carbs_g),
+        fat_g=float(c.fat_g),
+        diet_type=None,
+        meal_types=list(eng.MEAL_TYPES),
+        uses=uses,
+    )
+
+
+async def search_foods(
+    session: AsyncSession, user: User, q: str | None, meal_type: str | None
+) -> list[FoodOut]:
+    """Recent and frequent foods first, then the rest. Built-ins follow the diet type."""
+    profile = await require_profile(session, user)
+    allowed = eng.ALLOWED_DIETS[profile.diet_type]
+    usage = await repo.usage(session, user.id)
+    query = (q or "").strip().lower()
+    never = date.min
+
+    entries: list[tuple[int, date, str, FoodOut]] = []
+    for f in food_list():
+        if f.diet_type not in allowed:
+            continue
+        if meal_type and not query and meal_type not in f.meal_types:
+            continue
+        if query and query not in f.name.lower():
+            continue
+        n, last = usage.get(("builtin", f.code), (0, never))
+        entries.append((n, last, f.name, _builtin_out(f, n)))
+    for c in await repo.custom_foods(session, user.id):
+        if query and query not in c.name.lower():
+            continue
+        n, last = usage.get(("custom", c.id), (0, never))
+        entries.append((n, last, c.name, _custom_out(c, n)))
+
+    # Used foods first (most recent day, then most uses); then alphabetical.
+    entries.sort(key=lambda e: (e[0] == 0, -e[1].toordinal(), -e[0], e[2].lower()))
+    return [e[3] for e in entries[:SEARCH_LIMIT]]
+
+
+async def list_custom(session: AsyncSession, user: User) -> list[CustomFoodOut]:
+    return [_custom_food_out(c) for c in await repo.custom_foods(session, user.id)]
+
+
+def _custom_food_out(c: CustomFood) -> CustomFoodOut:
+    return CustomFoodOut(
+        id=c.id,
+        name=c.name,
+        serving_label=c.serving_label,
+        calories_kcal=float(c.calories_kcal),
+        protein_g=float(c.protein_g),
+        carbs_g=float(c.carbs_g),
+        fat_g=float(c.fat_g),
+    )
+
+
+async def create_custom(session: AsyncSession, user: User, data: CustomFoodIn) -> CustomFoodOut:
+    row = CustomFood(user_id=user.id, **data.model_dump())
+    repo.add(session, row)
+    await session.commit()
+    await session.refresh(row)
+    return _custom_food_out(row)
+
+
+async def update_custom(
+    session: AsyncSession, user: User, food_id: int, data: CustomFoodIn
+) -> CustomFoodOut:
+    row = await repo.custom_food(session, user.id, food_id)
+    if row is None:
+        raise NotFoundError("Food not found.", code="food_missing")
+    for k, v in data.model_dump().items():
+        setattr(row, k, v)
+    await session.commit()
+    await session.refresh(row)
+    return _custom_food_out(row)
+
+
+async def delete_custom(session: AsyncSession, user: User, food_id: int) -> None:
+    row = await repo.custom_food(session, user.id, food_id)
+    if row is None:
+        raise NotFoundError("Food not found.", code="food_missing")
+    await session.delete(row)  # logged items keep their saved values
+    await session.commit()
+
+
+# Meal logging ------------------------------------------------------------------
+
+
+def _f(v) -> float:
+    return float(v or 0)
+
+
+def _item_out(i: MealItem) -> ItemOut:
+    return ItemOut(
+        id=i.id,
+        food_code=i.food_code,
+        custom_food_id=i.custom_food_id,
+        name=i.name,
+        serving_label=i.serving_label,
+        servings=float(i.servings),
+        calories_kcal=i.calories_kcal,
+        protein_g=_f(i.protein_g),
+        carbs_g=_f(i.carbs_g),
+        fat_g=_f(i.fat_g),
+    )
+
+
+def _totals(items: list[MealItem]) -> Totals:
+    return Totals(
+        calories_kcal=sum(i.calories_kcal for i in items),
+        protein_g=round(sum(_f(i.protein_g) for i in items), 1),
+        carbs_g=round(sum(_f(i.carbs_g) for i in items), 1),
+        fat_g=round(sum(_f(i.fat_g) for i in items), 1),
+    )
+
+
+async def get_day(session: AsyncSession, user: User, day: date) -> DayNutritionOut:
+    profile = await require_profile(session, user)
+    target = await _target_row(session, user, profile, day)
+    meals = {m.meal_type: m for m in await repo.meals_on(session, user.id, day)}
+    all_items: list[MealItem] = []
+    meal_out = []
+    for mt in eng.MEAL_TYPES:
+        items = list(meals[mt].items) if mt in meals else []
+        all_items += items
+        meal_out.append(
+            MealOut(meal_type=mt, items=[_item_out(i) for i in items], totals=_totals(items))
+        )
+    eaten = _totals(all_items)
+    return DayNutritionOut(
+        day=day,
+        today=local_today(profile.timezone),
+        target=_target_out(target),
+        eaten=eaten,
+        remaining_kcal=target.calories_kcal - eaten.calories_kcal,
+        meals=meal_out,
+    )
+
+
+def _check_day(profile: Profile, day: date) -> None:
+    if day > local_today(profile.timezone):
+        raise AppError("You cannot log food for a future day.", code="future_day")
+
+
+async def add_item(session: AsyncSession, user: User, day: date, data: ItemIn) -> DayNutritionOut:
+    profile = await require_profile(session, user)
+    _check_day(profile, day)
+    if data.food_code is not None:
+        f = foods_by_code().get(data.food_code)
+        if f is None:
+            raise NotFoundError("Food not found.", code="food_missing")
+        name, label, per = f.name, f.serving_label, f
+    else:
+        c = await repo.custom_food(session, user.id, data.custom_food_id or 0)
+        if c is None:
+            raise NotFoundError("Food not found.", code="food_missing")
+        name, label = c.name, c.serving_label
+        per = eng.Food(
+            "",
+            c.name,
+            c.serving_label,
+            _f(c.calories_kcal),
+            _f(c.protein_g),
+            _f(c.carbs_g),
+            _f(c.fat_g),
+            "veg",
+            (),
+        )
+    m = eng.scale(per, data.servings)
+    meal = await repo.meal(session, user.id, day, data.meal_type)
+    if meal is None:
+        meal = Meal(user_id=user.id, day=day, meal_type=data.meal_type)
+        repo.add(session, meal)
+        await session.flush()
+    repo.add(
+        session,
+        MealItem(
+            meal_id=meal.id,
+            food_code=data.food_code,
+            custom_food_id=data.custom_food_id,
+            name=name,
+            serving_label=label,
+            servings=data.servings,
+            calories_kcal=m.calories_kcal,
+            protein_g=m.protein_g,
+            carbs_g=m.carbs_g,
+            fat_g=m.fat_g,
+        ),
+    )
+    await session.flush()
+    await milestone_service.evaluate(session, user.id)
+    await session.commit()
+    return await get_day(session, user, day)
+
+
+async def update_item(
+    session: AsyncSession, user: User, item_id: int, data: ItemPatch
+) -> DayNutritionOut:
+    item = await repo.item(session, user.id, item_id)
+    if item is None:
+        raise NotFoundError("Item not found.", code="item_missing")
+    old = float(item.servings)
+    factor = data.servings / old if old else 1
+    item.servings = round(data.servings, 2)  # type: ignore[assignment]
+    item.calories_kcal = round(item.calories_kcal * factor)
+    item.protein_g = round(_f(item.protein_g) * factor, 1)  # type: ignore[assignment]
+    item.carbs_g = round(_f(item.carbs_g) * factor, 1)  # type: ignore[assignment]
+    item.fat_g = round(_f(item.fat_g) * factor, 1)  # type: ignore[assignment]
+    day = item.meal.day
+    await session.commit()
+    return await get_day(session, user, day)
+
+
+async def delete_item(session: AsyncSession, user: User, item_id: int) -> DayNutritionOut:
+    item = await repo.item(session, user.id, item_id)
+    if item is None:
+        raise NotFoundError("Item not found.", code="item_missing")
+    day, meal_id = item.meal.day, item.meal_id
+    await session.delete(item)
+    await session.flush()
+    if await repo.count_items(session, meal_id) == 0:
+        await repo.remove_meal(session, meal_id)
+    await milestone_service.evaluate(session, user.id)
+    await session.commit()
+    return await get_day(session, user, day)
+
+
+# Suggestions and summary ------------------------------------------------------------
+
+
+async def suggestions(session: AsyncSession, user: User, day: date) -> SuggestionsOut:
+    profile = await require_profile(session, user)
+    d = await get_day(session, user, day)
+    out = []
+    for mt in eng.MEAL_TYPES:
+        budget = eng.meal_budget(d.target.calories_kcal, d.remaining_kcal, mt)
+        options = eng.suggest(food_list(), profile.diet_type, mt, budget, rotation=day.toordinal())
+        out.append(
+            MealSuggestionsOut(
+                meal_type=mt,
+                budget_kcal=budget,
+                options=[
+                    SuggestionOut(
+                        food_code=s.food.code,
+                        name=s.food.name,
+                        serving_label=s.food.serving_label,
+                        servings=s.servings,
+                        calories_kcal=s.calories_kcal,
+                        protein_g=s.protein_g,
+                    )
+                    for s in options
+                ],
+            )
+        )
+    return SuggestionsOut(day=day, remaining_kcal=d.remaining_kcal, meals=out)
+
+
+async def summary(session: AsyncSession, user: User, days: int) -> NutritionSummaryOut:
+    profile = await require_profile(session, user)
+    today = local_today(profile.timezone)
+    start = today - timedelta(days=days - 1)
+    eaten = await repo.daily_calories(session, user.id, start, today)
+    rows = await repo.targets(session, user.id)
+    if not rows:
+        rows = [await _target_row(session, user, profile, today)]
+    points = []
+    for i in range(days):
+        d = start + timedelta(days=i)
+        target = next((r for r in rows if r.effective_from <= d), rows[-1])
+        kcal, protein = eaten.get(d, (0, 0.0))
+        points.append(
+            NutritionDayPoint(
+                day=d,
+                calories_kcal=kcal,
+                target_kcal=target.calories_kcal,
+                protein_g=round(protein, 1),
+                has_meals=d in eaten,
+            )
+        )
+    return NutritionSummaryOut(days=points)

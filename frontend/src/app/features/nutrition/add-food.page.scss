@@ -1,0 +1,128 @@
+.back {
+  margin-left: -8px;
+}
+
+.meals {
+  margin-bottom: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--mat-sys-outline);
+  background: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-large);
+  margin-bottom: 8px;
+}
+
+.food {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 100%;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  .food-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .food-sub {
+    grid-column: 1;
+    font: var(--mat-sys-body-small);
+  }
+
+  .food-kcal {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+  }
+}
+
+.mine {
+  font: var(--mat-sys-label-small);
+  padding: 0 6px;
+  border-radius: 8px;
+  background: var(--mat-sys-secondary-container);
+  color: var(--mat-sys-on-secondary-container);
+}
+
+.recent {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.picked {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--mat-sys-primary);
+}
+
+.picked-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.picked-name {
+  font: var(--mat-sys-title-large);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+
+  .servings {
+    font: var(--mat-sys-headline-small);
+    min-width: 40px;
+    text-align: center;
+  }
+}
+
+.total {
+  font: var(--mat-sys-title-medium);
+}
+
+.add-btn {
+  width: 100%;
+  height: 48px;
+}
+
+.custom-toggle {
+  margin-top: 12px;
+}
+
+.custom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+
+  button {
+    align-self: flex-start;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 12px;
+}

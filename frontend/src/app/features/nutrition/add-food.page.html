@@ -1,0 +1,136 @@
+<section class="bab-page">
+  <a mat-button [routerLink]="['/eat']" [queryParams]="{ day: day() }" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Eat
+  </a>
+  <h1 class="bab-page-title">Add food</h1>
+
+  <mat-button-toggle-group
+    class="meals"
+    [value]="chosenMeal()"
+    (change)="mealType.set($event.value)"
+    aria-label="Meal"
+    hideSingleSelectionIndicator
+  >
+    @for (m of meals; track m.type) {
+      <mat-button-toggle [value]="m.type">{{ m.label }}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  @if (picked(); as f) {
+    <div class="picked">
+      <div class="picked-head">
+        <div>
+          <div class="picked-name">{{ f.name }}</div>
+          <div class="bab-muted">
+            {{ f.serving_label }} &middot; {{ f.calories_kcal | int }} kcal each
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          type="button"
+          (click)="picked.set(null)"
+          aria-label="Choose another food"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="stepper">
+        <button mat-icon-button type="button" (click)="step(-0.5)" aria-label="Fewer servings">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span class="servings">{{ servings() }}</span>
+        <button mat-icon-button type="button" (click)="step(0.5)" aria-label="More servings">
+          <mat-icon>add</mat-icon>
+        </button>
+        <span class="bab-muted">servings</span>
+      </div>
+      <p class="total">
+        {{ preview()!.kcal | int }} kcal <app-estimate /> &middot; {{ preview()!.protein }} g
+        protein
+      </p>
+      <button mat-flat-button type="button" class="add-btn" (click)="add()" [disabled]="saving()">
+        Add to {{ chosenMeal() }}
+      </button>
+    </div>
+  } @else {
+    <input
+      class="search"
+      type="search"
+      placeholder="Search foods, e.g. dal, idli, paneer"
+      aria-label="Search foods"
+      [value]="typed()"
+      (input)="typed.set($any($event.target).value)"
+    />
+    @if (foods.isLoading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+    @if (foods.error()) {
+      <p class="bab-form-error">Could not load foods.</p>
+    }
+    @if (foods.value(); as list) {
+      @if (list.length === 0) {
+        <p class="bab-muted">No foods match. Add it as your own food below.</p>
+      }
+      @for (f of list; track f.food_code ?? 'c' + f.custom_food_id) {
+        <button type="button" class="food" (click)="pick(f)">
+          <span class="food-name">
+            {{ f.name }}
+            @if (f.kind === 'custom') {
+              <span class="mine">mine</span>
+            }
+            @if (f.uses) {
+              <mat-icon class="recent" aria-label="Logged before">history</mat-icon>
+            }
+          </span>
+          <span class="bab-muted food-sub">{{ f.serving_label }}</span>
+          <span class="food-kcal">{{ f.calories_kcal | int }}</span>
+        </button>
+      }
+    }
+
+    <button mat-button type="button" class="custom-toggle" (click)="showCustom.set(!showCustom())">
+      <mat-icon>{{ showCustom() ? 'expand_less' : 'add' }}</mat-icon>
+      Add your own food
+    </button>
+    @if (showCustom()) {
+      <form [formGroup]="custom" (ngSubmit)="saveCustom()" novalidate class="custom">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" maxlength="80" />
+          <mat-error>Enter a name.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Serving</mat-label>
+          <input matInput formControlName="serving_label" maxlength="40" />
+          <mat-hint>For example "1 bowl" or "100 g"</mat-hint>
+        </mat-form-field>
+        <div class="grid">
+          <mat-form-field>
+            <mat-label>Calories</mat-label>
+            <input matInput type="number" inputmode="decimal" formControlName="calories_kcal" />
+            <span matTextSuffix>kcal</span>
+            <mat-error>0 to 3,000.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Protein</mat-label>
+            <input matInput type="number" inputmode="decimal" formControlName="protein_g" />
+            <span matTextSuffix>g</span>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Carbs</mat-label>
+            <input matInput type="number" inputmode="decimal" formControlName="carbs_g" />
+            <span matTextSuffix>g</span>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Fat</mat-label>
+            <input matInput type="number" inputmode="decimal" formControlName="fat_g" />
+            <span matTextSuffix>g</span>
+          </mat-form-field>
+        </div>
+        <button mat-flat-button type="submit" [disabled]="saving()">Save food</button>
+      </form>
+    }
+  }
+  <p class="bab-disclaimer">Food values are approximate. Estimates only, not medical advice.</p>
+</section>

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
+from app.engines.nutrition_engine import Food
 from app.engines.training_engine import Drill, Exercise
 
 CONTENT_DIR = Path(__file__).resolve().parent
@@ -63,7 +64,30 @@ def exercise_library() -> ExerciseLibrary:
     )
 
 
+@lru_cache
+def food_list() -> tuple[Food, ...]:
+    raw = _read("foods.json")["foods"]
+    foods = tuple(Food(**(f | {"meal_types": tuple(f["meal_types"])})) for f in raw)
+    codes = [f.code for f in foods]
+    if len(codes) != len(set(codes)):
+        raise ValueError("foods.json: duplicate codes")
+    for f in foods:
+        if f.diet_type not in ("veg", "egg", "non_veg"):
+            raise ValueError(f"foods.json: bad diet type for {f.code}")
+        if not f.meal_types or not set(f.meal_types) <= {"breakfast", "lunch", "dinner", "snack"}:
+            raise ValueError(f"foods.json: bad meal types for {f.code}")
+        if min(f.calories_kcal, f.protein_g, f.carbs_g, f.fat_g) < 0:
+            raise ValueError(f"foods.json: negative value for {f.code}")
+    return foods
+
+
+@lru_cache
+def foods_by_code() -> dict[str, Food]:
+    return {f.code: f for f in food_list()}
+
+
 def load_all() -> None:
     """Load and validate every content file. Called at startup so bad content fails fast."""
     motivational_lines()
     exercise_library()
+    food_list()

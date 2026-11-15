@@ -135,3 +135,19 @@ mat-card {
   color: var(--mat-sys-primary);
   font: var(--mat-sys-label-large);
 }
+
+.food-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 8px 0;
+
+  .num {
+    font: var(--mat-sys-headline-medium);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.small {
+  font: var(--mat-sys-body-small);
+}

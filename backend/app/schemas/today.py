@@ -7,6 +7,14 @@ from app.schemas.milestone import MilestoneBrief
 from app.schemas.training import WorkoutBrief
 
 
+class TodayNutrition(BaseModel):
+    target_kcal: int
+    eaten_kcal: int
+    remaining_kcal: int
+    protein_g: float
+    target_protein_g: int
+
+
 class TodayOut(BaseModel):
     """Everything for the "what do I do today" screen. Sections grow with each milestone."""
 
@@ -19,3 +27,4 @@ class TodayOut(BaseModel):
     checkin_due: bool = Field(description="No check-in in the last 7 days")
     new_milestones: list[MilestoneBrief] = Field(description="Unlocked but not seen yet")
     workout: WorkoutBrief | None = Field(description="Today's planned workout; null on a rest day")
+    nutrition: TodayNutrition

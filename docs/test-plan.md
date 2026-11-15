@@ -85,3 +85,19 @@
 - Exercise library: search, group filter, detail with easier and harder links.
 - Today shows the workout card or "Rest day"; the first finished workout unlocks
   "First workout".
+
+### M6
+- Eat shows today's calories against the target with an "estimate" label, macro bars
+  and "How your target is set" (BMR, activity factor, goal adjustment, floor).
+- Check the target by hand with the formula in docs/rules.md for your profile.
+- Add food: pick a meal, search (for example "dal"), choose servings in half steps,
+  add. Foods you have logged before appear first next time.
+- Veg users never see egg or meat foods; egg users see eggs but not meat.
+- Tap a logged item to change servings or remove it.
+- Add your own food; it appears as "mine" and in My foods, where it can be edited or
+  deleted without changing past days.
+- Ideas under a meal show 3 options that fit that meal's budget; Add puts one in.
+- Previous days can be viewed and logged; the next arrow stops at today.
+- The 7-day chart shows calories per day against the target.
+- Today shows "Food today" with Quick add.
+- Logging meals on 7 different days unlocks "A week of meals".
