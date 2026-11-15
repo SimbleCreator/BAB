@@ -329,6 +329,8 @@ export interface WeekOut {
   week_start: string;
   today: string;
   split: string;
+  /** Why the plan last changed, if it did. */
+  note: string | null;
   /** Seven days, Monday first. */
   days: PlanDayOut[];
 }
@@ -513,4 +515,40 @@ export interface NutritionDayPoint {
 
 export interface NutritionSummaryOut {
   days: NutritionDayPoint[];
+}
+
+// weekly adjustment ----------------------------------------------------------
+
+export interface NutritionChangeOut {
+  before_kcal: number;
+  after_kcal: number;
+  change_kcal: number;
+  floor_applied: boolean;
+  reason: string;
+}
+
+export interface TrainingChangeOut {
+  decision: 'progress' | 'reduce' | 'unchanged' | 'no_data';
+  planned_sessions: number;
+  done_sessions: number;
+  completion_pct: number;
+  changes: string[];
+  summary: string;
+}
+
+export interface AdjustmentOut {
+  id: number;
+  checkin_day: string;
+  reference_day: string;
+  created_at: string;
+  /** + gain / - loss per week, % of body weight. */
+  weekly_change_pct: number;
+  nutrition: NutritionChangeOut;
+  training: TrainingChangeOut;
+  summary: string[];
+}
+
+export interface CheckinSavedOut extends CheckinOut {
+  adjustment: AdjustmentOut | null;
+  adjustment_note: string | null;
 }

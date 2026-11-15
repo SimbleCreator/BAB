@@ -127,6 +127,22 @@
     </mat-card-content>
   </mat-card>
 
+  @if (justAdjusted(); as a) {
+    <div class="adjusted" role="status">
+      <div class="adjusted-head">
+        <mat-icon>tune</mat-icon>
+        <strong>Your plan was adjusted</strong>
+      </div>
+      <ul>
+        @for (line of a.summary; track $index) {
+          <li>{{ line }}</li>
+        }
+      </ul>
+    </div>
+  } @else if (adjustmentNote()) {
+    <p class="note"><mat-icon>info</mat-icon> {{ adjustmentNote() }}</p>
+  }
+
   <h2>History</h2>
   @if (history.isLoading() && !history.hasValue()) {
     <div class="center"><mat-spinner diameter="36" /></div>
@@ -157,6 +173,30 @@
           </button>
         }
       </div>
+    }
+  }
+  @if (adjustments.value(); as list) {
+    @if (list.length) {
+      <h2>Plan adjustments</h2>
+      @for (a of list.slice(0, 6); track a.id) {
+        <details class="adj">
+          <summary>
+            <span>{{ label(a.checkin_day) }}</span>
+            <span class="bab-muted">
+              {{ pct(a.weekly_change_pct) }} / week
+              @if (a.nutrition.change_kcal) {
+                &middot; {{ a.nutrition.change_kcal > 0 ? '+' : ''
+                }}{{ a.nutrition.change_kcal }} kcal
+              }
+            </span>
+          </summary>
+          <ul>
+            @for (line of a.summary; track $index) {
+              <li>{{ line }}</li>
+            }
+          </ul>
+        </details>
+      }
     }
   }
   <p class="bab-disclaimer">

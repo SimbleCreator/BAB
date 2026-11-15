@@ -186,3 +186,18 @@ h3 {
     min-width: 180px;
   }
 }
+
+.plan-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--mat-sys-surface-container-high);
+  font: var(--mat-sys-body-medium);
+
+  mat-icon {
+    flex: none;
+    color: var(--mat-sys-primary);
+  }
+}

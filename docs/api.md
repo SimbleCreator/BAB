@@ -54,8 +54,9 @@ endpoints.
 
 | GET | `/checkins` | bearer | All check-ins, newest first, with change from the previous one |
 | GET | `/checkins/status` | bearer | `due`, last check-in day, days since |
-| PUT | `/checkins/{day}` | bearer | Create or replace a check-in; the newest one updates profile weight |
+| PUT | `/checkins/{day}` | bearer | Create or replace a check-in; the newest one updates profile weight and may run the weekly adjustment (`adjustment`, or `adjustment_note` saying why not) |
 | DELETE | `/checkins/{day}` | bearer | Remove a check-in |
+| GET | `/checkins/adjustments` | bearer | Weekly adjustments, newest first, with plain summary lines |
 | GET | `/milestones` | bearer | Every milestone with progress, `unlocked_at` and `seen` |
 | POST | `/milestones/seen` | bearer | Mark unlocked milestones as seen after celebrating |
 

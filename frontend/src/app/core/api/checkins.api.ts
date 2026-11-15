@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { CheckinIn, CheckinOut, CheckinStatusOut } from './models';
+import { AdjustmentOut, CheckinIn, CheckinOut, CheckinSavedOut, CheckinStatusOut } from './models';
 
 /** Client for the backend `checkins` router. */
 @Injectable({ providedIn: 'root' })
@@ -19,8 +19,13 @@ export class CheckinsApi {
     return this.http.get<CheckinStatusOut>(`${this.base}/status`);
   }
 
-  save(day: string, body: CheckinIn): Observable<CheckinOut> {
-    return this.http.put<CheckinOut>(`${this.base}/${day}`, body);
+  /** Saving the newest check-in may run the weekly adjustment. */
+  save(day: string, body: CheckinIn): Observable<CheckinSavedOut> {
+    return this.http.put<CheckinSavedOut>(`${this.base}/${day}`, body);
+  }
+
+  adjustments(): Observable<AdjustmentOut[]> {
+    return this.http.get<AdjustmentOut[]>(`${this.base}/adjustments`);
   }
 
   delete(day: string): Observable<void> {

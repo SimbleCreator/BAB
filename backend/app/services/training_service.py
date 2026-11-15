@@ -79,13 +79,32 @@ def _session_from_json(d: dict) -> eng.SessionPlan:
     )
 
 
-def _plan_json(split: str, sessions: list[dict], profile: Profile) -> dict:
+def _inputs(profile: Profile) -> dict:
+    return {f: getattr(profile, f) for f in PLAN_FIELDS}
+
+
+def _plan_json(
+    split: str,
+    sessions: list[dict],
+    profile: Profile,
+    template: list[dict] | None = None,
+    note: str | None = None,
+) -> dict:
+    """`sessions` is what this week shows. `template` is the full week as it now stands
+    (with any progression) and is what the next week starts from."""
     return {
-        "version": 1,
+        "version": 2,
         "split": split,
-        "inputs": {f: getattr(profile, f) for f in PLAN_FIELDS},
+        "inputs": _inputs(profile),
         "sessions": sessions,
+        "template": template if template is not None else sessions,
+        "note": note,
     }
+
+
+def template_of(plan: TrainingPlan) -> list[eng.SessionPlan]:
+    raw = plan.plan_json.get("template") or plan.plan_json["sessions"]
+    return [_session_from_json(d) for d in raw]
 
 
 def _build(profile: Profile) -> eng.WeekPlan:
@@ -112,12 +131,15 @@ async def ensure_plan(
     row = await training_repo.latest_plan(session, user.id, week_start)
     if row is not None:
         return row
-    week = _build(profile)
-    row = TrainingPlan(
-        user_id=user.id,
-        week_start=week_start,
-        plan_json=_plan_json(week.split, [_session_to_json(s) for s in week.sessions], profile),
-    )
+    previous = await training_repo.latest_plan_before(session, user.id, week_start)
+    if previous is not None and previous.plan_json.get("inputs") == _inputs(profile):
+        # Same settings as before: carry the previous week forward, progression included.
+        template = previous.plan_json.get("template") or previous.plan_json["sessions"]
+        plan_json = _plan_json(previous.plan_json["split"], template, profile)
+    else:
+        week = _build(profile)
+        plan_json = _plan_json(week.split, [_session_to_json(s) for s in week.sessions], profile)
+    row = TrainingPlan(user_id=user.id, week_start=week_start, plan_json=plan_json)
     training_repo.add(session, row)
     await session.flush()
     return row
@@ -137,20 +159,67 @@ async def regenerate_from_tomorrow(session: AsyncSession, user: User, profile: P
             for d in current.plan_json["sessions"]
             if week_start + timedelta(days=d["day_offset"]) <= today
         ]
-    added = [
-        _session_to_json(s)
-        for s in new.sessions
-        if week_start + timedelta(days=s.day_offset) > today
-    ]
+    full = [_session_to_json(s) for s in new.sessions]
+    added = [d for d in full if week_start + timedelta(days=d["day_offset"]) > today]
     training_repo.add(
         session,
         TrainingPlan(
             user_id=user.id,
             week_start=week_start,
-            plan_json=_plan_json(new.split, kept + added, profile),
+            plan_json=_plan_json(new.split, kept + added, profile, template=full),
         ),
     )
     await session.flush()
+
+
+async def apply_adjusted_template(
+    session: AsyncSession,
+    user: User,
+    profile: Profile,
+    template: list[eng.SessionPlan],
+    note: str,
+) -> None:
+    """Use an adjusted week from tomorrow on; days up to today keep what they had.
+    Later weeks start from the adjusted template. Does not commit."""
+    today = local_today(profile.timezone)
+    week_start = week_start_for(today)
+    current = await ensure_plan(session, user, profile, week_start)
+    kept = [
+        d
+        for d in current.plan_json["sessions"]
+        if week_start + timedelta(days=d["day_offset"]) <= today
+    ]
+    full = [_session_to_json(s) for s in template]
+    added = [d for d in full if week_start + timedelta(days=d["day_offset"]) > today]
+    plan_json = _plan_json(
+        current.plan_json["split"], kept + added, profile, template=full, note=note
+    )
+    training_repo.add(
+        session, TrainingPlan(user_id=user.id, week_start=week_start, plan_json=plan_json)
+    )
+    await session.flush()
+
+
+async def last_week(session: AsyncSession, user: User, before: date):
+    """Planned and finished workouts in the 7 days before `before`, for the adjustment."""
+    from app.engines.adjustment_engine import LastWeek
+
+    start = before - timedelta(days=7)
+    planned_days: set[date] = set()
+    for ws in {week_start_for(start + timedelta(days=i)) for i in range(7)}:
+        plan = await training_repo.latest_plan(session, user.id, ws)
+        if plan is None:
+            continue
+        planned_days |= {d for d in _sessions_by_day(plan) if start <= d < before}
+    logged = await training_repo.sessions_with_sets(
+        session, user.id, start, before - timedelta(days=1)
+    )
+    done = [w for w in logged if w.status == "done" and w.day in planned_days]
+    met: dict[str, bool] = {}
+    for w in done:
+        for s in _logged(w):
+            met[s.exercise_code] = met.get(s.exercise_code, True) and s.target_met
+    return LastWeek(len(planned_days), len(done), met)
 
 
 # Output helpers ----------------------------------------------------------------
@@ -283,7 +352,13 @@ async def get_week(session: AsyncSession, user: User, day: date | None) -> WeekO
                 session=_session_out(d, s) if s else None,
             )
         )
-    return WeekOut(week_start=week_start, today=today, split=plan.plan_json["split"], days=days)
+    return WeekOut(
+        week_start=week_start,
+        today=today,
+        split=plan.plan_json["split"],
+        note=plan.plan_json.get("note"),
+        days=days,
+    )
 
 
 async def _planned_for(

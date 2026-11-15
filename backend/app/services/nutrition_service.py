@@ -70,6 +70,28 @@ async def set_targets_from_profile(
     return row
 
 
+async def set_target_calories(
+    session: AsyncSession, user: User, profile: Profile, calories: int, reason: str
+) -> NutritionTarget:
+    """Set a calorie target (from the weekly adjustment), effective today, with macros from
+    the current weight and goal. Replaces a row already set today. Does not commit."""
+    m = eng.macros_for(calories, float(profile.weight_kg), profile.goal)
+    today = local_today(profile.timezone)
+    row = await repo.target_on(session, user.id, today)
+    if row is None:
+        row = NutritionTarget(user_id=user.id, effective_from=today)
+        repo.add(session, row)
+    row.calories_kcal, row.protein_g, row.carbs_g, row.fat_g = (
+        m.calories_kcal,
+        m.protein_g,
+        m.carbs_g,
+        m.fat_g,
+    )
+    row.reason = reason[:300]
+    await session.flush()
+    return row
+
+
 def _target_out(row: NutritionTarget) -> TargetOut:
     return TargetOut(
         effective_from=row.effective_from,

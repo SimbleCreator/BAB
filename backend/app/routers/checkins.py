@@ -3,9 +3,10 @@ from datetime import date
 from fastapi import APIRouter, status
 
 from app.core.deps import CurrentUser, SessionDep
+from app.schemas.adjustment import AdjustmentOut, CheckinSavedOut
 from app.schemas.checkin import CheckinIn, CheckinOut, CheckinStatusOut
 from app.schemas.common import ErrorOut
-from app.services import checkin_service
+from app.services import adjustment_service, checkin_service
 
 router = APIRouter(prefix="/checkins", tags=["checkins"])
 
@@ -24,13 +25,14 @@ async def checkin_status(user: CurrentUser, session: SessionDep) -> CheckinStatu
 
 @router.put(
     "/{day}",
-    response_model=CheckinOut,
+    response_model=CheckinSavedOut,
     responses=_errors,
-    summary="Create or replace the check-in for a day. The newest one updates profile weight.",
+    summary="Create or replace the check-in for a day. The newest one updates profile weight "
+    "and may run the weekly adjustment.",
 )
 async def save_checkin(
     day: date, data: CheckinIn, user: CurrentUser, session: SessionDep
-) -> CheckinOut:
+) -> CheckinSavedOut:
     return await checkin_service.save(session, user, day, data)
 
 
@@ -39,3 +41,12 @@ async def save_checkin(
 )
 async def delete_checkin(day: date, user: CurrentUser, session: SessionDep) -> None:
     await checkin_service.delete(session, user, day)
+
+
+@router.get(
+    "/adjustments",
+    response_model=list[AdjustmentOut],
+    summary="Weekly adjustments, newest first",
+)
+async def list_adjustments(user: CurrentUser, session: SessionDep) -> list[AdjustmentOut]:
+    return await adjustment_service.list_adjustments(session, user)

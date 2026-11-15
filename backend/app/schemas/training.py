@@ -68,6 +68,7 @@ class WeekOut(BaseModel):
     week_start: date = Field(description="Monday of the week")
     today: date
     split: str
+    note: str | None = Field(default=None, description="Why the plan last changed, if it did")
     days: list[PlanDayOut] = Field(description="Seven days, Monday first")
 
 

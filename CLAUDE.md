@@ -163,6 +163,8 @@ custom_foods       id PK, user_id FK, name, serving_label, calories_kcal, protei
 checkins           id PK, user_id FK, day, weight_kg, waist_cm, chest_cm, arms_cm,
                    thighs_cm, note           UNIQUE (user_id, day)
 milestones         user_id FK, code, unlocked_at, seen_at   PK (user_id, code)
+weekly_adjustments id PK, user_id FK, checkin_day, created_at, summary (JSON)
+                   UNIQUE (user_id, checkin_day)
 habits             id PK, user_id FK, type, baseline, period, pace_pct, started_on,
                    active
 habit_logs         id PK, habit_id FK, day, units, logged_at

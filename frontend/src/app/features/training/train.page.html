@@ -37,6 +37,10 @@
       }
     </div>
 
+    @if (w.note) {
+      <p class="plan-note"><mat-icon>tune</mat-icon> {{ w.note }}</p>
+    }
+
     <div class="strip" role="tablist" aria-label="Days of the week">
       @for (d of w.days; track d.day) {
         <button

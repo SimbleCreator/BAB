@@ -98,7 +98,7 @@ Same line all day for a user; changes every day.
 | Change | value minus the previous check-in's value (by date), rounded to 0.1 |
 | Profile weight | saving the newest check-in (latest date) sets the profile weight; back-filling an older date does not |
 | Deleting | does not change the profile weight |
-| Adjustment | the weekly adjustment engine runs after a check-in from M7 |
+| Adjustment | the weekly adjustment may run after saving the newest check-in (see below) |
 
 ## Milestones (`app/engines/milestone_engine.py`)
 
@@ -174,7 +174,7 @@ Same line all day for a user; changes every day.
 | Fat | 25% of calories / 9 |
 | Carbs | (calories - protein x 4 - fat x 9) / 4, never below 0 |
 | Rounding | calories, grams rounded to whole numbers |
-| When targets are set | at the end of onboarding, and when sex, age, height, weight, goal or training days change in the profile; effective from today (a second change on the same day replaces the first). Weekly adjustments arrive in M7 |
+| When targets are set | at the end of onboarding, and when sex, age, height, weight, goal or training days change in the profile; effective from today (a second change on the same day replaces the first). The weekly adjustment then moves calories up or down from there |
 | Target for a day | the newest target effective on or before that day; days before the first target use the first |
 | Foods | 198 foods with an Indian focus, approximate values per serving, marked "to be verified by the owner"; shown as estimates |
 | Diet filter | veg sees veg foods; egg sees veg and egg; non-veg sees all. Applies to search and suggestions |
@@ -192,3 +192,46 @@ Same line all day for a user; changes every day.
 | Servings | 0.5, 1 or 1.5, never over budget; chosen to minimise unused budget + 12.5% for each half serving away from 1 |
 | Ranking | lowest cost, then most protein per kcal |
 | Options | 3 per meal, picked from the best 9 and rotated by day so ideas change daily |
+
+## Weekly adjustment (`app/engines/adjustment_engine.py`)
+
+When it runs: after saving a check-in, if all of these hold, otherwise the check-in
+response explains why not:
+
+| Condition | Value |
+| --- | --- |
+| Check-ins | at least two |
+| Which | only the newest check-in (back-filling an older date never adjusts) |
+| Once per check-in | editing a check-in that already adjusted does not run it again |
+| Once a week | at least 6 days since the last adjustment's check-in |
+| Comparison | the latest check-in at least 6 days before this one |
+
+Nutrition, by weight change per week as a % of the earlier weight
+((new - old) x 7 / days between / old x 100):
+
+| Goal | Rule |
+| --- | --- |
+| Lose fat | loss under 0.25% -> 100 kcal less; loss over 1% -> 150 kcal more; otherwise no change (a gain counts as "under") |
+| Build muscle | gain under 0.1% -> 100 kcal more; gain over 0.5% -> 100 kcal less; otherwise no change |
+| Stay fit | gain over 0.5% -> 100 kcal less; loss over 0.5% -> 100 kcal more; otherwise no change |
+| Floor | never below 1,500 kcal (men) or 1,200 kcal (women) |
+| Base | the calorie target in effect on the check-in day |
+| New target | effective today; protein, fat and carbs recalculated from the new calories and current weight; the reason is stored |
+
+Training, by the 7 days before the check-in:
+
+| Rule | Value |
+| --- | --- |
+| Completion | planned workout days done / planned workout days in those 7 days |
+| No planned days | no change |
+| 80% or more | each exercise where every logged set met its target: +2 reps (or +5 s) up to the top of its range; already at the top -> its harder variation at the start of that range, same sets (skipped if it needs a bar you do not have or is already in the session) |
+| Under 50% | one set fewer for every exercise, never below 1 (finisher unchanged) |
+| Otherwise | no change |
+| Applies | from tomorrow; days up to today keep what they had. The adjusted week becomes the template that following weeks start from |
+
+Plan carry-over: a new week copies the previous week's template when goal, level,
+minutes, days and pull-up bar are unchanged, so progress builds week to week. A change
+to any of those rebuilds the plan from the rules (progress starts again).
+
+Summary: every adjustment stores plain lines of what changed and why, shown after the
+check-in, in the check-in history and on the Train page.

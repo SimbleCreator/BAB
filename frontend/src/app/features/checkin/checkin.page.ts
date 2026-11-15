@@ -21,7 +21,7 @@ import { LowerCasePipe } from '@angular/common';
 
 import { apiErrorMessage } from '../../core/api/api-error';
 import { CheckinsApi } from '../../core/api/checkins.api';
-import { CheckinIn, CheckinOut } from '../../core/api/models';
+import { AdjustmentOut, CheckinIn, CheckinOut } from '../../core/api/models';
 import { WeightChartComponent } from '../../shared/components/weight-chart.component';
 import { dayLabel, formatDay, parseDay } from '../../shared/format/dates';
 
@@ -52,6 +52,10 @@ export class CheckinPage {
 
   protected readonly status = rxResource({ stream: () => this.api.status() });
   protected readonly history = rxResource({ stream: () => this.api.list() });
+  protected readonly adjustments = rxResource({ stream: () => this.api.adjustments() });
+  /** Result of the last save on this page: the adjustment it ran, or why none ran. */
+  protected readonly justAdjusted = signal<AdjustmentOut | null>(null);
+  protected readonly adjustmentNote = signal<string | null>(null);
 
   protected readonly form = inject(NonNullableFormBuilder).group({
     day: [new Date(), Validators.required],
@@ -92,6 +96,10 @@ export class CheckinPage {
     this.form.controls.day.valueChanges.pipe(takeUntilDestroyed()).subscribe((d) => {
       if (d) this.formDay.set(formatDay(d));
     });
+  }
+
+  protected pct(v: number): string {
+    return `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
   }
 
   protected label(day: string): string {
@@ -151,13 +159,18 @@ export class CheckinPage {
     this.saving.set(true);
     this.error.set(null);
     this.api.save(formatDay(v.day), body).subscribe({
-      next: () => {
+      next: (saved) => {
         this.saving.set(false);
-        this.snack.open('Check-in saved. Your profile weight is up to date.', undefined, {
-          duration: 3000,
-        });
+        this.justAdjusted.set(saved.adjustment);
+        this.adjustmentNote.set(saved.adjustment_note);
+        this.snack.open(
+          saved.adjustment ? 'Check-in saved. Your plan was adjusted.' : 'Check-in saved.',
+          undefined,
+          { duration: 3000 },
+        );
         this.status.reload();
         this.history.reload();
+        this.adjustments.reload();
       },
       error: (err: unknown) => {
         this.saving.set(false);

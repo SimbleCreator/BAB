@@ -58,3 +58,31 @@ async def count_done(session: AsyncSession, user_id: int) -> int:
         )
         or 0
     )
+
+
+async def latest_plan_before(
+    session: AsyncSession, user_id: int, week_start: date
+) -> TrainingPlan | None:
+    return await session.scalar(
+        select(TrainingPlan)
+        .where(TrainingPlan.user_id == user_id, TrainingPlan.week_start < week_start)
+        .order_by(
+            TrainingPlan.week_start.desc(), TrainingPlan.created_at.desc(), TrainingPlan.id.desc()
+        )
+        .limit(1)
+    )
+
+
+async def sessions_with_sets(
+    session: AsyncSession, user_id: int, start: date, end: date
+) -> list[WorkoutSession]:
+    rows = await session.scalars(
+        select(WorkoutSession)
+        .where(
+            WorkoutSession.user_id == user_id,
+            WorkoutSession.day >= start,
+            WorkoutSession.day <= end,
+        )
+        .options(selectinload(WorkoutSession.sets))
+    )
+    return list(rows)

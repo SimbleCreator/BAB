@@ -101,3 +101,18 @@
 - The 7-day chart shows calories per day against the target.
 - Today shows "Food today" with Quick add.
 - Logging meals on 7 different days unlocks "A week of meals".
+
+### M7
+- First check-in: the page says it sets the starting point; nothing changes.
+- A check-in a week later: "Your plan was adjusted" lists the weight trend, the
+  calorie decision and the training decision. Eat's target and its "How your target
+  is set" reason match; Train shows "Updated after your check-in".
+- Check the calorie rule for your goal with the table in docs/rules.md (for fat loss,
+  losing less than 0.25% a week takes 100 kcal off).
+- Save the same check-in again: it says the adjustment already ran.
+- A check-in 3 days later: it says plans adjust once a week.
+- Log every planned workout of the week at or above target, then check in: reps go up
+  by 2 (or holds by 5 s) from tomorrow; at the top of the range the harder variation
+  replaces it.
+- Miss most workouts, then check in: one set fewer per exercise from tomorrow.
+- Next week's plan keeps the changes. Changing goal or days in Account starts fresh.

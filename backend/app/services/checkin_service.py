@@ -10,8 +10,9 @@ from app.engines import checkin_engine as eng
 from app.models.checkin import Checkin
 from app.models.user import User
 from app.repositories import checkin_repo
+from app.schemas.adjustment import CheckinSavedOut
 from app.schemas.checkin import CheckinIn, CheckinOut, CheckinStatusOut
-from app.services import milestone_service
+from app.services import adjustment_service, milestone_service
 from app.services.common import require_profile
 
 
@@ -54,7 +55,7 @@ async def status(session: AsyncSession, user: User) -> CheckinStatusOut:
     )
 
 
-async def save(session: AsyncSession, user: User, day: date, data: CheckinIn) -> CheckinOut:
+async def save(session: AsyncSession, user: User, day: date, data: CheckinIn) -> CheckinSavedOut:
     profile = await require_profile(session, user)
     if day > local_today(profile.timezone):
         raise AppError("You cannot check in for a future day.", code="future_day")
@@ -72,12 +73,15 @@ async def save(session: AsyncSession, user: User, day: date, data: CheckinIn) ->
     if latest is not None and latest.day == day:
         # The newest check-in is the user's current weight.
         profile.weight_kg = data.weight_kg
+    await session.flush()
+    adjustment, note = await adjustment_service.maybe_adjust(session, user, profile, day)
     await milestone_service.evaluate(session, user.id)
     await session.commit()
 
     rows = await checkin_repo.list_all(session, user.id)
     i = next(i for i, r in enumerate(rows) if r.day == day)
-    return _out(rows[i], rows[i - 1] if i else None)
+    out = _out(rows[i], rows[i - 1] if i else None)
+    return CheckinSavedOut(**out.model_dump(), adjustment=adjustment, adjustment_note=note)
 
 
 async def delete(session: AsyncSession, user: User, day: date) -> None:
