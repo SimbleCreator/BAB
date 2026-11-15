@@ -1,0 +1,23 @@
+# Local development database only. Backend and frontend run natively.
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: bab-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bab
+      POSTGRES_PASSWORD: bab_dev_password
+      POSTGRES_DB: bab
+    ports:
+      - "5432:5432"
+    volumes:
+      - bab_pgdata:/var/lib/postgresql/data
+      - ./backend/scripts/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bab -d bab"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  bab_pgdata:

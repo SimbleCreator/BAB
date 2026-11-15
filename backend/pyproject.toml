@@ -1,0 +1,44 @@
+[project]
+name = "bab-backend"
+version = "0.1.0"
+description = "B.A.B (Be A Beast) fitness buddy API"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.162.5",
+    "uvicorn[standard]>=0.54.0",
+    "pydantic>=2.14.3",
+    "pydantic-settings>=2.15.0",
+    "sqlalchemy[asyncio]>=2.0.57",
+    "asyncpg>=0.32.0",
+    "alembic>=1.20.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.2.0",
+    "httpx>=0.28.1",
+    "ruff>=0.17.5",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "ASYNC", "SIM"]
+ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

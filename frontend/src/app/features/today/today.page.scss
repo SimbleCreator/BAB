@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+mat-card {
+  margin-bottom: 16px;
+}
+
+.line-text {
+  font: var(--mat-sys-title-large);
+  margin: 8px 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+
+  &.ok mat-icon {
+    color: var(--mat-sys-primary);
+  }
+
+  &.error mat-icon {
+    color: var(--mat-sys-error);
+  }
+}
