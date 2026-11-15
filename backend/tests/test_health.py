@@ -24,5 +24,6 @@ async def test_every_route_has_a_response_schema(client):
             if ok == "204":
                 continue
             content = op["responses"][ok].get("content", {})
-            assert "application/json" in content, f"{method.upper()} {path} has no response model"
-            assert content["application/json"]["schema"], f"{method.upper()} {path}"
+            assert content, f"{method.upper()} {path} has no response model"
+            for media in content.values():
+                assert media.get("schema"), f"{method.upper()} {path} {media}"

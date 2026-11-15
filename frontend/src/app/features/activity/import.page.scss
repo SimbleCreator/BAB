@@ -1,0 +1,98 @@
+.back {
+  margin-left: -8px;
+}
+
+mat-card {
+  margin-bottom: 16px;
+}
+
+.steps {
+  padding-left: 20px;
+  margin: 8px 0 16px;
+
+  li {
+    margin-bottom: 8px;
+  }
+}
+
+code {
+  font-size: 0.9em;
+  background: var(--mat-sys-surface-container-high);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.small {
+  font: var(--mat-sys-body-small);
+}
+
+h2 {
+  font: var(--mat-sys-title-medium);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.done mat-icon {
+  color: var(--mat-sys-primary);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--mat-sys-body-medium);
+}
+
+th,
+td {
+  padding: 8px 10px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+th {
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+tr.bad td {
+  background: color-mix(in srgb, var(--mat-sys-error) 10%, transparent);
+}
+
+.err {
+  color: var(--mat-sys-error);
+  white-space: normal;
+}
+
+.exists {
+  color: var(--mat-sys-tertiary);
+}
+
+mat-slide-toggle {
+  display: block;
+  margin: 8px 0;
+}
+
+.counts {
+  font: var(--mat-sys-title-small);
+}

@@ -1,0 +1,128 @@
+<section class="bab-page">
+  <a mat-button routerLink="/activity" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Activity
+  </a>
+  <h1 class="bab-page-title">Import from CSV</h1>
+
+  <mat-card appearance="outlined">
+    <mat-card-content>
+      <ol class="steps">
+        <li>
+          Download the template and fill one row per day:
+          <code>date, steps, distance_km, active_kcal</code>. Dates look like
+          <code>2026-01-31</code>. Leave a cell blank if you don't have it.
+        </li>
+        <li>Choose the file. You'll see a preview before anything is saved.</li>
+      </ol>
+      <div class="buttons">
+        <a mat-stroked-button [href]="templateUrl" download="bab-activity-template.csv">
+          <mat-icon>download</mat-icon>
+          Template
+        </a>
+        <button mat-flat-button type="button" (click)="fileInput.click()" [disabled]="busy()">
+          <mat-icon>upload_file</mat-icon>
+          Choose CSV file
+        </button>
+        <input #fileInput hidden type="file" accept=".csv,text/csv" (change)="choose($event)" />
+      </div>
+      <p class="bab-muted small">Up to 1 MB.</p>
+    </mat-card-content>
+    @if (busy()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+  </mat-card>
+
+  @if (error()) {
+    <p class="bab-form-error" role="alert">{{ error() }}</p>
+  }
+
+  @if (result(); as r) {
+    <mat-card appearance="outlined" class="done">
+      <mat-card-content>
+        <h2><mat-icon>check_circle</mat-icon> Import finished</h2>
+        <p>
+          {{ r.created }} new {{ r.created === 1 ? 'day' : 'days' }} added,
+          {{ r.updated }} replaced.
+          @if (r.skipped_existing) {
+            {{ r.skipped_existing }} kept as they were.
+          }
+          @if (r.skipped_invalid) {
+            {{ r.skipped_invalid }} rows with errors skipped.
+          }
+        </p>
+        <div class="buttons">
+          <a mat-flat-button routerLink="/activity">See activity</a>
+          <button mat-button type="button" (click)="reset()">Import another file</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (preview(); as p) {
+    <h2>Preview: {{ file()?.name }}</h2>
+    @for (e of p.file_errors; track e) {
+      <p class="bab-form-error">{{ e }}</p>
+    }
+    @if (p.rows.length) {
+      <p class="counts">{{ counts() }}</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Line</th>
+              <th>Date</th>
+              <th class="num">Steps</th>
+              <th class="num">Distance</th>
+              <th class="num">kcal</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of p.rows; track row.line) {
+              <tr [class.bad]="row.errors.length">
+                <td>{{ row.line }}</td>
+                <td>{{ row.day ?? '-' }}</td>
+                <td class="num">{{ row.steps | int }}</td>
+                <td class="num">{{ row.distance_m | km }}</td>
+                <td class="num">{{ row.active_kcal | int }}</td>
+                <td>
+                  @if (row.errors.length) {
+                    <span class="err">{{ row.errors.join('; ') }}</span>
+                  } @else if (row.exists) {
+                    <span class="exists">already logged</span>
+                  } @else {
+                    new
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (p.existing_rows) {
+        <mat-slide-toggle [checked]="overwrite()" (change)="overwrite.set($event.checked)">
+          Replace {{ p.existing_rows }} {{ p.existing_rows === 1 ? 'day' : 'days' }} already logged
+        </mat-slide-toggle>
+      }
+      @if (p.invalid_rows) {
+        <p class="bab-muted small">
+          Rows with errors are skipped. Fix them and import again if needed.
+        </p>
+      }
+      <div class="buttons">
+        <button
+          mat-flat-button
+          type="button"
+          (click)="runImport()"
+          [disabled]="busy() || importCount() === 0"
+        >
+          Import {{ importCount() }} {{ importCount() === 1 ? 'day' : 'days' }}
+        </button>
+        <button mat-button type="button" (click)="reset()">Cancel</button>
+      </div>
+    }
+  }
+</section>

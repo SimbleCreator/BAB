@@ -1,0 +1,44 @@
+.back {
+  margin-left: -8px;
+}
+
+.day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.date-field {
+  width: 170px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+
+  button[type='submit'] {
+    min-width: 140px;
+    height: 48px;
+  }
+}
+
+.danger {
+  color: var(--mat-sys-error);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}

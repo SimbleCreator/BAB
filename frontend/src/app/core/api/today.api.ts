@@ -3,14 +3,14 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { HealthOut } from './models';
+import { TodayOut } from './models';
 
-/** Client for the backend `health` router. */
+/** Client for the backend `today` router. */
 @Injectable({ providedIn: 'root' })
-export class HealthApi {
+export class TodayApi {
   private readonly http = inject(HttpClient);
 
-  check(): Observable<HealthOut> {
-    return this.http.get<HealthOut>(`${environment.apiBaseUrl}/health`);
+  get(): Observable<TodayOut> {
+    return this.http.get<TodayOut>(`${environment.apiBaseUrl}/today`);
   }
 }

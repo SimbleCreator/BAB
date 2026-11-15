@@ -7,14 +7,16 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.content import load_all as load_content
 from app.core.config import get_settings
 from app.core.database import engine
 from app.core.errors import AppError
-from app.routers import auth, health, profile
+from app.routers import activity, auth, health, profile, today
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    load_content()
     yield
     await engine.dispose()
 
@@ -44,7 +46,7 @@ def create_app() -> FastAPI:
         allow_headers=["Authorization", "Content-Type"],
     )
     app.add_exception_handler(AppError, _app_error_handler)
-    for r in (health.router, auth.router, profile.router):
+    for r in (health.router, auth.router, profile.router, today.router, activity.router):
         app.include_router(r, prefix=settings.api_prefix)
     return app
 

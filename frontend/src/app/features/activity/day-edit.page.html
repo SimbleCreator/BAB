@@ -1,0 +1,105 @@
+<section class="bab-page">
+  <a mat-button [routerLink]="back() || '/activity'" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </a>
+
+  <div class="day-head">
+    <h1 class="bab-page-title">{{ title() }}</h1>
+    <mat-form-field class="date-field" subscriptSizing="dynamic">
+      <mat-label>Day</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [value]="dateValue()"
+        [max]="maxDate()"
+        (dateChange)="chooseDay($event.value)"
+        readonly
+        (click)="picker.open()"
+      />
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-datepicker #picker />
+    </mat-form-field>
+  </div>
+
+  @if (entry.isLoading() || todayRes.isLoading()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (entry.error() || todayRes.error()) {
+    <p class="bab-form-error">Could not load this day.</p>
+    <button mat-button type="button" (click)="entry.reload(); todayRes.reload()">Try again</button>
+  } @else if (isFuture()) {
+    <p class="bab-muted">This day has not happened yet. Pick today or an earlier day.</p>
+  } @else {
+    <p class="bab-muted">
+      Copy the numbers from your watch or phone health app. Leave a field blank if you don't have
+      it.
+    </p>
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <mat-form-field>
+        <mat-label>Steps</mat-label>
+        <input matInput type="number" inputmode="numeric" formControlName="steps" />
+        <mat-error>0 to 200,000.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Distance</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="decimal"
+          step="0.01"
+          formControlName="distance_km"
+        />
+        <span matTextSuffix>km</span>
+        @if (entry.value()?.distance_estimated) {
+          <mat-hint>
+            Blank: estimated {{ entry.value()!.distance_m | km }} from steps
+            <app-estimate />
+          </mat-hint>
+        } @else {
+          <mat-hint>Blank: estimated from steps.</mat-hint>
+        }
+        <mat-error>0 to 300 km.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Active calories</mat-label>
+        <input matInput type="number" inputmode="numeric" formControlName="active_kcal" />
+        <span matTextSuffix>kcal</span>
+        @if (entry.value()?.active_kcal_estimated) {
+          <mat-hint>
+            Blank: estimated {{ entry.value()!.active_kcal | int }} kcal from steps
+            <app-estimate />
+          </mat-hint>
+        } @else {
+          <mat-hint>Blank: estimated from steps and your weight.</mat-hint>
+        }
+        <mat-error>0 to 20,000.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Note (optional)</mat-label>
+        <textarea matInput formControlName="note" rows="2" maxlength="500"></textarea>
+      </mat-form-field>
+
+      @if (form.touched && form.hasError('empty')) {
+        <p class="bab-form-error">Enter at least one number.</p>
+      }
+      @if (error()) {
+        <p class="bab-form-error" role="alert">{{ error() }}</p>
+      }
+
+      <div class="actions">
+        <button mat-flat-button type="submit" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+        @if (entry.value()) {
+          <button mat-button type="button" class="danger" (click)="remove()" [disabled]="saving()">
+            {{ confirmDelete() ? 'Tap again to delete' : 'Delete this day' }}
+          </button>
+        }
+      </div>
+    </form>
+    <p class="bab-disclaimer">Estimates only, not medical advice.</p>
+  }
+</section>

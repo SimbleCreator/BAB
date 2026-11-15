@@ -24,3 +24,13 @@ class DietType(str, Enum):
     veg = "veg"
     egg = "egg"
     non_veg = "non_veg"
+
+
+class Source(str, Enum):
+    """Where an activity record came from. Automatic sources replace manual ones later."""
+
+    manual = "manual"
+    csv = "csv"
+    gpx = "gpx"
+    android = "android"
+    ios = "ios"

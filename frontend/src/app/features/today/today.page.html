@@ -1,34 +1,88 @@
 <section class="bab-page">
-  <h1 class="bab-page-title">Today</h1>
+  @if (today.isLoading() && !today.hasValue()) {
+    <div class="center"><mat-spinner diameter="40" /></div>
+  } @else if (today.error()) {
+    <h1 class="bab-page-title">Today</h1>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <p class="bab-form-error">Could not load today. Check your connection.</p>
+        <button mat-button type="button" (click)="today.reload()">Try again</button>
+      </mat-card-content>
+    </mat-card>
+  } @else if (today.value(); as t) {
+    <p class="bab-muted date">{{ dateLabel() }}</p>
+    <h1 class="bab-page-title">Hi {{ t.name }}</h1>
 
-  <mat-card appearance="outlined" class="line">
-    <mat-card-content>
-      <p class="line-text">Show up first. The results catch up later.</p>
-    </mat-card-content>
-  </mat-card>
+    <mat-card appearance="outlined" class="line">
+      <mat-card-content>
+        <mat-icon>bolt</mat-icon>
+        <p>{{ t.line }}</p>
+      </mat-card-content>
+    </mat-card>
 
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Server connection</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      @if (health.isLoading()) {
-        <div class="status">
-          <mat-spinner diameter="24" />
-          <span>Checking...</span>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="card-head">
+          <h2>Steps today</h2>
+          <span class="streak" [class.on]="t.current_streak > 0">
+            <mat-icon>local_fire_department</mat-icon>
+            {{ t.current_streak }} day streak
+          </span>
         </div>
-      } @else if (health.error()) {
-        <div class="status error">
-          <mat-icon>cloud_off</mat-icon>
-          <span>Cannot reach the server. Is the backend running?</span>
-        </div>
-        <button mat-button (click)="health.reload()">Try again</button>
-      } @else if (health.value(); as h) {
-        <div class="status ok">
-          <mat-icon>check_circle</mat-icon>
-          <span>Connected. API version {{ h.version }}.</span>
-        </div>
-      }
-    </mat-card-content>
-  </mat-card>
+
+        @if (t.activity; as a) {
+          <div class="bab-stat">{{ a.steps | int }}</div>
+          <mat-progress-bar mode="determinate" [value]="stepPercent()" />
+          <p class="bab-muted goal-text">
+            @if (stepsLeft() === 0) {
+              Goal of {{ t.step_goal | int }} reached. Nice work.
+            } @else {
+              {{ stepsLeft() | int }} to go for your {{ t.step_goal | int }} goal
+            }
+          </p>
+          <div class="pair">
+            <div>
+              <div class="num">{{ a.distance_m | km }}</div>
+              <div class="bab-muted">
+                distance
+                @if (a.distance_estimated) {
+                  <app-estimate />
+                }
+              </div>
+            </div>
+            <div>
+              <div class="num">{{ a.active_kcal | int }} kcal</div>
+              <div class="bab-muted">
+                active
+                @if (a.active_kcal_estimated) {
+                  <app-estimate />
+                }
+              </div>
+            </div>
+          </div>
+          <a mat-button [routerLink]="['/activity/day', t.day]" [queryParams]="{ back: '/today' }">
+            <mat-icon>edit</mat-icon>
+            Update numbers
+          </a>
+        } @else {
+          <p class="bab-muted">
+            Nothing logged yet. Copy today's numbers from your watch or phone.
+          </p>
+          <a
+            mat-flat-button
+            class="add"
+            [routerLink]="['/activity/day', t.day]"
+            [queryParams]="{ back: '/today' }"
+          >
+            <mat-icon>add</mat-icon>
+            Add today's numbers
+          </a>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <p class="bab-disclaimer">
+      Calories and distance marked "estimate" are estimates only, not medical advice.
+    </p>
+  }
 </section>

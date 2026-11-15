@@ -35,3 +35,18 @@ endpoints.
 | POST | `/auth/change-password` | bearer | Needs current password; other sessions end |
 | GET | `/profile` | bearer | Own profile; 404 `profile_missing` before onboarding |
 | PUT | `/profile` | bearer | Create (onboarding) or replace the profile |
+| GET | `/today` | bearer | Today screen: local date, name, line of the day, step goal, streak, today's activity |
+| GET | `/activity?from=&to=` | bearer | Logged days in a range (at most 366 days), oldest first |
+| GET | `/activity/summary?days=30` | bearer | One point per day ending today, totals, current and longest streak |
+| GET | `/activity/csv-template` | none | CSV template download |
+| POST | `/activity/import/preview` | bearer | Multipart `file`; parse and report row errors, nothing saved |
+| POST | `/activity/import` | bearer | Multipart `file` and `overwrite` (true/false); saves valid rows |
+| GET | `/activity/{day}` | bearer | One day; 404 `activity_missing` if nothing logged |
+| PUT | `/activity/{day}` | bearer | Create or replace a day (`source` becomes `manual`); future days rejected |
+| DELETE | `/activity/{day}` | bearer | Remove a day |
+
+Activity responses return the value to show. When `distance_estimated` or
+`active_kcal_estimated` is true, that field was blank and the value is an estimate;
+send it back as `null` when editing so it stays estimated.
+
+Most feature endpoints answer 409 `profile_missing` until onboarding is finished.

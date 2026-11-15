@@ -30,3 +30,12 @@ async def register(client: httpx.AsyncClient, email: str = "a@example.com") -> d
 
 def bearer(token_body: dict) -> dict[str, str]:
     return {"Authorization": f"Bearer {token_body['access_token']}"}
+
+
+async def onboard(client: httpx.AsyncClient, email: str = "a@example.com", **profile) -> dict:
+    """Register and finish onboarding. Returns auth headers."""
+    tok = await register(client, email)
+    h = bearer(tok)
+    r = await client.put("/api/v1/profile", json=PROFILE | profile, headers=h)
+    assert r.status_code == 200, r.text
+    return h

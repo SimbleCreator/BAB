@@ -1,0 +1,26 @@
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.content import motivational_lines
+from app.core.timeutil import local_today
+from app.engines import activity_engine
+from app.engines.lines_engine import line_of_the_day
+from app.models.user import User
+from app.repositories import activity_repo
+from app.schemas.today import TodayOut
+from app.services.activity_service import to_out
+from app.services.common import require_profile
+
+
+async def get_today(session: AsyncSession, user: User) -> TodayOut:
+    profile = await require_profile(session, user)
+    today = local_today(profile.timezone)
+    row = await activity_repo.get(session, user.id, today)
+    goal_days = await activity_repo.goal_days(session, user.id, profile.daily_step_goal)
+    return TodayOut(
+        day=today,
+        name=profile.name,
+        line=line_of_the_day(motivational_lines(), today, user.id),
+        step_goal=profile.daily_step_goal,
+        current_streak=activity_engine.current_streak(goal_days, today),
+        activity=to_out(row, profile) if row else None,
+    )

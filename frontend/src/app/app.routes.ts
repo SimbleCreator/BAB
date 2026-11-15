@@ -63,12 +63,18 @@ export const routes: Routes = [
       {
         path: 'activity',
         title: 'Activity - B.A.B',
-        loadComponent: upcoming,
-        data: {
-          title: 'Activity',
-          icon: 'directions_walk',
-          blurb: 'Log steps, distance and active calories for any day.',
-        },
+        loadComponent: () =>
+          import('./features/activity/activity.page').then((m) => m.ActivityPage),
+      },
+      {
+        path: 'activity/day/:day',
+        title: 'Log a day - B.A.B',
+        loadComponent: () => import('./features/activity/day-edit.page').then((m) => m.DayEditPage),
+      },
+      {
+        path: 'activity/import',
+        title: 'Import CSV - B.A.B',
+        loadComponent: () => import('./features/activity/import.page').then((m) => m.ImportPage),
       },
       {
         path: 'train',

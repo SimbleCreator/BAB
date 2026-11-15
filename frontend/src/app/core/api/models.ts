@@ -71,3 +71,84 @@ export interface ProfileIn {
 export interface ProfileOut extends ProfileIn {
   updated_at: string;
 }
+
+// activity router -----------------------------------------------------------
+
+export type Source = 'manual' | 'csv' | 'gpx' | 'android' | 'ios';
+
+export interface ActivityIn {
+  steps: number | null;
+  /** Metres. */
+  distance_m: number | null;
+  active_kcal: number | null;
+  note: string | null;
+}
+
+export interface ActivityOut {
+  /** YYYY-MM-DD, the user's local date. */
+  day: string;
+  steps: number | null;
+  distance_m: number | null;
+  active_kcal: number | null;
+  distance_estimated: boolean;
+  active_kcal_estimated: boolean;
+  source: Source;
+  note: string | null;
+  updated_at: string;
+}
+
+export interface DayPoint {
+  day: string;
+  has_entry: boolean;
+  steps: number;
+  distance_m: number;
+  active_kcal: number;
+  goal_met: boolean;
+}
+
+export interface ActivitySummaryOut {
+  today: string;
+  step_goal: number;
+  current_streak: number;
+  longest_streak: number;
+  total_steps: number;
+  total_distance_m: number;
+  /** Oldest first, ending today. */
+  days: DayPoint[];
+}
+
+export interface CsvRowOut {
+  line: number;
+  day: string | null;
+  steps: number | null;
+  distance_m: number | null;
+  active_kcal: number | null;
+  errors: string[];
+  exists: boolean;
+}
+
+export interface CsvPreviewOut {
+  file_errors: string[];
+  rows: CsvRowOut[];
+  valid_rows: number;
+  invalid_rows: number;
+  existing_rows: number;
+}
+
+export interface CsvImportOut {
+  created: number;
+  updated: number;
+  skipped_existing: number;
+  skipped_invalid: number;
+}
+
+// today router --------------------------------------------------------------
+
+export interface TodayOut {
+  day: string;
+  name: string;
+  line: string;
+  step_goal: number;
+  current_streak: number;
+  activity: ActivityOut | null;
+}

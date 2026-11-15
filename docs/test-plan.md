@@ -27,3 +27,20 @@
 - Sign out returns to Sign in; reloading an app URL stays on Sign in.
 - 11 quick failed logins show "Too many attempts".
 - CLI: `python -m app.cli reset-password <email>` and `make-admin <email>`.
+
+### M2
+- Today with nothing logged shows the line of the day and "Add today's numbers".
+- Add only steps: Today shows distance and active calories with an "estimate" label.
+- Check the estimate: distance = steps x height_cm x 0.415 / 100 m;
+  calories = steps x 0.04 x weight_kg / 70.
+- Edit the day: estimated fields are blank with the estimate shown as a hint. Enter a
+  distance and save: the "estimate" label goes away for distance only.
+- Activity: "Add a past day" opens a calendar with future days disabled.
+- Delete a day needs a second tap.
+- Import: download the template, add rows (include a bad date, a future date and a
+  duplicate date), choose it. The preview lists each problem by line. Days already
+  logged are kept unless "Replace" is switched on.
+- A file over 1 MB is refused before upload.
+- Chart: 7 and 30 days, goal days in orange, dashed goal line. Streak and best streak
+  match the data.
+- Works at 360 px and on desktop.
