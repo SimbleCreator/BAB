@@ -3,6 +3,7 @@
 A fitness buddy web app: training and eating plans, daily activity, runs, weekly
 check-ins, milestones and an optional smoking or drinking reduction plan.
 Product spec and working rules: [CLAUDE.md](CLAUDE.md).
+Step-by-step local run and test guide: [START_PROCEDURES.md](START_PROCEDURES.md).
 
 ```
 backend/    FastAPI + SQLAlchemy (async) + Alembic + PostgreSQL
