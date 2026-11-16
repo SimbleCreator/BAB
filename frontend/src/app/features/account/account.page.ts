@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -62,6 +69,12 @@ export class AccountPage {
   protected readonly pwError = signal<string | null>(null);
 
   constructor() {
+    // A Google-only account sets a first password: no current password to ask for.
+    effect(() => {
+      const c = this.pwForm.controls.current_password;
+      c.setValidators(this.hasPassword() ? Validators.required : null);
+      c.updateValueAndValidity();
+    });
     effect(() => {
       const p = this.profile.value();
       if (p) {
@@ -112,6 +125,10 @@ export class AccountPage {
     });
   }
 
+  /** False for accounts that only sign in with Google: they set a first password. */
+  protected readonly hasPassword = computed(() => this.auth.user()?.has_password ?? true);
+  protected readonly googleLinked = computed(() => this.auth.user()?.google_linked ?? false);
+
   protected changePassword(): void {
     if (this.pwForm.invalid) {
       this.pwForm.markAllAsTouched();
@@ -119,13 +136,22 @@ export class AccountPage {
     }
     this.pwSaving.set(true);
     this.pwError.set(null);
-    this.auth.changePassword(this.pwForm.getRawValue()).subscribe({
+    const v = this.pwForm.getRawValue();
+    const first = !this.hasPassword();
+    const body = first
+      ? { new_password: v.new_password }
+      : { current_password: v.current_password, new_password: v.new_password };
+    this.auth.changePassword(body).subscribe({
       next: () => {
         this.pwSaving.set(false);
         this.pwForm.reset();
-        this.snack.open('Password changed. Other devices were signed out.', undefined, {
-          duration: 3500,
-        });
+        this.snack.open(
+          first
+            ? 'Password set. You can now also sign in with your email.'
+            : 'Password changed. Other devices were signed out.',
+          undefined,
+          { duration: 3500 },
+        );
       },
       error: (err: unknown) => {
         this.pwSaving.set(false);
@@ -137,7 +163,8 @@ export class AccountPage {
   private readonly accountApi = inject(AccountApi);
   protected readonly exporting = signal(false);
   protected readonly deleteForm = this.fb.group({
-    password: ['', Validators.required],
+    password: [''],
+    email: [''],
     confirm: [false, Validators.requiredTrue],
   });
   protected readonly deleting = signal(false);
@@ -163,6 +190,12 @@ export class AccountPage {
   }
 
   protected deleteAccount(): void {
+    const d = this.deleteForm.getRawValue();
+    if (this.hasPassword() ? !d.password : !d.email.trim()) {
+      this.deleteForm.controls[this.hasPassword() ? 'password' : 'email'].setErrors({
+        required: true,
+      });
+    }
     if (this.deleteForm.invalid) {
       this.deleteForm.markAllAsTouched();
       return;
@@ -170,7 +203,11 @@ export class AccountPage {
     this.deleting.set(true);
     this.deleteError.set(null);
     this.accountApi
-      .delete({ password: this.deleteForm.getRawValue().password, confirm: true })
+      .delete(
+        this.hasPassword()
+          ? { password: d.password, confirm: true }
+          : { email: d.email.trim(), confirm: true },
+      )
       .subscribe({
         next: () => {
           this.deleting.set(false);

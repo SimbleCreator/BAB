@@ -2,8 +2,10 @@
 # connect-src lists the font and map hosts because the service worker fetches those
 # files on the page's behalf, and a worker's own requests are checked against
 # connect-src (with only 'self', icons and fonts fail to load once it is active).
+# accounts.google.com/gsi/ is Sign in with Google: its script, button frame, styles and
+# the worker's fetch of the script (only loaded when BAB_GOOGLE_CLIENT_ID is set).
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://tile.openstreetmap.org; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://tile.openstreetmap.org https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), camera=(), microphone=()

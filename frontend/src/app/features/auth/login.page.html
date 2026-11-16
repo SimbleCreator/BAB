@@ -39,7 +39,11 @@
       {{ pending() ? 'Signing in...' : 'Sign in' }}
     </button>
   </form>
+  <app-google-sign-in (signedIn)="afterGoogle($event)" />
 
-  <p class="bab-muted">Forgot your password? Contact the admin to reset it.</p>
+  <p class="bab-muted">
+    Forgot your password? Contact the admin to reset it. Signed up with Google? Use the Google
+    button.
+  </p>
   <p>New here? <a routerLink="/register">Create an account</a></p>
 </section>

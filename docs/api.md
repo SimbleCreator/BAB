@@ -31,8 +31,10 @@ endpoints.
 | POST | `/auth/login` | none | Sign in, returns tokens |
 | POST | `/auth/refresh` | cookie | Rotate refresh cookie, new access token |
 | POST | `/auth/logout` | cookie | Revoke the refresh token, clear cookie |
-| GET | `/auth/me` | bearer | Current user, including `has_profile` |
-| POST | `/auth/change-password` | bearer | Needs current password; other sessions end |
+| GET | `/auth/me` | bearer | Current user, including `has_profile`, `has_password` and `google_linked` |
+| POST | `/auth/change-password` | bearer | Needs current password (except to set a first one on a Google-only account); other sessions end |
+| GET | `/auth/google/config` | none | `{enabled, client_id}` for the Google button |
+| POST | `/auth/google` | none | `{credential, is_adult?, accepts_privacy?}`: sign in or sign up with a Google ID token; 400 `consent_required` for a new user without consent; returns tokens and sets the refresh cookie |
 | GET | `/profile` | bearer | Own profile; 404 `profile_missing` before onboarding |
 | PUT | `/profile` | bearer | Create (onboarding) or replace the profile, including the optional "Know me" fields (city, state, work_type, food_source, wake_time, usual_foods, sleep_hours, sweet_drinks_per_day, fasting_note, food_budget_inr); the response adds `region` |
 | GET | `/profile/options` | bearer | States (code, name, region), work types, food sources and the usual-foods limit |

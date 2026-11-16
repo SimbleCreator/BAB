@@ -46,7 +46,8 @@ All data is stored per user, per day, on the server.
 Backend
 - Python, FastAPI, Pydantic v2, SQLAlchemy 2 (async), Alembic, PostgreSQL
 - Auth: argon2 password hashing, JWT access token, refresh token in an httpOnly
-  cookie
+  cookie; Sign in with Google verified with PyJWT (`pyjwt[crypto]`) against Google's
+  public keys, using Google Identity Services in the browser (no Google SDK on the server)
 - Tests: pytest, httpx test client
 - GPX parsing with defusedxml (never the standard XML parser on uploads)
 

@@ -20,8 +20,9 @@ import { publicConfigResource } from './legal';
       <h2>What we store</h2>
       <ul>
         <li>
-          Your account: email address, a scrambled (hashed) password, when you agreed to this policy
-          and when you last signed in.
+          Your account: email address, a scrambled (hashed) password if you set one, your Google
+          account id if you sign in with Google, when you agreed to this policy and when you last
+          signed in.
         </li>
         <li>
           Your profile: name, age, sex, height, weight, goal, training preferences, diet type, step
@@ -59,6 +60,11 @@ import { publicConfigResource } from './legal';
         Your data is not sold or shared with anyone. It is kept on the servers that run the app. Map
         tiles are loaded from OpenStreetMap, which sees the map area you view but not your account.
         Fonts are loaded from Google Fonts, which receives your IP address when the app loads.
+      </p>
+      <p>
+        If you use "Continue with Google", Google tells us your email address and a Google account
+        id, and confirms the email is yours. We keep only those two. Google knows you signed in to
+        B.A.B; nothing you log in B.A.B is sent to Google.
       </p>
       <p>
         Bounce, the AI coach, is the one exception. Only when you ask Bounce for a plan, the server

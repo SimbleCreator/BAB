@@ -27,7 +27,14 @@ class ExportOut(BaseModel):
 
 
 class DeleteAccountIn(BaseModel):
-    password: str = Field(min_length=1, max_length=128)
+    password: str | None = Field(
+        default=None, min_length=1, max_length=128, description="Required when the account has one"
+    )
+    email: str | None = Field(
+        default=None,
+        max_length=254,
+        description="Google-only accounts (no password) type their email to confirm instead",
+    )
     confirm: Literal[True] = Field(description="Must be true: the user confirms permanent removal")
 
 

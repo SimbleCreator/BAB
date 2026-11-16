@@ -1,4 +1,4 @@
-"""Accounts: register, login, refresh rotation, logout, change password."""
+"""Accounts: register, login (password or Google), refresh rotation, logout, change password."""
 
 from dataclasses import dataclass
 from datetime import timedelta
@@ -6,7 +6,7 @@ from datetime import timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.core.errors import AppError, AuthError, ConflictError
+from app.core.errors import AppError, AuthError, ConflictError, UnavailableError
 from app.core.security import (
     DUMMY_PASSWORD_HASH,
     create_access_token,
@@ -19,7 +19,16 @@ from app.core.security import (
 )
 from app.models.user import RefreshToken, User
 from app.repositories import profile_repo, user_repo
-from app.schemas.auth import ChangePasswordIn, LoginIn, RegisterIn, TokenOut, UserOut
+from app.schemas.auth import (
+    ChangePasswordIn,
+    GoogleConfigOut,
+    GoogleSignInIn,
+    LoginIn,
+    RegisterIn,
+    TokenOut,
+    UserOut,
+)
+from app.services.google_auth import GoogleTokenError, GoogleVerifier
 
 INVALID_LOGIN = "Email or password is wrong."
 
@@ -38,6 +47,8 @@ async def user_out(session: AsyncSession, user: User) -> UserOut:
         is_admin=user.is_admin,
         created_at=user.created_at,
         has_profile=has_profile,
+        has_password=user.password_hash is not None,
+        google_linked=user.google_sub is not None,
     )
 
 
@@ -80,6 +91,11 @@ async def login(session: AsyncSession, data: LoginIn) -> AuthResult:
     if user is None:
         verify_password(DUMMY_PASSWORD_HASH, data.password)
         raise AuthError(INVALID_LOGIN, code="invalid_login")
+    if user.password_hash is None:
+        verify_password(DUMMY_PASSWORD_HASH, data.password)
+        raise AuthError(
+            "This account signs in with Google. Use the Google button.", code="use_google"
+        )
     if not verify_password(user.password_hash, data.password):
         raise AuthError(INVALID_LOGIN, code="invalid_login")
     if not user.is_active:
@@ -125,11 +141,69 @@ async def logout(session: AsyncSession, raw_token: str | None) -> None:
 
 
 async def change_password(session: AsyncSession, user: User, data: ChangePasswordIn) -> AuthResult:
-    if not verify_password(user.password_hash, data.current_password):
+    """Change the password, or set a first one on a Google-only account."""
+    if user.password_hash is not None and not verify_password(
+        user.password_hash, data.current_password or ""
+    ):
         raise AppError("Current password is wrong.", code="wrong_password")
     user.password_hash = hash_password(data.new_password)
     # Sign out every other device; this one gets a fresh session.
     await user_repo.revoke_all_refresh_tokens(session, user.id, utcnow())
+    result = await _issue(session, user)
+    await session.commit()
+    return result
+
+
+def google_config() -> GoogleConfigOut:
+    client_id = get_settings().google_client_id
+    return GoogleConfigOut(enabled=bool(client_id), client_id=client_id or None)
+
+
+async def google_sign_in(
+    session: AsyncSession, verifier: GoogleVerifier | None, data: GoogleSignInIn
+) -> AuthResult:
+    """Sign in with a Google ID token.
+
+    The Google account is matched by Google's id first, then by verified email (which links
+    Google to an existing password account). With no match, a new account is created, but
+    only when the user has confirmed 18+ and the privacy policy (else `consent_required`).
+    """
+    if verifier is None:
+        raise UnavailableError("Sign in with Google is not set up.", code="google_disabled")
+    try:
+        identity = await verifier.verify(data.credential)
+    except GoogleTokenError as exc:
+        raise AuthError("Google sign-in failed. Try again.", code="google_invalid") from exc
+
+    now = utcnow()
+    user = await user_repo.get_by_google_sub(session, identity.sub)
+    if user is None:
+        user = await user_repo.get_by_email(session, identity.email)
+        if user is not None:
+            if user.google_sub is not None:
+                # The email belongs to an account linked to a different Google account.
+                raise AuthError("Google sign-in failed. Try again.", code="google_mismatch")
+            user.google_sub = identity.sub
+    if user is None:
+        if not (data.is_adult and data.accepts_privacy):
+            raise AppError(
+                "Confirm you are 18 or older and accept the privacy policy to create your account.",
+                code="consent_required",
+            )
+        user = await user_repo.add(
+            session,
+            User(
+                email=identity.email,
+                password_hash=None,
+                google_sub=identity.sub,
+                consent_at=now,
+                last_login_at=now,
+            ),
+        )
+        await session.refresh(user)
+    if not user.is_active:
+        raise AuthError("This account is disabled. Contact the admin.", code="account_disabled")
+    user.last_login_at = now
     result = await _issue(session, user)
     await session.commit()
     return result

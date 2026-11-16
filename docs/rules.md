@@ -14,7 +14,13 @@ medical advice" note.
 | Refresh token | 48 random bytes, stored as SHA-256, 30 days (`BAB_REFRESH_TOKEN_DAYS`) |
 | Refresh rotation | every refresh revokes the used token and issues a new one |
 | Refresh reuse | a revoked token presented again revokes every session of that user |
-| Change password | requires current password; signs out all other sessions |
+| Change password | requires current password; signs out all other sessions. A Google-only account (no password) sets a first password without one |
+| Sign in with Google | on only when `BAB_GOOGLE_CLIENT_ID` is set. The browser sends Google's ID token; the API checks the RS256 signature against Google's published keys (cached 1 hour), audience = the client id, issuer accounts.google.com, expiry (30 s leeway) and `email_verified` true |
+| Google account matching | by Google id (`sub`) first; else by email, which links Google to the existing account; an email already linked to a different Google id is refused (`google_mismatch`) |
+| New Google user | created only with `is_adult` and `accepts_privacy` true, else 400 `consent_required` (the app asks, then sends the same token again); no password is stored |
+| Google rate limit | shares the login limit (10 per IP per 5 minutes) |
+| Email sign-in, Google-only account | refused with `use_google` |
+| Delete account | password; Google-only accounts type their email instead |
 | Admin reset | `python -m app.cli reset-password <email>` signs out all sessions |
 | Login rate limit | 10 attempts per IP per 5 minutes |
 | Register rate limit | 5 attempts per IP per hour |

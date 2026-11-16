@@ -14,6 +14,10 @@ async def get_by_email(session: AsyncSession, email: str) -> User | None:
     return await session.scalar(select(User).where(User.email == email))
 
 
+async def get_by_google_sub(session: AsyncSession, sub: str) -> User | None:
+    return await session.scalar(select(User).where(User.google_sub == sub))
+
+
 async def add(session: AsyncSession, user: User) -> User:
     session.add(user)
     await session.flush()

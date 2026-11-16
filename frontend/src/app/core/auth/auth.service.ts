@@ -3,7 +3,14 @@ import { Router } from '@angular/router';
 import { Observable, catchError, finalize, firstValueFrom, map, of, shareReplay, tap } from 'rxjs';
 
 import { AuthApi } from '../api/auth.api';
-import { ChangePasswordIn, LoginIn, RegisterIn, TokenOut, UserOut } from '../api/models';
+import {
+  ChangePasswordIn,
+  GoogleSignInIn,
+  LoginIn,
+  RegisterIn,
+  TokenOut,
+  UserOut,
+} from '../api/models';
 
 /**
  * Session state. The access token lives only in memory; the refresh token is an
@@ -42,6 +49,10 @@ export class AuthService {
 
   register(body: RegisterIn): Observable<UserOut> {
     return this.api.register(body).pipe(map((t) => this.accept(t)));
+  }
+
+  googleSignIn(body: GoogleSignInIn): Observable<UserOut> {
+    return this.api.google(body).pipe(map((t) => this.accept(t)));
   }
 
   changePassword(body: ChangePasswordIn): Observable<UserOut> {

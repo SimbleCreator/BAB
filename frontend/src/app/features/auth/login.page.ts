@@ -7,11 +7,14 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 
 import { apiErrorMessage } from '../../core/api/api-error';
+import { UserOut } from '../../core/api/models';
 import { AuthService } from '../../core/auth/auth.service';
+import { GoogleSignInComponent } from './google-sign-in.component';
 
 @Component({
   selector: 'app-login-page',
   imports: [
+    GoogleSignInComponent,
     ReactiveFormsModule,
     RouterLink,
     MatFormFieldModule,
@@ -54,6 +57,10 @@ export class LoginPage {
         this.error.set(apiErrorMessage(err));
       },
     });
+  }
+
+  protected afterGoogle(user: UserOut): void {
+    void this.router.navigateByUrl(user.has_profile ? this.safeReturnUrl() : '/onboarding');
   }
 
   private safeReturnUrl(): string {

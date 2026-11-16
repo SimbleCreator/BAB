@@ -25,8 +25,22 @@ export interface LoginIn {
 }
 
 export interface ChangePasswordIn {
-  current_password: string;
+  /** Omit only to set a first password on a Google-only account. */
+  current_password?: string;
   new_password: string;
+}
+
+export interface GoogleSignInIn {
+  /** The ID token from Google Identity Services. */
+  credential: string;
+  /** Needed only when this creates a new account. */
+  is_adult?: boolean;
+  accepts_privacy?: boolean;
+}
+
+export interface GoogleConfigOut {
+  enabled: boolean;
+  client_id: string | null;
 }
 
 export interface UserOut {
@@ -35,6 +49,9 @@ export interface UserOut {
   is_admin: boolean;
   created_at: string;
   has_profile: boolean;
+  /** False for Google-only accounts. */
+  has_password: boolean;
+  google_linked: boolean;
 }
 
 export interface TokenOut {
@@ -741,7 +758,10 @@ export interface HistoryDayOut {
 // account router -------------------------------------------------------------
 
 export interface DeleteAccountIn {
-  password: string;
+  /** Required when the account has a password. */
+  password?: string;
+  /** Google-only accounts type their email instead. */
+  email?: string;
   confirm: true;
 }
 

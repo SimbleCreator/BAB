@@ -52,6 +52,7 @@
       {{ pending() ? 'Creating account...' : 'Create account' }}
     </button>
   </form>
+  <app-google-sign-in (signedIn)="afterGoogle($event)" />
 
   <p>Already have an account? <a routerLink="/login">Sign in</a></p>
 </section>

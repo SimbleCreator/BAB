@@ -64,6 +64,10 @@ class Settings(BaseSettings):
     ai_json_mode: bool = True
     ai_daily_plan_limit: int = 5
 
+    # Sign in with Google: the OAuth web client id from Google Cloud Console (it is public,
+    # not a secret). Empty switches the Google button off.
+    google_client_id: str = ""
+
     @property
     def ai_enabled(self) -> bool:
         return bool(self.ai_api_key)

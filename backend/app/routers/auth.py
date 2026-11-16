@@ -10,9 +10,18 @@ from app.core.cookies import (
 )
 from app.core.deps import CurrentUser, SessionDep
 from app.core.rate_limit import login_limiter, register_limiter
-from app.schemas.auth import ChangePasswordIn, LoginIn, RegisterIn, TokenOut, UserOut
+from app.schemas.auth import (
+    ChangePasswordIn,
+    GoogleConfigOut,
+    GoogleSignInIn,
+    LoginIn,
+    RegisterIn,
+    TokenOut,
+    UserOut,
+)
 from app.schemas.common import ErrorOut
 from app.services import auth_service
+from app.services.google_auth import GoogleVerifier, get_google_verifier
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -38,6 +47,36 @@ async def register(data: RegisterIn, session: SessionDep, response: Response) ->
 )
 async def login(data: LoginIn, session: SessionDep, response: Response) -> TokenOut:
     result = await auth_service.login(session, data)
+    set_refresh_cookie(response, result.refresh_token)
+    return result.token
+
+
+@router.get(
+    "/google/config",
+    response_model=GoogleConfigOut,
+    summary="Whether Sign in with Google is on, and the public client id for the button",
+)
+async def google_config() -> GoogleConfigOut:
+    return auth_service.google_config()
+
+
+@router.post(
+    "/google",
+    response_model=TokenOut,
+    dependencies=[Depends(login_limiter)],
+    responses={**_errors, 400: {"model": ErrorOut}, 503: {"model": ErrorOut}},
+    summary="Sign in (or sign up) with a Google ID token",
+    description="Matches the Google account, then the verified email (linking it). With no "
+    "match a new account is created only when is_adult and accepts_privacy are true; "
+    "otherwise 400 consent_required, and the client asks and sends the same token again.",
+)
+async def google_sign_in(
+    data: GoogleSignInIn,
+    session: SessionDep,
+    response: Response,
+    verifier: Annotated[GoogleVerifier | None, Depends(get_google_verifier)],
+) -> TokenOut:
+    result = await auth_service.google_sign_in(session, verifier, data)
     set_refresh_cookie(response, result.refresh_token)
     return result.token
 

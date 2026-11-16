@@ -11,7 +11,10 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(254), unique=True)
-    password_hash: Mapped[str] = mapped_column(String(255))
+    # Null for accounts that only sign in with Google.
+    password_hash: Mapped[str | None] = mapped_column(String(255))
+    # Google's stable account id ("sub"), once the account has signed in with Google.
+    google_sub: Mapped[str | None] = mapped_column(String(255), unique=True)
     is_admin: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, server_default="true")
     consent_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))

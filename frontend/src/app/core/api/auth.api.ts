@@ -3,7 +3,15 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ChangePasswordIn, LoginIn, RegisterIn, TokenOut, UserOut } from './models';
+import {
+  ChangePasswordIn,
+  GoogleConfigOut,
+  GoogleSignInIn,
+  LoginIn,
+  RegisterIn,
+  TokenOut,
+  UserOut,
+} from './models';
 
 /** Client for the backend `auth` router. */
 @Injectable({ providedIn: 'root' })
@@ -17,6 +25,14 @@ export class AuthApi {
 
   login(body: LoginIn): Observable<TokenOut> {
     return this.http.post<TokenOut>(`${this.base}/login`, body);
+  }
+
+  googleConfig(): Observable<GoogleConfigOut> {
+    return this.http.get<GoogleConfigOut>(`${this.base}/google/config`);
+  }
+
+  google(body: GoogleSignInIn): Observable<TokenOut> {
+    return this.http.post<TokenOut>(`${this.base}/google`, body);
   }
 
   refresh(): Observable<TokenOut> {

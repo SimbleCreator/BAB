@@ -129,8 +129,11 @@ async def export(session: AsyncSession, user: User) -> ExportOut:
 
 async def delete_account(session: AsyncSession, user: User, data: DeleteAccountIn) -> None:
     """Permanent: the database cascades the delete to every row the user owns."""
-    if not verify_password(user.password_hash, data.password):
-        raise AppError("Password is wrong.", code="wrong_password")
+    if user.password_hash is not None:
+        if not verify_password(user.password_hash, data.password or ""):
+            raise AppError("Password is wrong.", code="wrong_password")
+    elif (data.email or "").strip().lower() != user.email:
+        raise AppError("Type your account email to confirm.", code="wrong_email")
     await session.delete(user)
     await session.commit()
 

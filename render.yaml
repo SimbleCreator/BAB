@@ -29,6 +29,9 @@ services:
       # OpenRouter key (sk-or-...). Leave empty to switch Bounce off.
       - key: BAB_AI_API_KEY
         sync: false
+      # Google OAuth web client id (public). Leave empty to hide Sign in with Google.
+      - key: BAB_GOOGLE_CLIENT_ID
+        sync: false
       - key: BAB_JWT_SECRET
         generateValue: true
       - key: BAB_COOKIE_SAMESITE

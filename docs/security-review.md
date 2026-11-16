@@ -17,6 +17,11 @@ test that covers the item.
 | Change password needs the current one; other sessions end | done | `test_change_password` |
 | JWT algorithm pinned, secret strong in production | done | HS256 only; production refuses weak/dev secret: `test_production_refuses_weak_secret` |
 | Adults only, consent recorded | done | `RegisterIn`; `test_register_validation` |
+| Google ID token checked on the server (signature RS256 with Google's keys, audience, issuer, expiry, verified email) | added in M13 | `services/google_auth.py`; `test_real_verifier_accepts_good_token`, `test_real_verifier_rejects`, `test_real_verifier_rejects_other_signature` |
+| Google sign-up still requires 18+ and consent | added in M13 | `test_new_user_needs_consent_then_is_created` |
+| An email linked to one Google account cannot be taken over by another | added in M13 | `test_email_linked_to_another_google_account_is_refused` |
+| Google sign-in rate limited like login; disabled accounts refused | added in M13 | `login_limiter` on `/auth/google`; `test_bad_token_and_disabled_account` |
+| CSP allows only `accounts.google.com/gsi/` for the Google button (script, style, frame, connect) | added in M13 | `frontend/public/_headers` |
 
 ## Data access
 

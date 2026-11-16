@@ -121,6 +121,31 @@ cd "/home/bharat/Bharaths_Personal/BAB APP/backend" && BAB_DATABASE_URL='NEON_UR
 
 The same way works for `reset-password user@example.com --generate`.
 
+### Step 5b (optional): Sign in with Google
+
+Free; needs a Google account. Only the client id is used (no client secret).
+
+1. Open https://console.cloud.google.com, create a project (for example "BAB").
+2. **APIs & Services > OAuth consent screen** (shown as **Google Auth Platform**):
+   - User type **External**; app name "B.A.B"; your support email; developer email.
+   - **Branding**: add the home page `https://beabeast.pages.dev`, the privacy page
+     `https://beabeast.pages.dev/privacy` and terms `https://beabeast.pages.dev/terms`.
+   - Scopes: none to add. Sign in with Google only uses `openid`, `email` and `profile`,
+     which need no Google review.
+   - **Audience**: press **Publish app** so anyone can sign in (while in "Testing" only
+     the test users you list can).
+3. **Clients > Create client**: type **Web application**, name "B.A.B web".
+   - **Authorized JavaScript origins**: `https://beabeast.pages.dev`, plus
+     `http://localhost` and `http://localhost:4200` for local development.
+   - **Authorized redirect URIs**: leave empty (the button uses a popup).
+4. Copy the **Client ID** (ends in `.apps.googleusercontent.com`).
+5. Render > `bab-api` > **Environment**: add `BAB_GOOGLE_CLIENT_ID` with that value and
+   save (Render redeploys). For local development put the same line in `backend/.env`.
+6. Open the site: "Continue with Google" appears under the sign-in and register forms.
+
+The site's security headers (`frontend/public/_headers`) already allow Google's sign-in
+script and popup from `accounts.google.com/gsi/`.
+
 ### Step 6: Updates
 
 Push to `main`: Render rebuilds the API when `backend/` changes and Cloudflare rebuilds

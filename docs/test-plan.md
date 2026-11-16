@@ -215,3 +215,17 @@
 - 28 days after the first check-in a card appears: highlights, a then/now table and
   4-week stats; Home shows "Your 4-week card is ready" until Progress is opened.
 
+### M13 (Sign in with Google)
+- Without `BAB_GOOGLE_CLIENT_ID`: no Google button on sign-in or register; email sign-in
+  works as before.
+- With a real client id (docs/deploy.md, Step 5b): "Continue with Google" shows under
+  both forms. A new Google user sees "Create your B.A.B account for you@gmail.com" with
+  the 18+ and privacy boxes; Create account is disabled until both are ticked, then
+  onboarding opens. Signing in again goes straight in.
+- An existing email account signing in with the same Gmail address lands in the same
+  account (data intact); its email sign-in still works.
+- Google-only account: Account shows "Set a password" with no current-password field;
+  after setting one, email sign-in works. Delete asks for the email instead of a password.
+- Email sign-in for a Google-only account says to use the Google button.
+- Live site: no CSP errors in the console when the Google button loads or its popup opens.
+

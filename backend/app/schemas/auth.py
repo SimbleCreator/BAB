@@ -43,7 +43,13 @@ class LoginIn(BaseModel):
 
 
 class ChangePasswordIn(BaseModel):
-    current_password: str = Field(min_length=1, max_length=PASSWORD_MAX)
+    current_password: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=PASSWORD_MAX,
+        description="Required when the account has a password; omit to set a first password "
+        "on a Google-only account",
+    )
     new_password: str = Field(min_length=PASSWORD_MIN, max_length=PASSWORD_MAX)
 
 
@@ -53,6 +59,8 @@ class UserOut(BaseModel):
     is_admin: bool
     created_at: datetime
     has_profile: bool
+    has_password: bool = Field(default=True, description="False for Google-only accounts")
+    google_linked: bool = Field(default=False, description="Can sign in with Google")
 
 
 class TokenOut(BaseModel):
@@ -60,3 +68,18 @@ class TokenOut(BaseModel):
     token_type: Literal["bearer"] = "bearer"  # noqa: S105
     expires_in: int = Field(description="Access token lifetime in seconds.")
     user: UserOut
+
+
+class GoogleSignInIn(BaseModel):
+    credential: str = Field(
+        min_length=20, max_length=4096, description="The ID token from Google Identity Services"
+    )
+    is_adult: bool = Field(default=False, description="Needed only when this creates a new account")
+    accepts_privacy: bool = Field(
+        default=False, description="Needed only when this creates a new account"
+    )
+
+
+class GoogleConfigOut(BaseModel):
+    enabled: bool
+    client_id: str | None = Field(description="Public OAuth client id for the Google button")
