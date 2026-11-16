@@ -23,7 +23,11 @@
         <div>
           <div class="picked-name">{{ f.name }}</div>
           <div class="bab-muted">
-            {{ f.serving_label }} &middot; {{ f.calories_kcal | int }} kcal each
+            {{ f.serving_label }}
+            @if (f.serving_g) {
+              ({{ f.serving_g | int }} g)
+            }
+            &middot; {{ f.calories_kcal | int }} kcal
           </div>
         </div>
         <button
@@ -35,21 +39,79 @@
           <mat-icon>close</mat-icon>
         </button>
       </div>
-      <div class="stepper">
-        <button mat-icon-button type="button" (click)="step(-0.5)" aria-label="Fewer servings">
-          <mat-icon>remove</mat-icon>
-        </button>
-        <span class="servings">{{ servings() }}</span>
-        <button mat-icon-button type="button" (click)="step(0.5)" aria-label="More servings">
-          <mat-icon>add</mat-icon>
-        </button>
-        <span class="bab-muted">servings</span>
-      </div>
-      <p class="total">
-        {{ preview()!.kcal | int }} kcal <app-estimate /> &middot; {{ preview()!.protein }} g
-        protein
-      </p>
-      <button mat-flat-button type="button" class="add-btn" (click)="add()" [disabled]="saving()">
+      @if (f.serving_g) {
+        <mat-button-toggle-group
+          class="unit"
+          [value]="unit()"
+          (change)="unit.set($event.value)"
+          aria-label="Enter amount as"
+          hideSingleSelectionIndicator
+        >
+          <mat-button-toggle value="g">Weight</mat-button-toggle>
+          <mat-button-toggle value="serving">Servings</mat-button-toggle>
+        </mat-button-toggle-group>
+      }
+      @if (byWeight()) {
+        <label class="weight">
+          <span class="weight-label">How much did it weigh?</span>
+          <span class="weight-box" [class.invalid]="gramsError()">
+            <input
+              type="number"
+              inputmode="numeric"
+              min="1"
+              max="3000"
+              step="5"
+              [value]="grams() ?? ''"
+              (input)="setGrams($any($event.target).value)"
+              aria-describedby="weight-help"
+            />
+            <span>g</span>
+          </span>
+        </label>
+        <div class="quick" role="group" aria-label="Quick weights">
+          @for (q of quickGrams(); track q.n) {
+            <button
+              type="button"
+              class="quick-btn"
+              [class.on]="grams() === q.g"
+              (click)="grams.set(q.g)"
+            >
+              {{ q.g }} g
+              <small>{{ q.n === 1 ? '1 serving' : q.n + ' servings' }}</small>
+            </button>
+          }
+        </div>
+        <p id="weight-help" class="bab-muted small" [class.bab-field-error]="gramsError()">
+          {{
+            gramsError()
+              ? 'Enter 1 to 3,000 g.'
+              : 'No scale? A katori holds about 150 g, a cup of cooked rice about 160 g.'
+          }}
+        </p>
+      } @else {
+        <div class="stepper">
+          <button mat-icon-button type="button" (click)="step(-0.5)" aria-label="Fewer servings">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="servings">{{ servings() }}</span>
+          <button mat-icon-button type="button" (click)="step(0.5)" aria-label="More servings">
+            <mat-icon>add</mat-icon>
+          </button>
+          <span class="bab-muted">servings</span>
+        </div>
+      }
+      @if (preview(); as p) {
+        <p class="total">
+          {{ p.kcal | int }} kcal <app-estimate /> &middot; {{ p.protein }} g protein
+        </p>
+      }
+      <button
+        mat-flat-button
+        type="button"
+        class="add-btn"
+        (click)="add()"
+        [disabled]="saving() || !preview()"
+      >
         Add to {{ chosenMeal() }}
       </button>
     </div>
@@ -78,12 +140,21 @@
             {{ f.name }}
             @if (f.kind === 'custom') {
               <span class="mine">mine</span>
+            } @else if (f.usual) {
+              <span class="mine usual">usual</span>
+            } @else if (f.regional) {
+              <span class="mine local">local</span>
             }
             @if (f.uses) {
               <mat-icon class="recent" aria-label="Logged before">history</mat-icon>
             }
           </span>
-          <span class="bab-muted food-sub">{{ f.serving_label }}</span>
+          <span class="bab-muted food-sub">
+            {{ f.serving_label }}
+            @if (f.serving_g) {
+              &middot; {{ f.serving_g | int }} g
+            }
+          </span>
           <span class="food-kcal">{{ f.calories_kcal | int }}</span>
         </button>
       }
@@ -104,6 +175,13 @@
           <mat-label>Serving</mat-label>
           <input matInput formControlName="serving_label" maxlength="40" />
           <mat-hint>For example "1 bowl" or "100 g"</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Weight of one serving (optional)</mat-label>
+          <input matInput type="number" inputmode="numeric" formControlName="serving_g" />
+          <span matTextSuffix>g</span>
+          <mat-hint>Lets you log this food by weight</mat-hint>
+          <mat-error>1 to 3,000 g.</mat-error>
         </mat-form-field>
         <div class="grid">
           <mat-form-field>

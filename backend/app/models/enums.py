@@ -42,3 +42,21 @@ class TrainingMode(str, Enum):
     activity = "activity"
     gym = "gym"
     both = "both"
+
+
+class WorkType(str, Enum):
+    """How the user spends most of the working day."""
+
+    desk = "desk"
+    standing = "standing"  # on your feet
+    physical = "physical"
+    shifts = "shifts"
+
+
+class FoodSource(str, Enum):
+    """Where most of the user's food comes from."""
+
+    home = "home"
+    hostel = "hostel"  # hostel or mess
+    out = "out"  # eating out
+    mixed = "mixed"

@@ -34,7 +34,8 @@ endpoints.
 | GET | `/auth/me` | bearer | Current user, including `has_profile` |
 | POST | `/auth/change-password` | bearer | Needs current password; other sessions end |
 | GET | `/profile` | bearer | Own profile; 404 `profile_missing` before onboarding |
-| PUT | `/profile` | bearer | Create (onboarding) or replace the profile |
+| PUT | `/profile` | bearer | Create (onboarding) or replace the profile, including the optional "Know me" fields (city, state, work_type, food_source, wake_time, usual_foods, sleep_hours, sweet_drinks_per_day, fasting_note, food_budget_inr); the response adds `region` |
+| GET | `/profile/options` | bearer | States (code, name, region), work types, food sources and the usual-foods limit |
 | GET | `/today` | bearer | Today screen: local date, name, line of the day, step goal, streak, today's activity |
 | GET | `/activity?from=&to=` | bearer | Logged days in a range (at most 366 days), oldest first |
 | GET | `/activity/summary?days=30` | bearer | One point per day ending today, totals, current and longest streak |
@@ -69,12 +70,13 @@ endpoints.
 
 | GET | `/nutrition/targets` | bearer | Current target, how it is calculated, and target history |
 | GET | `/nutrition/days/{day}` | bearer | Target, eaten totals, remaining and the four meals with items |
-| POST | `/nutrition/days/{day}/items` | bearer | Log `{meal_type, food_code or custom_food_id, servings}`; returns the day |
-| PATCH | `/nutrition/items/{id}` | bearer | Change servings; returns the day |
+| POST | `/nutrition/days/{day}/items` | bearer | Log `{meal_type, food_code or custom_food_id, grams or servings}`; returns the day |
+| PATCH | `/nutrition/items/{id}` | bearer | Change `{grams}` or `{servings}`; returns the day |
 | DELETE | `/nutrition/items/{id}` | bearer | Remove an item; returns the day |
-| GET | `/nutrition/days/{day}/suggestions` | bearer | 3 options per meal within each meal's calorie budget |
+| GET | `/nutrition/days/{day}/suggestions` | bearer | 3 options per meal within each meal's calorie budget, usual and regional dishes first, with grams and `why` |
 | GET | `/nutrition/summary?days=7` | bearer | Calories eaten and target per day |
-| GET | `/foods?q=&meal_type=` | bearer | Built-in foods for the user's diet and their custom foods, recent first |
+| GET | `/foods?q=&meal_type=` | bearer | Built-in foods for the user's diet and their custom foods: recent, then usual, then regional first; each has `serving_g`, `regions`, `usual`, `regional` |
+| GET | `/foods/staples?diet_type=&state=` | bearer | Dishes to pick usual home foods from (works before onboarding), own region first |
 | GET/POST | `/foods/custom` | bearer | List or create custom foods |
 | PUT/DELETE | `/foods/custom/{id}` | bearer | Edit or delete a custom food |
 

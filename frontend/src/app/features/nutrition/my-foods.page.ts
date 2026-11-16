@@ -48,6 +48,12 @@ import { LoaderComponent } from '../../shared/components/loader.component';
               <mat-form-field
                 ><mat-label>Serving</mat-label><input matInput formControlName="serving_label"
               /></mat-form-field>
+              <mat-form-field
+                ><mat-label>Grams in one serving (optional)</mat-label
+                ><input matInput type="number" formControlName="serving_g" /><mat-hint
+                  >Lets you log it by weight</mat-hint
+                ><mat-error>1 to 3,000 g.</mat-error></mat-form-field
+              >
               <div class="grid">
                 <mat-form-field
                   ><mat-label>kcal</mat-label
@@ -84,7 +90,8 @@ import { LoaderComponent } from '../../shared/components/loader.component';
             <button type="button" class="row" (click)="edit(f)">
               <span>{{ f.name }}</span>
               <span class="bab-muted"
-                >{{ f.serving_label }} &middot; {{ f.calories_kcal }} kcal</span
+                >{{ f.serving_label }}{{ f.serving_g ? ' (' + f.serving_g + ' g)' : '' }} &middot;
+                {{ f.calories_kcal }} kcal</span
               >
             </button>
           }
@@ -142,6 +149,7 @@ export class MyFoodsPage {
   protected readonly form = inject(NonNullableFormBuilder).group({
     name: ['', [Validators.required, Validators.maxLength(80)]],
     serving_label: ['', [Validators.required, Validators.maxLength(40)]],
+    serving_g: [null as number | null, [Validators.min(1), Validators.max(3000)]],
     calories_kcal: [0, [Validators.required, Validators.min(0), Validators.max(3000)]],
     protein_g: [0, [Validators.required, Validators.min(0), Validators.max(300)]],
     carbs_g: [0, [Validators.required, Validators.min(0), Validators.max(500)]],
@@ -154,6 +162,7 @@ export class MyFoodsPage {
     this.form.setValue({
       name: f.name,
       serving_label: f.serving_label,
+      serving_g: f.serving_g ?? null,
       calories_kcal: f.calories_kcal,
       protein_g: f.protein_g,
       carbs_g: f.carbs_g,
@@ -167,7 +176,10 @@ export class MyFoodsPage {
       return;
     }
     this.busy.set(true);
-    this.api.updateCustom(f.id, this.form.getRawValue()).subscribe({
+    const v = this.form.getRawValue();
+    const grams =
+      v.serving_g === null || (v.serving_g as unknown) === '' ? null : Number(v.serving_g);
+    this.api.updateCustom(f.id, { ...v, serving_g: grams }).subscribe({
       next: () => this.done('Saved.'),
       error: (err: unknown) => this.fail(err),
     });

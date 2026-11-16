@@ -39,18 +39,27 @@ class FoodOut(BaseModel):
     custom_food_id: int | None
     name: str
     serving_label: str
+    serving_g: float | None = Field(
+        default=None, description="Weight of one serving in grams; null if unknown"
+    )
     calories_kcal: float = Field(description="Per serving; an estimate")
     protein_g: float
     carbs_g: float
     fat_g: float
     diet_type: str | None
     meal_types: list[str]
+    regions: list[str] = Field(default_factory=list, description="Empty means eaten everywhere")
+    usual: bool = Field(default=False, description="One of the user's usual home foods")
+    regional: bool = Field(default=False, description="A dish from the user's region")
     uses: int = Field(description="Times this user has logged it")
 
 
 class CustomFoodIn(BaseModel):
     name: str = Field(min_length=1, max_length=80)
     serving_label: str = Field(min_length=1, max_length=40)
+    serving_g: float | None = Field(
+        default=None, ge=1, le=3000, description="Grams in one serving; lets you log by weight"
+    )
     calories_kcal: float = Field(ge=0, le=3000)
     protein_g: float = Field(ge=0, le=300)
     carbs_g: float = Field(ge=0, le=500)
@@ -74,24 +83,39 @@ class CustomFoodOut(CustomFoodIn):
     id: int
 
 
-class ItemIn(BaseModel):
+class _Amount(BaseModel):
+    """How much was eaten: exactly one of grams (preferred) or servings."""
+
+    grams: float | None = Field(default=None, ge=1, le=3000, description="Weight eaten in grams")
+    servings: float | None = Field(default=None, gt=0, le=20)
+
+    @model_validator(mode="after")
+    def _one_amount(self):
+        if (self.grams is None) == (self.servings is None):
+            raise ValueError("Send either grams or servings.")
+        if self.grams is not None:
+            self.grams = round(self.grams)
+        if self.servings is not None:
+            self.servings = round(self.servings, 2)
+        return self
+
+
+class ItemIn(_Amount):
     """Exactly one of food_code (built-in) or custom_food_id."""
 
     meal_type: MealType
     food_code: str | None = Field(default=None, max_length=40)
     custom_food_id: int | None = None
-    servings: float = Field(gt=0, le=20)
 
     @model_validator(mode="after")
     def _one_food(self) -> "ItemIn":
         if (self.food_code is None) == (self.custom_food_id is None):
             raise ValueError("Send either food_code or custom_food_id.")
-        self.servings = round(self.servings, 2)
         return self
 
 
-class ItemPatch(BaseModel):
-    servings: float = Field(gt=0, le=20)
+class ItemPatch(_Amount):
+    pass
 
 
 class ItemOut(BaseModel):
@@ -101,6 +125,7 @@ class ItemOut(BaseModel):
     name: str
     serving_label: str
     servings: float
+    grams: float | None = Field(description="Weight logged, when logged by weight")
     calories_kcal: int
     protein_g: float
     carbs_g: float
@@ -134,8 +159,12 @@ class SuggestionOut(BaseModel):
     name: str
     serving_label: str
     servings: float
+    grams: int = Field(description="Suggested weight in grams")
     calories_kcal: int
     protein_g: float
+    why: Literal["usual", "regional"] | None = Field(
+        default=None, description="usual: you eat it at home; regional: from your region"
+    )
 
 
 class MealSuggestionsOut(BaseModel):
@@ -160,3 +189,13 @@ class NutritionDayPoint(BaseModel):
 
 class NutritionSummaryOut(BaseModel):
     days: list[NutritionDayPoint] = Field(description="Oldest first, ending today")
+
+
+class StapleOut(BaseModel):
+    """A dish offered when picking usual home foods."""
+
+    food_code: str
+    name: str
+    serving_label: str
+    meal_types: list[str]
+    regional: bool

@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, Numeric, String, func
+from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, Integer, Numeric, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -29,6 +29,17 @@ class Profile(Base):
     training_mode: Mapped[str] = mapped_column(
         String(10), default="activity", server_default="activity"
     )
+    # "Know me" (all optional; asked during onboarding or later on the profile page).
+    city: Mapped[str | None] = mapped_column(String(60))
+    state: Mapped[str | None] = mapped_column(String(3))
+    work_type: Mapped[str | None] = mapped_column(String(10))
+    food_source: Mapped[str | None] = mapped_column(String(10))
+    wake_time: Mapped[str | None] = mapped_column(String(5))
+    usual_foods: Mapped[list[str]] = mapped_column(JSON, default=list, server_default="[]")
+    sleep_hours: Mapped[Decimal | None] = mapped_column(Numeric(3, 1))
+    sweet_drinks_per_day: Mapped[int | None] = mapped_column(Integer)
+    fasting_note: Mapped[str | None] = mapped_column(String(80))
+    food_budget_inr: Mapped[int | None] = mapped_column(Integer)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

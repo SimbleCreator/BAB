@@ -225,3 +225,93 @@ async def test_isolation_between_users(client, make_client):
 async def test_requires_profile(client):
     h = bearer(await register(client))
     assert (await client.get(f"/api/v1/nutrition/days/{day()}", headers=h)).status_code == 409
+
+
+# Personal B.A.B (M11): weight logging and familiar food first -------------------------
+
+
+async def test_log_by_grams(client):
+    h = await onboard(client)
+    # Idli: 2 pieces = 80 g = 120 kcal, so 120 g = 1.5 servings = 180 kcal.
+    r = await client.post(
+        items_url(), json={"meal_type": "breakfast", "food_code": "idli", "grams": 120}, headers=h
+    )
+    assert r.status_code == 201, r.text
+    item = r.json()["meals"][0]["items"][0]
+    assert item["grams"] == 120
+    assert item["servings"] == 1.5
+    assert item["calories_kcal"] == 180
+    # Edit by weight: 40 g = half a serving.
+    r = await client.patch(f"/api/v1/nutrition/items/{item['id']}", json={"grams": 40}, headers=h)
+    item = r.json()["meals"][0]["items"][0]
+    assert (item["grams"], item["servings"], item["calories_kcal"]) == (40, 0.5, 60)
+    # Back to servings: grams cleared.
+    r = await client.patch(f"/api/v1/nutrition/items/{item['id']}", json={"servings": 2}, headers=h)
+    item = r.json()["meals"][0]["items"][0]
+    assert (item["grams"], item["calories_kcal"]) == (None, 240)
+
+
+async def test_amount_needs_exactly_one_of_grams_or_servings(client):
+    h = await onboard(client)
+    body = {"meal_type": "breakfast", "food_code": "idli"}
+    assert (await client.post(items_url(), json=body, headers=h)).status_code == 422
+    r = await client.post(items_url(), json=body | {"grams": 80, "servings": 1}, headers=h)
+    assert r.status_code == 422
+    assert (
+        await client.post(items_url(), json=body | {"grams": 5000}, headers=h)
+    ).status_code == 422
+
+
+async def test_custom_food_by_grams_needs_serving_weight(client):
+    h = await onboard(client)
+    base = {"name": "Amma's upma", "serving_label": "1 bowl", "calories_kcal": 250}
+    macros = {"protein_g": 6, "carbs_g": 38, "fat_g": 8}
+    no_g = (await client.post("/api/v1/foods/custom", json=base | macros, headers=h)).json()
+    with_g = (
+        await client.post(
+            "/api/v1/foods/custom", json=base | macros | {"serving_g": 200}, headers=h
+        )
+    ).json()
+    assert with_g["serving_g"] == 200
+    r = await client.post(
+        items_url(),
+        json={"meal_type": "lunch", "custom_food_id": no_g["id"], "grams": 100},
+        headers=h,
+    )
+    assert r.status_code == 400
+    assert r.json()["code"] == "no_serving_weight"
+    r = await client.post(
+        items_url(),
+        json={"meal_type": "lunch", "custom_food_id": with_g["id"], "grams": 100},
+        headers=h,
+    )
+    assert r.json()["eaten"]["calories_kcal"] == 125
+
+
+async def test_search_puts_usual_then_regional_first(client):
+    h = await onboard(client, state="WB", usual_foods=["poha"])
+    foods = (await client.get("/api/v1/foods", headers=h)).json()
+    assert foods[0]["food_code"] == "poha" and foods[0]["usual"] is True
+    assert foods[1]["regional"] is True
+    assert "east" in foods[1]["regions"]
+    assert foods[0]["serving_g"] == 180
+
+
+async def test_suggestions_explain_why_and_give_grams(client):
+    h = await onboard(client, state="TN")
+    s = (await client.get(f"/api/v1/nutrition/days/{day()}/suggestions", headers=h)).json()
+    options = [o for m in s["meals"] for o in m["options"]]
+    assert any(o["why"] == "regional" for o in options)
+    assert all(o["grams"] > 0 for o in options)
+
+
+async def test_staples_before_onboarding(client):
+    h = bearer(await register(client))
+    r = await client.get("/api/v1/foods/staples?diet_type=veg&state=KL", headers=h)
+    assert r.status_code == 200
+    staples = r.json()
+    assert staples[0]["regional"] is True
+    codes = {s["food_code"] for s in staples}
+    assert "puttu_kadala" in codes and "chicken_curry" not in codes
+    assert all(set(s["meal_types"]) - {"snack"} for s in staples)
+    assert (await client.get("/api/v1/foods/staples?diet_type=veg")).status_code == 401

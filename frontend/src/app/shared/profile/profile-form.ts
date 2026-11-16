@@ -2,12 +2,14 @@ import { NonNullableFormBuilder, ValidatorFn, Validators } from '@angular/forms'
 
 import {
   DietType,
+  FoodSource,
   Goal,
   Level,
   ProfileIn,
   ProfileOut,
   Sex,
   TrainingMode,
+  WorkType,
 } from '../../core/api/models';
 
 export const MODE_OPTIONS: { value: TrainingMode; label: string; hint: string }[] = [
@@ -42,6 +44,22 @@ export const SEX_OPTIONS: { value: Sex; label: string }[] = [
   { value: 'male', label: 'Male' },
   { value: 'female', label: 'Female' },
 ];
+
+export const WORK_OPTIONS: { value: WorkType; label: string; hint: string }[] = [
+  { value: 'desk', label: 'Desk job', hint: 'Sitting most of the day' },
+  { value: 'standing', label: 'On my feet', hint: 'Shop, teaching, nursing, walking around' },
+  { value: 'physical', label: 'Physical work', hint: 'Lifting, building, farm or delivery' },
+  { value: 'shifts', label: 'Shifts', hint: 'Night or changing hours' },
+];
+
+export const FOOD_SOURCE_OPTIONS: { value: FoodSource; label: string }[] = [
+  { value: 'home', label: 'Home food' },
+  { value: 'hostel', label: 'Hostel or mess' },
+  { value: 'out', label: 'Eating out' },
+  { value: 'mixed', label: 'A mix' },
+];
+
+export const USUAL_FOODS_MAX = 12;
 
 export const MINUTE_OPTIONS = [20, 30, 40, 50, 60, 90];
 export const DAY_OPTIONS = [2, 3, 4, 5, 6];
@@ -89,6 +107,25 @@ export function buildProfileForm(fb: NonNullableFormBuilder) {
       has_pullup_bar: [false],
       training_mode: fb.control<TrainingMode>('activity', Validators.required),
     }),
+    life: fb.group({
+      city: ['', [Validators.required, Validators.maxLength(60), Validators.pattern(/\S/)]],
+      state: fb.control<string | null>(null, Validators.required),
+      work_type: fb.control<WorkType | null>(null, Validators.required),
+      food_source: fb.control<FoodSource | null>(null, Validators.required),
+      wake_time: ['07:00', [Validators.required, Validators.pattern(/^([01]\d|2[0-3]):[0-5]\d$/)]],
+    }),
+    plate: fb.group({
+      usual_foods: fb.control<string[]>([], Validators.maxLength(USUAL_FOODS_MAX)),
+    }),
+    more: fb.group({
+      sleep_hours: fb.control<number | null>(null, [Validators.min(3), Validators.max(12)]),
+      sweet_drinks_per_day: fb.control<number | null>(null, [
+        Validators.min(0),
+        Validators.max(20),
+      ]),
+      fasting_note: ['', Validators.maxLength(80)],
+      food_budget_inr: fb.control<number | null>(null, [Validators.min(50), Validators.max(5000)]),
+    }),
     daily: fb.group({
       diet_type: fb.control<DietType | null>(null, Validators.required),
       daily_step_goal: [8000, [Validators.required, Validators.min(1000), Validators.max(50000)]],
@@ -100,7 +137,8 @@ export function buildProfileForm(fb: NonNullableFormBuilder) {
 export type ProfileForm = ReturnType<typeof buildProfileForm>;
 
 export function profileFromForm(form: ProfileForm): ProfileIn {
-  const { about, training, daily } = form.getRawValue();
+  const { about, training, daily, life, plate, more } = form.getRawValue();
+  const num = (v: number | null) => (v === null || (v as unknown) === '' ? null : Number(v));
   return {
     name: about.name.trim(),
     age: Number(about.age),
@@ -116,6 +154,16 @@ export function profileFromForm(form: ProfileForm): ProfileIn {
     daily_step_goal: Number(daily.daily_step_goal),
     timezone: daily.timezone,
     training_mode: training.training_mode,
+    city: life.city.trim(),
+    state: life.state,
+    work_type: life.work_type,
+    food_source: life.food_source,
+    wake_time: life.wake_time,
+    usual_foods: plate.usual_foods,
+    sleep_hours: num(more.sleep_hours),
+    sweet_drinks_per_day: num(more.sweet_drinks_per_day),
+    fasting_note: more.fasting_note.trim() || null,
+    food_budget_inr: num(more.food_budget_inr),
   };
 }
 
@@ -135,6 +183,20 @@ export function patchProfileForm(form: ProfileForm, p: ProfileOut): void {
       days_per_week: p.days_per_week,
       has_pullup_bar: p.has_pullup_bar,
       training_mode: p.training_mode ?? 'activity',
+    },
+    life: {
+      city: p.city ?? '',
+      state: p.state ?? null,
+      work_type: p.work_type ?? null,
+      food_source: p.food_source ?? null,
+      wake_time: p.wake_time ?? '07:00',
+    },
+    plate: { usual_foods: p.usual_foods ?? [] },
+    more: {
+      sleep_hours: p.sleep_hours ?? null,
+      sweet_drinks_per_day: p.sweet_drinks_per_day ?? null,
+      fasting_note: p.fasting_note ?? '',
+      food_budget_inr: p.food_budget_inr ?? null,
     },
     daily: {
       diet_type: p.diet_type,

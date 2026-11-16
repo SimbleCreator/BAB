@@ -107,32 +107,54 @@
           >
             <span class="item-name">{{ item.name }}</span>
             <span class="bab-muted item-sub">{{
-              servingsLabel(item.servings, item.serving_label)
+              item.grams !== null
+                ? (item.grams | int) + ' g'
+                : servingsLabel(item.servings, item.serving_label)
             }}</span>
             <span class="item-kcal">{{ item.calories_kcal | int }}</span>
           </button>
           @if (editing() === item.id) {
             <div class="edit">
-              <div class="stepper">
-                <button
-                  mat-icon-button
-                  type="button"
-                  (click)="stepServings(-0.5)"
-                  aria-label="Fewer servings"
-                >
-                  <mat-icon>remove</mat-icon>
-                </button>
-                <span>{{ editServings() }} x</span>
-                <button
-                  mat-icon-button
-                  type="button"
-                  (click)="stepServings(0.5)"
-                  aria-label="More servings"
-                >
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-              <button mat-flat-button type="button" (click)="saveEdit(item)" [disabled]="busy()">
+              @if (item.grams !== null) {
+                <label class="grams-edit">
+                  <input
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="3000"
+                    [value]="editGrams() ?? ''"
+                    (input)="setEditGrams($any($event.target).value)"
+                    aria-label="Weight in grams"
+                  />
+                  <span>g</span>
+                </label>
+              } @else {
+                <div class="stepper">
+                  <button
+                    mat-icon-button
+                    type="button"
+                    (click)="stepServings(-0.5)"
+                    aria-label="Fewer servings"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                  <span>{{ editServings() }} x</span>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    (click)="stepServings(0.5)"
+                    aria-label="More servings"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              }
+              <button
+                mat-flat-button
+                type="button"
+                (click)="saveEdit(item)"
+                [disabled]="busy() || (item.grams !== null && !editGramsValid())"
+              >
                 Save
               </button>
               <button
@@ -182,10 +204,17 @@
               @for (o of mi.options; track o.food_code) {
                 <div class="idea">
                   <div>
-                    <div>{{ o.name }}</div>
+                    <div>
+                      {{ o.name }}
+                      @if (o.why === 'usual') {
+                        <span class="why usual">your usual</span>
+                      } @else if (o.why === 'regional') {
+                        <span class="why">local</span>
+                      }
+                    </div>
                     <div class="bab-muted small">
-                      {{ servingsLabel(o.servings, o.serving_label) }} &middot;
-                      {{ o.calories_kcal | int }} kcal &middot; {{ o.protein_g }} g protein
+                      about {{ o.grams | int }} g &middot; {{ o.calories_kcal | int }} kcal &middot;
+                      {{ o.protein_g }} g protein
                     </div>
                   </div>
                   <button

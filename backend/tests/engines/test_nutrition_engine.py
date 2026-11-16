@@ -103,3 +103,65 @@ def test_prefers_a_normal_serving():
     out = eng.suggest(FOODS, "non_veg", "lunch", 910)
     assert all(s.servings <= 1.5 for s in out)
     assert any(s.servings == 1 for s in eng.suggest(FOODS, "veg", "lunch", 450))
+
+
+# Personal B.A.B (M11) --------------------------------------------------------------
+
+
+def _food(code, kcal, regions=(), serving_g=100.0):
+    return eng.Food(code, code, "1 bowl", kcal, 10, 30, 5, "veg", ("lunch",), serving_g, regions)
+
+
+def test_content_has_regional_dishes_with_weights():
+    from app.content import REGIONS, states
+
+    foods = food_list()
+    assert len(foods) >= 250
+    assert all(f.serving_g > 0 for f in foods)
+    for region in REGIONS:
+        assert sum(region in f.regions for f in foods) >= 5, region
+    assert {s.region for s in states()} == {*REGIONS, None}
+
+
+def test_region_for_state():
+    from app.content import region_for
+
+    assert region_for("KA") == "south"
+    assert region_for("WB") == "east"
+    assert region_for("OUT") is None
+    assert region_for(None) is None
+    assert region_for("XX") is None
+
+
+def test_familiarity():
+    usual = frozenset({"a"})
+    assert eng.familiarity(_food("a", 300, ("south",)), usual, "south") == 0
+    assert eng.familiarity(_food("b", 300, ("south",)), usual, "south") == 1
+    assert eng.familiarity(_food("b", 300, ("south",)), usual, "north") == 2
+    assert eng.familiarity(_food("b", 300, ("south",)), usual, None) == 2
+
+
+def test_usual_and_regional_food_lead_suggestions():
+    plain = _food("plain", 400)  # fills the budget exactly
+    regional = _food("regional", 300, ("east",))  # 1 serving fills 75%
+    usual = _food("usual", 270)  # 1 serving fills 67.5%
+    tiny = _food("tiny", 60, ("east",))  # 1.5 servings fill only 22.5%: not preferred
+    foods = [plain, regional, usual, tiny]
+
+    def first(**kw):
+        return eng.suggest(foods, "veg", "lunch", 400, count=1, **kw)[0].food.code
+
+    assert first() == "plain"
+    assert first(region="east") == "regional"
+    assert first(region="east", usual=frozenset({"usual"})) == "usual"
+    order = [s.food.code for s in eng.suggest(foods, "veg", "lunch", 400, count=4, region="east")]
+    assert order[:2] == ["regional", "plain"]
+    assert order[-1] == "tiny"
+
+
+def test_servings_for_grams():
+    f = _food("x", 200, serving_g=150)
+    assert eng.servings_for_grams(f, 300) == 2
+    assert eng.servings_for_grams(f, 75) == 0.5
+    with pytest.raises(ValueError):
+        eng.servings_for_grams(_food("y", 200, serving_g=0), 100)

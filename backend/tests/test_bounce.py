@@ -73,6 +73,26 @@ async def test_activity_plan_is_checked_and_stored(client):
     assert r.status_code == 409 and r.json()["code"] == "plan_current"
 
 
+async def test_prompt_carries_know_me_answers(client):
+    h = await onboard(
+        client,
+        city="Kochi",
+        state="KL",
+        work_type="desk",
+        food_source="hostel",
+        wake_time="06:00",
+        usual_foods=["idli", "sambar"],
+        food_budget_inr=200,
+    )
+    llm = use(client, FakeLLM(reply()))
+    assert (await client.post("/api/v1/bounce/plan", headers=h)).status_code == 200
+    prompt = llm.calls[0][0]["content"]
+    for text in ('"city": "Kochi"', '"state": "Kerala"', '"region": "south"', "desk job"):
+        assert text in prompt
+    assert "hostel or mess food" in prompt and '"Idli"' in prompt and '"Sambar"' in prompt
+    assert '"food_budget_inr_per_day": 200' in prompt
+
+
 async def test_gym_mode_needs_gym_profile_and_analyses_supplements(client):
     h = await onboard(client, training_mode="gym", diet_type="non_veg")
     use(client, FakeLLM(reply(plan_dict(meal="Chicken and rice"))))

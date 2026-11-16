@@ -69,10 +69,53 @@ export interface ProfileIn {
   daily_step_goal: number;
   timezone: string;
   training_mode: TrainingMode;
+  // "Know me" (optional)
+  city?: string | null;
+  /** State or union territory code from /profile/options. */
+  state?: string | null;
+  work_type?: WorkType | null;
+  food_source?: FoodSource | null;
+  /** HH:MM */
+  wake_time?: string | null;
+  /** Food codes eaten at home most days. */
+  usual_foods?: string[];
+  sleep_hours?: number | null;
+  sweet_drinks_per_day?: number | null;
+  fasting_note?: string | null;
+  /** Daily food budget in rupees. */
+  food_budget_inr?: number | null;
 }
+
+export type WorkType = 'desk' | 'standing' | 'physical' | 'shifts';
+export type FoodSource = 'home' | 'hostel' | 'out' | 'mixed';
+export type FoodRegion = 'north' | 'south' | 'east' | 'west' | 'central' | 'northeast';
 
 export interface ProfileOut extends ProfileIn {
   updated_at: string;
+  usual_foods: string[];
+  /** From the state; null outside India or unset. */
+  region: FoodRegion | null;
+}
+
+export interface StateOption {
+  code: string;
+  name: string;
+  region: FoodRegion | null;
+}
+
+export interface ProfileOptionsOut {
+  states: StateOption[];
+  work_types: WorkType[];
+  food_sources: FoodSource[];
+  usual_foods_max: number;
+}
+
+export interface StapleOut {
+  food_code: string;
+  name: string;
+  serving_label: string;
+  meal_types: string[];
+  regional: boolean;
 }
 
 // activity router -----------------------------------------------------------
@@ -429,6 +472,8 @@ export interface FoodOut {
   custom_food_id: number | null;
   name: string;
   serving_label: string;
+  /** Grams in one serving; null when unknown. */
+  serving_g: number | null;
   /** Per serving, an estimate. */
   calories_kcal: number;
   protein_g: number;
@@ -436,12 +481,17 @@ export interface FoodOut {
   fat_g: number;
   diet_type: string | null;
   meal_types: string[];
+  regions: string[];
+  usual: boolean;
+  regional: boolean;
   uses: number;
 }
 
 export interface CustomFoodIn {
   name: string;
   serving_label: string;
+  /** Grams in one serving; lets the food be logged by weight. */
+  serving_g?: number | null;
   calories_kcal: number;
   protein_g: number;
   carbs_g: number;
@@ -456,7 +506,14 @@ export interface ItemIn {
   meal_type: MealType;
   food_code: string | null;
   custom_food_id: number | null;
-  servings: number;
+  /** Send exactly one of grams or servings. */
+  grams?: number;
+  servings?: number;
+}
+
+export interface ItemPatch {
+  grams?: number;
+  servings?: number;
 }
 
 export interface ItemOut {
@@ -466,6 +523,8 @@ export interface ItemOut {
   name: string;
   serving_label: string;
   servings: number;
+  /** Weight logged, when logged by weight. */
+  grams: number | null;
   calories_kcal: number;
   protein_g: number;
   carbs_g: number;
@@ -500,8 +559,11 @@ export interface SuggestionOut {
   name: string;
   serving_label: string;
   servings: number;
+  grams: number;
   calories_kcal: number;
   protein_g: number;
+  /** usual: eaten at home; regional: from the user's region. */
+  why: 'usual' | 'regional' | null;
 }
 
 export interface MealSuggestionsOut {

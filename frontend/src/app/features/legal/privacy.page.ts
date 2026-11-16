@@ -28,6 +28,11 @@ import { publicConfigResource } from './legal';
           goal and timezone.
         </li>
         <li>
+          About your day, if you answer: city and state, kind of work, where your food comes from,
+          wake-up time, the dishes you usually eat at home, and optionally sleep, sweet drinks,
+          fasting days and food budget. These are used to suggest familiar food and fit your plan.
+        </li>
+        <li>
           What you log: daily steps, distance and calories; runs and GPS tracks from files you
           upload; workouts; meals and your own foods; weekly check-ins and measurements; and, if you
           use one, your smoking or drinking reduction plan.
@@ -57,7 +62,8 @@ import { publicConfigResource } from './legal';
       <p>
         Bounce, the AI coach, is the one exception. Only when you ask Bounce for a plan, the server
         sends the numbers it needs (age, sex, height, weight, goal, level, training time, diet type,
-        how you train, recent check-ins and step averages, and your gym and supplement answers) to
+        how you train, recent check-ins and step averages, your gym and supplement answers, and your
+        "about your day" answers including city, state and usual dishes) to
         the AI service set up by the owner (by default OpenRouter, which passes the request to the
         company running the chosen model, such as Google or NVIDIA; free models may keep requests to
         improve their services). Your name, email and account details are never sent. The plan that

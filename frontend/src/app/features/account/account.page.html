@@ -16,10 +16,16 @@
         <form [formGroup]="form" (ngSubmit)="saveProfile()" novalidate>
           <h3>About you</h3>
           <app-profile-fields [form]="form" section="about" />
+          <h3>Your day</h3>
+          <app-profile-fields [form]="form" section="life" />
           <h3>Goal and training</h3>
           <app-profile-fields [form]="form" section="training" />
           <h3>Food and daily goal</h3>
           <app-profile-fields [form]="form" section="daily" />
+          <h3>Your plate</h3>
+          <app-profile-fields [form]="form" section="plate" />
+          <h3>More about you</h3>
+          <app-profile-fields [form]="form" section="more" />
           @if (profileError()) {
             <p class="bab-form-error" role="alert">{{ profileError() }}</p>
           }

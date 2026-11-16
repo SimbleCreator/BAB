@@ -19,12 +19,14 @@ All data is stored per user, per day, on the server.
   step capture, wake-up alarm with motivational lines, and a motivating buddy
 - iOS app after Android
 - AI-written weekly plans: built (Bounce, see below)
+- Personal coaching (M11-M15, see "Personal B.A.B" below): built in order
 - LLM features later: meal photo calories, buddy chat
 - Community and subscription later
 
 ### Out of scope now (do NOT build, do not add dependencies for these)
 - Native mobile code, automatic step capture, alarms, push notifications
-- Any LLM use other than Bounce plans and tips; meal photo recognition; chat
+- Any LLM use other than Bounce plans, tips and the 90-day letter; meal photo
+  recognition (users pick the dish and enter its weight instead); chat
 - Community, subscription, payments, ads, third-party analytics
 - Email sending (no verification or reset emails in version 1)
 - Body photos (removed from the product permanently)
@@ -175,6 +177,14 @@ bounce_plans       id PK, user_id FK, mode, week_start, content (JSON), targets 
                    model, based_on_checkin_day, created_at
 ```
 `profiles.training_mode` is activity, gym or both (default activity).
+Personal B.A.B adds to `profiles` (all nullable): city, state (code), work_type,
+food_source, wake_time, usual_foods (JSON list of food codes), sleep_hours,
+sweet_drinks_per_day, fasting_note, food_budget_inr, target_weight_kg; to
+`users`: google_sub UNIQUE nullable (password_hash nullable for Google-only
+accounts); to `meal_items` and `custom_foods`: grams / serving_g (nullable); to
+`checkins`: energy, sleep, stairs (1-5, nullable). New tables:
+`bounce_letters` (user_id, written_on, open_on, content, opened_at) and
+`easy_days` (user_id, day) UNIQUE (user_id, day).
 All schema changes go through Alembic migrations. Deleting a user cascades to all
 of their rows.
 
@@ -265,9 +275,48 @@ of their rows.
   owner" and show "estimate" beside calories in the UI.
 - Meal suggestions: 3 options per meal type matching diet type and the remaining
   calories for the day.
-- Meal logging: meal type, search foods, servings, or a custom food with its own
-  values saved for reuse. Recent and frequent foods first. Any day can be edited.
+- Meal logging: meal type, search foods, then the weight eaten in grams (or
+  servings), or a custom food with its own values saved for reuse. Recent and frequent foods first. Any day can be edited.
 - Eat page: calories and macros versus target, meals of the day, 7-day chart.
+
+### Personal B.A.B (M11-M15)
+- M11 "Know me": onboarding adds a "Your day" step (city, state, kind of work:
+  desk / on your feet / physical / shifts, where food comes from: home / hostel or
+  mess / eating out / mixed, wake-up time) and a "Your plate" step (pick up to 12
+  dishes eaten at home most days, filtered by diet type, own region first).
+  Optional on the profile page: sleep hours, sweet tea/coffee/drinks per day,
+  fasting days, daily food budget in rupees. State maps to a region (north, south,
+  east, west, central, northeast) through `content/regions.json`; outside India
+  means no region. Every food in `foods.json` has `serving_g` and `regions` (empty
+  means eaten everywhere); at least 250 foods with regional dishes from every region.
+  Food is logged by weight: calories = per-serving value x grams / serving_g.
+  Search and suggestions rank used foods, then the user's usual foods, then their
+  region. Bounce plans use city, region, lifestyle and usual foods.
+- M12 "Show me it is possible": optional target weight. `projection_engine` gives
+  a range of weeks to reach it from the daily calorie gap (7,700 kcal per kg, the
+  gap taken as 80-120% effective), never faster than 1% of body weight a week for
+  loss or 0.5% for gain; after 3 or more check-ins over 14+ days the real trend
+  replaces the formula. Labelled "estimate". Every 4 weeks from the first check-in
+  a "then vs now" card compares weight, measurements, steps, workouts and wins.
+  Check-in adds optional energy, sleep and "stairs without getting out of breath"
+  (1-5) and shows these wins beside weight.
+- M13 Sign in with Google: Google Identity Services button on login and register;
+  the server verifies the ID token with PyJWT against Google's public keys
+  (audience = `BAB_GOOGLE_CLIENT_ID`, verified email only). Off when the client id
+  is not set. A Google email that matches an existing account links to it. New
+  Google users still confirm 18+ and consent before the account is created.
+  Google-only accounts set a password from Account to use email sign-in.
+- M14 Bounce knows your life: keep-your-plate tips (portion changes to the user's
+  usual foods, not replacements); hostel/mess mode (tick what was served, get the
+  best plate from it); fixed festival and season calendar in
+  `content/calendar.json` (fasting periods, festival weeks, monsoon, summer heat)
+  that adjusts tips and plans; daily food budget respected by meal plans; an
+  "Easy day" button that shrinks today to a 10-minute plan that still counts for
+  streaks (at most 2 per week), offered by Bounce after 3 quiet days.
+- M15 Letter from future you: on the first plan, Bounce writes a letter dated 90
+  days ahead from the user's real numbers and plan (one AI call, safety-checked,
+  no promises of results). It stays sealed with a countdown and opens on day 90
+  beside the actual progress; a new one can be written then.
 
 ### Weekly check-in
 - Weight (required), waist, chest, arms, thighs (optional), note.
@@ -415,6 +464,11 @@ Milestones:
   `docs/deploy.md` describing deployment to a free static host for the frontend
   and a free container host and managed PostgreSQL for the backend, without
   locking the code to any one provider
+- M11: "Know me" profile, regional foods, logging by weight
+- M12: target weight projection, then-vs-now cards, wins at check-in
+- M13: sign in with Google
+- M14: Bounce personalisation (plate tips, mess mode, calendar, budget, easy day)
+- M15: letter from future you
 
 If a requirement is unclear or conflicts with what a library can do, ask before
 choosing.

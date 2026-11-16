@@ -75,6 +75,13 @@ week (other days are rest or light walking) and the user's level. Beginners star
 - Prefer common Indian home food (dal, roti, rice, sabzi, curd, paneer, poha, upma, idli, \
 dosa, sprouts, fruit) with rough portions. Match the daily calorie and protein targets \
 given; do not invent different targets.
+- Build the meal plan mainly from the user's "usual_foods" and dishes of their region or \
+city when given: keep familiar food and change portions and sides, rather than replacing \
+it with unfamiliar "diet" food.
+- Fit the user's life when given: wake time (when to train), kind of work (desk jobs get \
+short movement breaks; physical work needs less extra cardio), where food comes from \
+(hostel or mess: best picks from typical mess food; eating out: sensible orders), the \
+daily food budget in rupees (use affordable staples), fasting days and sleep.
 - Weight loss: daily walking or steps first, then home or gym strength work; never crash diets.
 - If check-ins show progress, progress the plan a little; if weight is stuck or rising \
 against the goal, adjust gently and say so in the summary.
@@ -104,6 +111,21 @@ class GymInfo:
 
 
 @dataclass
+class Lifestyle:
+    city: str | None = None
+    state: str | None = None
+    region: str | None = None
+    work: str | None = None
+    food_from: str | None = None
+    wake_time: str | None = None
+    usual_foods: list[str] = field(default_factory=list)
+    sleep_hours: float | None = None
+    sweet_drinks_per_day: int | None = None
+    fasting: str | None = None
+    food_budget_inr_per_day: int | None = None
+
+
+@dataclass
 class BounceContext:
     mode: str
     age: int
@@ -121,6 +143,7 @@ class BounceContext:
     carbs_g: int
     fat_g: int
     gym: GymInfo | None = None
+    life: Lifestyle = field(default_factory=Lifestyle)
     checkins: list[CheckinPoint] = field(default_factory=list)
     avg_steps_7d: int | None = None
     step_goal_days_7d: int = 0

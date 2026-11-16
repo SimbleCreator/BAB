@@ -38,6 +38,32 @@ medical advice" note.
 | diet_type | veg, egg, non_veg |
 | timezone | any IANA name known to the server |
 | training_mode | activity, gym, both (default activity) |
+| city | optional, up to 60 characters, trimmed |
+| state | optional; a code from `content/regions.json` (36 states and union territories, or OUT for outside India) |
+| work_type | optional: desk, standing (on your feet), physical, shifts |
+| food_source | optional: home, hostel (or mess), out (eating out), mixed |
+| wake_time | optional, HH:MM (00:00 to 23:59) |
+| usual_foods | up to 12 food codes, duplicates dropped; unknown codes rejected on save and hidden on read |
+| sleep_hours | optional, 3 to 12, rounded to the nearest half hour |
+| sweet_drinks_per_day | optional, 0 to 20 |
+| fasting_note | optional, up to 80 characters |
+| food_budget_inr | optional, 50 to 5,000 rupees a day |
+
+Onboarding asks city, state, work, food source and wake time ("Your day") and usual
+foods ("Your plate"); the rest is on the Account page. The API accepts all of them as
+optional so older clients keep working.
+
+## Food regions (`content/regions.json`)
+
+| Region | States and union territories |
+| --- | --- |
+| north | Chandigarh, Delhi, Haryana, Himachal Pradesh, Jammu and Kashmir, Ladakh, Punjab, Rajasthan, Uttar Pradesh, Uttarakhand |
+| south | Andaman and Nicobar, Andhra Pradesh, Karnataka, Kerala, Lakshadweep, Puducherry, Tamil Nadu, Telangana |
+| east | Bihar, Jharkhand, Odisha, West Bengal |
+| west | Dadra and Nagar Haveli and Daman and Diu, Goa, Gujarat, Maharashtra |
+| central | Chhattisgarh, Madhya Pradesh |
+| northeast | Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim, Tripura |
+| none | Outside India |
 
 ## Daily activity (`app/engines/activity_engine.py`)
 
@@ -177,11 +203,13 @@ Same line all day for a user; changes every day.
 | Rounding | calories, grams rounded to whole numbers |
 | When targets are set | at the end of onboarding, and when sex, age, height, weight, goal or training days change in the profile; effective from today (a second change on the same day replaces the first). The weekly adjustment then moves calories up or down from there |
 | Target for a day | the newest target effective on or before that day; days before the first target use the first |
-| Foods | 198 foods with an Indian focus, approximate values per serving, marked "to be verified by the owner"; shown as estimates |
+| Foods | 307 foods with an Indian focus (109 regional dishes added in M11), approximate values per serving, marked "to be verified by the owner"; shown as estimates. Each has `serving_g` (grams in one serving, ml for drinks) and `regions` (empty means eaten everywhere); every region has at least 5 dishes |
 | Diet filter | veg sees veg foods; egg sees veg and egg; non-veg sees all. Applies to search and suggestions |
 | Logging | any day up to today; one meal per type per day with any number of items; nutrients are saved as eaten |
+| Logging by weight | send grams (1 to 3,000) or servings (over 0, up to 20), not both. Servings = grams / serving_g, rounded to 2 decimals; nutrients = per-serving value x servings. A custom food needs its own serving_g to be logged by weight (error `no_serving_weight`). Editing by grams uses the weight per serving of the logged item; editing by servings clears the grams |
 | Custom foods | per user; editing or deleting one does not change logged items |
-| Search order | foods the user has logged (most recent day, then most times) first, then A-Z; up to 50 |
+| Search order | foods the user has logged (most recent day, then most times) first; then usual home foods; then dishes from the user's region (custom foods rank with these); then A-Z; up to 50 |
+| Usual-food picker | `/foods/staples`: foods for the diet type that suit breakfast, lunch or dinner, own region first then A-Z; works before onboarding |
 
 ## Meal suggestions
 
@@ -191,7 +219,9 @@ Same line all day for a user; changes every day.
 | Budget | min(remaining calories for the day, target x meal share), never below 0 |
 | Candidates | foods for the user's diet that list the meal type |
 | Servings | 0.5, 1 or 1.5, never over budget; chosen to minimise unused budget + 12.5% for each half serving away from 1 |
-| Ranking | lowest cost, then most protein per kcal |
+| Familiar food first | tier 0: usual home foods; tier 1: dishes from the user's region; tier 2: the rest. A usual or regional food only keeps its tier when the suggested amount fills at least 50% of the meal budget |
+| Ranking | lowest tier, then lowest cost, then most protein per kcal |
+| Shown weight | suggested servings x serving_g, rounded; `why` says usual or regional |
 | Options | 3 per meal, picked from the best 9 and rotated by day so ideas change daily |
 
 ## Weekly adjustment (`app/engines/adjustment_engine.py`)

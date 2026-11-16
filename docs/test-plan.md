@@ -183,3 +183,22 @@
 - Uploading a file over 6 MB returns 413 before it is parsed.
 - Build the container (`docker build -t bab-api backend`) and run it with a real
   database; migrations run on start and the health check passes.
+
+### M11 ("Know me", regional foods, logging by weight)
+- New account: onboarding has "Your day" (city, state, work, food source, wake time)
+  and "Your plate". With Karnataka picked, the plate list starts with South Indian
+  dishes marked "local"; search finds others; at most 12 can be picked; switching diet
+  to veg drops any egg or meat dish already picked.
+- Eat > Add food: usual dishes appear first (tag "usual"), then "local" dishes; each row
+  shows its serving weight. Picking a dish opens Weight entry with one serving's grams
+  filled in; quick buttons for 0.5 / 1 / 1.5 / 2 servings; 200 g of a 150 g / 230 kcal
+  dish shows 307 kcal. Servings mode still works. Empty or 0 g disables Add.
+- The logged item shows "225 g"; tapping it edits the weight.
+- Ideas for each meal list local dishes first (tags "your usual" / "local") with
+  "about N g".
+- My foods: a custom food without grams per serving cannot be logged by weight (the
+  Weight toggle is hidden); add grams and it can.
+- Account: "Your day", "Your plate" and "More about you" load and save; on a 360 px
+  phone the paired fields stack.
+- Bounce: a new plan's meals lean on the usual dishes and the region (check by eye).
+

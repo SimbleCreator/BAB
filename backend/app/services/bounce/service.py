@@ -7,6 +7,7 @@ from zoneinfo import ZoneInfo
 from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.content import foods_by_code, states_by_code
 from app.core.config import get_settings
 from app.core.errors import (
     ConflictError,
@@ -38,7 +39,13 @@ from app.schemas.bounce import (
 )
 from app.services.bounce import rules
 from app.services.bounce.llm import LLMClient, LLMError, extract_json
-from app.services.bounce.prompt import BounceContext, CheckinPoint, GymInfo, build_messages
+from app.services.bounce.prompt import (
+    BounceContext,
+    CheckinPoint,
+    GymInfo,
+    Lifestyle,
+    build_messages,
+)
 from app.services.common import require_profile
 from app.services.nutrition_service import breakdown
 
@@ -335,6 +342,7 @@ async def _context(
         )
         if gym is not None and profile.training_mode != "activity"
         else None,
+        life=_lifestyle(profile),
         checkins=[
             CheckinPoint(
                 day=c.day.isoformat(),
@@ -420,3 +428,36 @@ async def generate(session: AsyncSession, user: User, llm: LLMClient | None) -> 
     bounce_repo.add(session, row)
     await session.commit()
     return _plan_out(row)
+
+
+WORK_WORDS = {
+    "desk": "desk job, sits most of the day",
+    "standing": "on their feet most of the day",
+    "physical": "physical work",
+    "shifts": "shift work with changing hours",
+}
+FOOD_FROM_WORDS = {
+    "home": "home-cooked food",
+    "hostel": "hostel or mess food",
+    "out": "mostly eats out",
+    "mixed": "a mix of home food and eating out",
+}
+
+
+def _lifestyle(profile: Profile) -> Lifestyle:
+    """The "Know me" answers, in words the model can use. Only set fields are sent."""
+    state = states_by_code().get(profile.state or "")
+    by_code = foods_by_code()
+    return Lifestyle(
+        city=profile.city,
+        state=state.name if state else None,
+        region=state.region if state else None,
+        work=WORK_WORDS.get(profile.work_type or ""),
+        food_from=FOOD_FROM_WORDS.get(profile.food_source or ""),
+        wake_time=profile.wake_time,
+        usual_foods=[by_code[c].name for c in profile.usual_foods or () if c in by_code],
+        sleep_hours=float(profile.sleep_hours) if profile.sleep_hours is not None else None,
+        sweet_drinks_per_day=profile.sweet_drinks_per_day,
+        fasting=profile.fasting_note,
+        food_budget_inr_per_day=profile.food_budget_inr,
+    )

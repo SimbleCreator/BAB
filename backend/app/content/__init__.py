@@ -67,7 +67,10 @@ def exercise_library() -> ExerciseLibrary:
 @lru_cache
 def food_list() -> tuple[Food, ...]:
     raw = _read("foods.json")["foods"]
-    foods = tuple(Food(**(f | {"meal_types": tuple(f["meal_types"])})) for f in raw)
+    foods = tuple(
+        Food(**(f | {"meal_types": tuple(f["meal_types"]), "regions": tuple(f["regions"])}))
+        for f in raw
+    )
     codes = [f.code for f in foods]
     if len(codes) != len(set(codes)):
         raise ValueError("foods.json: duplicate codes")
@@ -78,7 +81,45 @@ def food_list() -> tuple[Food, ...]:
             raise ValueError(f"foods.json: bad meal types for {f.code}")
         if min(f.calories_kcal, f.protein_g, f.carbs_g, f.fat_g) < 0:
             raise ValueError(f"foods.json: negative value for {f.code}")
+        if f.serving_g <= 0:
+            raise ValueError(f"foods.json: serving_g must be positive for {f.code}")
+        if not set(f.regions) <= set(REGIONS):
+            raise ValueError(f"foods.json: unknown region for {f.code}")
     return foods
+
+
+REGIONS = ("north", "south", "east", "west", "central", "northeast")
+
+
+@dataclass(frozen=True)
+class State:
+    code: str
+    name: str
+    region: str | None
+
+
+@lru_cache
+def states() -> tuple[State, ...]:
+    raw = _read("regions.json")
+    if tuple(raw["regions"]) != REGIONS:
+        raise ValueError("regions.json: region list does not match the code")
+    out = tuple(State(**s) for s in raw["states"])
+    for s in out:
+        if s.region is not None and s.region not in REGIONS:
+            raise ValueError(f"regions.json: unknown region for {s.code}")
+    if len({s.code for s in out}) != len(out):
+        raise ValueError("regions.json: duplicate codes")
+    return out
+
+
+@lru_cache
+def states_by_code() -> dict[str, State]:
+    return {s.code: s for s in states()}
+
+
+def region_for(state_code: str | None) -> str | None:
+    s = states_by_code().get(state_code or "")
+    return s.region if s else None
 
 
 @lru_cache
@@ -90,4 +131,5 @@ def load_all() -> None:
     """Load and validate every content file. Called at startup so bad content fails fast."""
     motivational_lines()
     exercise_library()
+    states()
     food_list()

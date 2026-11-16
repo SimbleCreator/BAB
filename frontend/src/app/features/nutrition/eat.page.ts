@@ -69,6 +69,11 @@ export class EatPage {
   protected readonly meals = MEALS;
   protected readonly editing = signal<number | null>(null);
   protected readonly editServings = signal(1);
+  protected readonly editGrams = signal<number | null>(null);
+  protected readonly editGramsValid = computed(() => {
+    const g = this.editGrams();
+    return g !== null && g >= 1 && g <= 3000;
+  });
   protected readonly openIdeas = signal<MealType | null>(null);
   protected readonly showHow = signal(false);
   protected readonly busy = signal(false);
@@ -125,6 +130,12 @@ export class EatPage {
   protected startEdit(item: ItemOut): void {
     this.editing.set(this.editing() === item.id ? null : item.id);
     this.editServings.set(item.servings);
+    this.editGrams.set(item.grams);
+  }
+
+  protected setEditGrams(value: string): void {
+    const n = Number(value);
+    this.editGrams.set(value.trim() === '' || !Number.isFinite(n) ? null : Math.round(n));
   }
 
   protected stepServings(delta: number): void {
@@ -132,7 +143,9 @@ export class EatPage {
   }
 
   protected saveEdit(item: ItemOut): void {
-    this.run(this.api.updateItem(item.id, this.editServings()), 'Updated.');
+    const amount =
+      item.grams !== null ? { grams: this.editGrams()! } : { servings: this.editServings() };
+    this.run(this.api.updateItem(item.id, amount), 'Updated.');
   }
 
   protected remove(item: ItemOut): void {
@@ -147,7 +160,7 @@ export class EatPage {
         meal_type: type,
         food_code: s.food_code,
         custom_food_id: null,
-        servings: s.servings,
+        grams: s.grams,
       }),
       `Added ${s.name}.`,
     );

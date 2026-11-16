@@ -9,8 +9,10 @@ import {
   DayNutritionOut,
   FoodOut,
   ItemIn,
+  ItemPatch,
   MealType,
   NutritionSummaryOut,
+  StapleOut,
   SuggestionsOut,
   TargetsOut,
 } from './models';
@@ -33,8 +35,8 @@ export class NutritionApi {
     return this.http.post<DayNutritionOut>(`${this.base}/nutrition/days/${day}/items`, body);
   }
 
-  updateItem(id: number, servings: number): Observable<DayNutritionOut> {
-    return this.http.patch<DayNutritionOut>(`${this.base}/nutrition/items/${id}`, { servings });
+  updateItem(id: number, amount: ItemPatch): Observable<DayNutritionOut> {
+    return this.http.patch<DayNutritionOut>(`${this.base}/nutrition/items/${id}`, amount);
   }
 
   deleteItem(id: number): Observable<DayNutritionOut> {
@@ -49,6 +51,13 @@ export class NutritionApi {
     return this.http.get<NutritionSummaryOut>(`${this.base}/nutrition/summary`, {
       params: { days },
     });
+  }
+
+  /** Dishes to pick usual home foods from; works before onboarding. Own region first. */
+  staples(dietType: string, state: string | null): Observable<StapleOut[]> {
+    const params: Record<string, string> = { diet_type: dietType };
+    if (state) params['state'] = state;
+    return this.http.get<StapleOut[]>(`${this.base}/foods/staples`, { params });
   }
 
   foods(q: string, mealType: MealType | null): Observable<FoodOut[]> {

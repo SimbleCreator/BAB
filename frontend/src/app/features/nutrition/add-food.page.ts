@@ -63,12 +63,30 @@ export class AddFoodPage {
 
   protected readonly picked = signal<FoodOut | null>(null);
   protected readonly servings = signal(1);
+  /** Log by weight when the food has a known serving weight. */
+  protected readonly unit = signal<'g' | 'serving'>('g');
+  protected readonly grams = signal<number | null>(null);
+  protected readonly byWeight = computed(() => this.unit() === 'g' && !!this.picked()?.serving_g);
+  /** Servings eaten, from the weight or the stepper. Null when the weight is not valid. */
+  private readonly eaten = computed<number | null>(() => {
+    const f = this.picked();
+    if (!f) return null;
+    if (!this.byWeight()) return this.servings();
+    const g = this.grams();
+    return g !== null && g >= 1 && g <= 3000 ? g / f.serving_g! : null;
+  });
+  protected readonly gramsError = computed(() => this.byWeight() && this.eaten() === null);
   protected readonly preview = computed(() => {
     const f = this.picked();
-    const n = this.servings();
-    return f
+    const n = this.eaten();
+    return f && n !== null
       ? { kcal: Math.round(f.calories_kcal * n), protein: Math.round(f.protein_g * n * 10) / 10 }
       : null;
+  });
+  /** Quick weights: half, one, one and a half and two servings. */
+  protected readonly quickGrams = computed(() => {
+    const g = this.picked()?.serving_g;
+    return g ? [0.5, 1, 1.5, 2].map((n) => ({ n, g: Math.round(g * n) })) : [];
   });
   protected readonly saving = signal(false);
   protected readonly showCustom = signal(false);
@@ -76,6 +94,7 @@ export class AddFoodPage {
   protected readonly custom = inject(NonNullableFormBuilder).group({
     name: ['', [Validators.required, Validators.maxLength(80), Validators.pattern(/\S/)]],
     serving_label: ['1 serving', [Validators.required, Validators.maxLength(40)]],
+    serving_g: [null as number | null, [Validators.min(1), Validators.max(3000)]],
     calories_kcal: [
       null as number | null,
       [Validators.required, Validators.min(0), Validators.max(3000)],
@@ -88,6 +107,13 @@ export class AddFoodPage {
   protected pick(f: FoodOut): void {
     this.picked.set(f);
     this.servings.set(1);
+    this.unit.set(f.serving_g ? 'g' : 'serving');
+    this.grams.set(f.serving_g ? Math.round(f.serving_g) : null);
+  }
+
+  protected setGrams(value: string): void {
+    const n = Number(value);
+    this.grams.set(value.trim() === '' || !Number.isFinite(n) ? null : Math.round(n));
   }
 
   protected step(delta: number): void {
@@ -96,14 +122,15 @@ export class AddFoodPage {
 
   protected add(): void {
     const f = this.picked();
-    if (!f) return;
+    if (!f || this.eaten() === null) return;
+    const amount = this.byWeight() ? { grams: this.grams()! } : { servings: this.servings() };
     this.saving.set(true);
     this.api
       .addItem(this.day(), {
         meal_type: this.chosenMeal(),
         food_code: f.food_code,
         custom_food_id: f.custom_food_id,
-        servings: this.servings(),
+        ...amount,
       })
       .subscribe({
         next: (d) => {
@@ -129,6 +156,8 @@ export class AddFoodPage {
       ...v,
       name: v.name.trim(),
       calories_kcal: Number(v.calories_kcal),
+      serving_g:
+        v.serving_g === null || (v.serving_g as unknown) === '' ? null : Number(v.serving_g),
     };
     this.saving.set(true);
     this.api.createCustom(body).subscribe({
@@ -142,12 +171,16 @@ export class AddFoodPage {
           custom_food_id: c.id,
           name: c.name,
           serving_label: c.serving_label,
+          serving_g: c.serving_g ?? null,
           calories_kcal: c.calories_kcal,
           protein_g: c.protein_g,
           carbs_g: c.carbs_g,
           fat_g: c.fat_g,
           diet_type: null,
           meal_types: [],
+          regions: [],
+          usual: false,
+          regional: false,
           uses: 0,
         });
         this.foods.reload();

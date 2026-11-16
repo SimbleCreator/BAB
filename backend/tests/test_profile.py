@@ -72,3 +72,74 @@ async def test_deleting_user_cascades(client, session):
     await session.commit()
     assert await session.scalar(select(func.count()).select_from(Profile)) == 0
     assert await session.scalar(select(func.count()).select_from(RefreshToken)) == 0
+
+
+# Personal B.A.B (M11): "Know me" -------------------------------------------------------
+
+KNOW_ME = {
+    "city": "  Bengaluru ",
+    "state": "KA",
+    "work_type": "desk",
+    "food_source": "home",
+    "wake_time": "06:30",
+    "usual_foods": ["idli", "sambar", "idli"],
+    "sleep_hours": 7.3,
+    "sweet_drinks_per_day": 2,
+    "fasting_note": " Ekadashi ",
+    "food_budget_inr": 300,
+}
+
+
+async def test_know_me_fields_saved(client):
+    from tests.helpers import onboard
+
+    h = await onboard(client, **KNOW_ME)
+    p = (await client.get("/api/v1/profile", headers=h)).json()
+    assert p["city"] == "Bengaluru"
+    assert p["region"] == "south"
+    assert p["usual_foods"] == ["idli", "sambar"]
+    assert p["sleep_hours"] == 7.5
+    assert p["fasting_note"] == "Ekadashi"
+    assert p["wake_time"] == "06:30"
+
+
+async def test_know_me_optional_and_region_null_outside_india(client):
+    from tests.helpers import onboard
+
+    h = await onboard(client)
+    p = (await client.get("/api/v1/profile", headers=h)).json()
+    assert p["state"] is None and p["region"] is None and p["usual_foods"] == []
+    h2 = await onboard(client, "b@example.com", state="OUT")
+    assert (await client.get("/api/v1/profile", headers=h2)).json()["region"] is None
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {"state": "ZZ"},
+        {"wake_time": "6:30"},
+        {"wake_time": "24:00"},
+        {"usual_foods": ["not_a_food"]},
+        {"usual_foods": [f"f{i}" for i in range(13)]},
+        {"work_type": "astronaut"},
+        {"sleep_hours": 2},
+        {"food_budget_inr": 10},
+    ],
+)
+async def test_know_me_validation(client, bad):
+    from tests.helpers import PROFILE, bearer, register
+
+    h = bearer(await register(client))
+    r = await client.put("/api/v1/profile", json=PROFILE | bad, headers=h)
+    assert r.status_code == 422
+
+
+async def test_profile_options(client):
+    from tests.helpers import bearer, register
+
+    h = bearer(await register(client))
+    o = (await client.get("/api/v1/profile/options", headers=h)).json()
+    assert {"code": "KA", "name": "Karnataka", "region": "south"} in o["states"]
+    assert o["states"][-1]["code"] == "OUT"
+    assert o["work_types"] == ["desk", "standing", "physical", "shifts"]
+    assert o["usual_foods_max"] == 12

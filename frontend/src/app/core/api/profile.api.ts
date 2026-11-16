@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ProfileIn, ProfileOut } from './models';
+import { ProfileIn, ProfileOptionsOut, ProfileOut } from './models';
 
 /** Client for the backend `profile` router. */
 @Injectable({ providedIn: 'root' })
@@ -13,6 +13,11 @@ export class ProfileApi {
 
   get(): Observable<ProfileOut> {
     return this.http.get<ProfileOut>(this.base);
+  }
+
+  /** Choices for the "Know me" questions (states, kinds of work, food sources). */
+  options(): Observable<ProfileOptionsOut> {
+    return this.http.get<ProfileOptionsOut>(`${this.base}/options`);
   }
 
   save(body: ProfileIn): Observable<ProfileOut> {

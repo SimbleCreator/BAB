@@ -1,11 +1,19 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.content import states
 from app.core.errors import NotFoundError
 from app.core.timeutil import local_today
+from app.models.enums import FoodSource, WorkType
 from app.models.profile import Profile
 from app.models.user import User
 from app.repositories import profile_repo
-from app.schemas.profile import ProfileIn, ProfileOut
+from app.schemas.profile import (
+    USUAL_FOODS_MAX,
+    ProfileIn,
+    ProfileOptionsOut,
+    ProfileOut,
+    StateOption,
+)
 from app.services import nutrition_service, training_service
 
 
@@ -48,3 +56,12 @@ async def save(session: AsyncSession, user: User, data: ProfileIn) -> ProfileOut
     await session.commit()
     await session.refresh(profile)
     return ProfileOut.model_validate(profile)
+
+
+def options() -> ProfileOptionsOut:
+    return ProfileOptionsOut(
+        states=[StateOption(code=s.code, name=s.name, region=s.region) for s in states()],
+        work_types=[w.value for w in WorkType],
+        food_sources=[f.value for f in FoodSource],
+        usual_foods_max=USUAL_FOODS_MAX,
+    )

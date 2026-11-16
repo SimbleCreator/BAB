@@ -11,6 +11,13 @@
   align-items: start;
 }
 
+@media (max-width: 520px) {
+  .row.pair {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
 .field-label {
   font: var(--mat-sys-title-small);
   margin: 12px 0 4px;

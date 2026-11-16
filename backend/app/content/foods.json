@@ -1,10 +1,11 @@
 {
-  "_note": "Approximate values per serving, to be verified by the owner. Shown to users as estimates.",
+  "_note": "Approximate values per serving, to be verified by the owner. Shown to users as estimates. serving_g is the weight of one serving in grams (ml for drinks); regions lists where a dish is a home staple (empty means eaten everywhere).",
   "foods": [
     {
       "code": "idli",
       "name": "Idli",
       "serving_label": "2 pieces",
+      "serving_g": 80,
       "calories_kcal": 120,
       "protein_g": 4,
       "carbs_g": 24,
@@ -12,12 +13,16 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "plain_dosa",
       "name": "Plain dosa",
       "serving_label": "1 dosa",
+      "serving_g": 90,
       "calories_kcal": 170,
       "protein_g": 4,
       "carbs_g": 28,
@@ -26,12 +31,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "masala_dosa",
       "name": "Masala dosa",
       "serving_label": "1 dosa",
+      "serving_g": 180,
       "calories_kcal": 300,
       "protein_g": 6,
       "carbs_g": 42,
@@ -40,12 +49,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "rava_upma",
       "name": "Rava upma",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 250,
       "protein_g": 6,
       "carbs_g": 38,
@@ -53,12 +66,16 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "poha",
       "name": "Poha",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 250,
       "protein_g": 5,
       "carbs_g": 45,
@@ -67,12 +84,17 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "west",
+        "central"
       ]
     },
     {
       "code": "onion_uttapam",
       "name": "Onion uttapam",
       "serving_label": "1 uttapam",
+      "serving_g": 150,
       "calories_kcal": 220,
       "protein_g": 6,
       "carbs_g": 34,
@@ -81,12 +103,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "medu_vada",
       "name": "Medu vada",
       "serving_label": "2 pieces",
+      "serving_g": 100,
       "calories_kcal": 280,
       "protein_g": 8,
       "carbs_g": 28,
@@ -95,12 +121,16 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "ven_pongal",
       "name": "Ven pongal",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 300,
       "protein_g": 8,
       "carbs_g": 40,
@@ -108,12 +138,16 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "aloo_paratha",
       "name": "Aloo paratha",
       "serving_label": "1 paratha",
+      "serving_g": 140,
       "calories_kcal": 300,
       "protein_g": 6,
       "carbs_g": 40,
@@ -122,12 +156,16 @@
       "meal_types": [
         "breakfast",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "plain_paratha",
       "name": "Plain paratha",
       "serving_label": "1 paratha",
+      "serving_g": 80,
       "calories_kcal": 260,
       "protein_g": 5,
       "carbs_g": 32,
@@ -137,12 +175,16 @@
         "breakfast",
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "methi_thepla",
       "name": "Methi thepla",
       "serving_label": "2 pieces",
+      "serving_g": 70,
       "calories_kcal": 220,
       "protein_g": 6,
       "carbs_g": 28,
@@ -151,12 +193,16 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "besan_chilla",
       "name": "Besan chilla",
       "serving_label": "2 pieces",
+      "serving_g": 120,
       "calories_kcal": 220,
       "protein_g": 12,
       "carbs_g": 26,
@@ -165,12 +211,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "moong_dal_chilla",
       "name": "Moong dal chilla",
       "serving_label": "2 pieces",
+      "serving_g": 120,
       "calories_kcal": 220,
       "protein_g": 14,
       "carbs_g": 28,
@@ -179,12 +227,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "oats_porridge_with_milk",
       "name": "Oats porridge with milk",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 250,
       "protein_g": 10,
       "carbs_g": 38,
@@ -192,12 +242,14 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "masala_oats",
       "name": "Masala oats",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 200,
       "protein_g": 6,
       "carbs_g": 32,
@@ -206,12 +258,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "cornflakes_with_milk",
       "name": "Cornflakes with milk",
       "serving_label": "1 bowl",
+      "serving_g": 230,
       "calories_kcal": 220,
       "protein_g": 7,
       "carbs_g": 40,
@@ -219,12 +273,14 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "muesli_with_milk",
       "name": "Muesli with milk",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 300,
       "protein_g": 10,
       "carbs_g": 48,
@@ -232,12 +288,14 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "buttered_toast",
       "name": "Buttered toast",
       "serving_label": "2 slices",
+      "serving_g": 70,
       "calories_kcal": 220,
       "protein_g": 6,
       "carbs_g": 28,
@@ -246,12 +304,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "peanut_butter_toast",
       "name": "Peanut butter toast",
       "serving_label": "2 slices",
+      "serving_g": 80,
       "calories_kcal": 350,
       "protein_g": 12,
       "carbs_g": 30,
@@ -260,12 +320,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_sandwich",
       "name": "Vegetable sandwich",
       "serving_label": "1 sandwich",
+      "serving_g": 150,
       "calories_kcal": 250,
       "protein_g": 7,
       "carbs_g": 36,
@@ -274,12 +336,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "paneer_sandwich",
       "name": "Paneer sandwich",
       "serving_label": "1 sandwich",
+      "serving_g": 160,
       "calories_kcal": 330,
       "protein_g": 15,
       "carbs_g": 34,
@@ -288,12 +352,14 @@
       "meal_types": [
         "breakfast",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sabudana_khichdi",
       "name": "Sabudana khichdi",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 350,
       "protein_g": 4,
       "carbs_g": 60,
@@ -301,12 +367,16 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "khaman_dhokla",
       "name": "Khaman dhokla",
       "serving_label": "4 pieces",
+      "serving_g": 120,
       "calories_kcal": 160,
       "protein_g": 6,
       "carbs_g": 24,
@@ -315,12 +385,16 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "puri_bhaji",
       "name": "Puri bhaji",
       "serving_label": "2 puris with bhaji",
+      "serving_g": 220,
       "calories_kcal": 400,
       "protein_g": 7,
       "carbs_g": 50,
@@ -328,12 +402,14 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "ragi_dosa",
       "name": "Ragi dosa",
       "serving_label": "1 dosa",
+      "serving_g": 90,
       "calories_kcal": 150,
       "protein_g": 4,
       "carbs_g": 26,
@@ -342,12 +418,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "appam",
       "name": "Appam",
       "serving_label": "2 appams",
+      "serving_g": 120,
       "calories_kcal": 220,
       "protein_g": 4,
       "carbs_g": 44,
@@ -356,12 +436,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "idiyappam",
       "name": "Idiyappam",
       "serving_label": "2 pieces",
+      "serving_g": 100,
       "calories_kcal": 200,
       "protein_g": 3,
       "carbs_g": 44,
@@ -370,12 +454,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "pesarattu",
       "name": "Pesarattu",
       "serving_label": "1 dosa",
+      "serving_g": 120,
       "calories_kcal": 200,
       "protein_g": 10,
       "carbs_g": 28,
@@ -384,12 +472,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "vermicelli_upma",
       "name": "Vermicelli upma",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 230,
       "protein_g": 5,
       "carbs_g": 42,
@@ -397,12 +489,16 @@
       "diet_type": "veg",
       "meal_types": [
         "breakfast"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "misal_pav",
       "name": "Misal pav",
       "serving_label": "1 plate",
+      "serving_g": 350,
       "calories_kcal": 450,
       "protein_g": 15,
       "carbs_g": 55,
@@ -411,12 +507,16 @@
       "meal_types": [
         "breakfast",
         "lunch"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "vegetable_daliya",
       "name": "Vegetable daliya",
       "serving_label": "1 bowl",
+      "serving_g": 220,
       "calories_kcal": 220,
       "protein_g": 7,
       "carbs_g": 40,
@@ -425,12 +525,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "paneer_paratha",
       "name": "Paneer paratha",
       "serving_label": "1 paratha",
+      "serving_g": 150,
       "calories_kcal": 320,
       "protein_g": 12,
       "carbs_g": 36,
@@ -439,12 +541,16 @@
       "meal_types": [
         "breakfast",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "boiled_egg",
       "name": "Boiled egg",
       "serving_label": "1 large egg",
+      "serving_g": 50,
       "calories_kcal": 78,
       "protein_g": 6.3,
       "carbs_g": 0.6,
@@ -453,12 +559,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "plain_omelette",
       "name": "Plain omelette",
       "serving_label": "2 eggs",
+      "serving_g": 120,
       "calories_kcal": 190,
       "protein_g": 13,
       "carbs_g": 2,
@@ -467,12 +575,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_bhurji",
       "name": "Egg bhurji",
       "serving_label": "2 eggs",
+      "serving_g": 130,
       "calories_kcal": 210,
       "protein_g": 13,
       "carbs_g": 4,
@@ -481,12 +591,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_white_omelette",
       "name": "Egg white omelette",
       "serving_label": "3 egg whites",
+      "serving_g": 100,
       "calories_kcal": 60,
       "protein_g": 11,
       "carbs_g": 1,
@@ -495,12 +607,14 @@
       "meal_types": [
         "breakfast",
         "dinner"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_sandwich",
       "name": "Egg sandwich",
       "serving_label": "1 sandwich",
+      "serving_g": 160,
       "calories_kcal": 300,
       "protein_g": 14,
       "carbs_g": 30,
@@ -509,12 +623,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_dosa",
       "name": "Egg dosa",
       "serving_label": "1 dosa",
+      "serving_g": 150,
       "calories_kcal": 260,
       "protein_g": 11,
       "carbs_g": 28,
@@ -523,12 +639,16 @@
       "meal_types": [
         "breakfast",
         "dinner"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "poached_egg",
       "name": "Poached egg",
       "serving_label": "1 egg",
+      "serving_g": 50,
       "calories_kcal": 72,
       "protein_g": 6,
       "carbs_g": 0,
@@ -537,12 +657,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_paratha",
       "name": "Egg paratha",
       "serving_label": "1 paratha",
+      "serving_g": 150,
       "calories_kcal": 330,
       "protein_g": 12,
       "carbs_g": 32,
@@ -551,12 +673,16 @@
       "meal_types": [
         "breakfast",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "french_toast",
       "name": "French toast",
       "serving_label": "2 slices",
+      "serving_g": 130,
       "calories_kcal": 300,
       "protein_g": 12,
       "carbs_g": 30,
@@ -564,12 +690,14 @@
       "diet_type": "egg",
       "meal_types": [
         "breakfast"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "steamed_rice",
       "name": "Steamed rice",
       "serving_label": "1 cup cooked",
+      "serving_g": 160,
       "calories_kcal": 205,
       "protein_g": 4,
       "carbs_g": 45,
@@ -578,12 +706,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "brown_rice",
       "name": "Brown rice",
       "serving_label": "1 cup cooked",
+      "serving_g": 160,
       "calories_kcal": 215,
       "protein_g": 5,
       "carbs_g": 45,
@@ -592,12 +722,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "jeera_rice",
       "name": "Jeera rice",
       "serving_label": "1 cup",
+      "serving_g": 170,
       "calories_kcal": 250,
       "protein_g": 4,
       "carbs_g": 44,
@@ -606,12 +738,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chapati",
       "name": "Chapati",
       "serving_label": "1 medium",
+      "serving_g": 40,
       "calories_kcal": 110,
       "protein_g": 3,
       "carbs_g": 18,
@@ -621,12 +755,14 @@
         "breakfast",
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "phulka",
       "name": "Phulka",
       "serving_label": "1 phulka",
+      "serving_g": 30,
       "calories_kcal": 80,
       "protein_g": 3,
       "carbs_g": 16,
@@ -635,12 +771,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "naan",
       "name": "Naan",
       "serving_label": "1 naan",
+      "serving_g": 90,
       "calories_kcal": 260,
       "protein_g": 8,
       "carbs_g": 45,
@@ -649,12 +787,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "bajra_roti",
       "name": "Bajra roti",
       "serving_label": "1 roti",
+      "serving_g": 50,
       "calories_kcal": 120,
       "protein_g": 3,
       "carbs_g": 22,
@@ -663,12 +803,17 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "west",
+        "north"
       ]
     },
     {
       "code": "jowar_roti",
       "name": "Jowar roti",
       "serving_label": "1 roti",
+      "serving_g": 45,
       "calories_kcal": 110,
       "protein_g": 3,
       "carbs_g": 22,
@@ -677,12 +822,17 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "west",
+        "south"
       ]
     },
     {
       "code": "ragi_mudde",
       "name": "Ragi mudde",
       "serving_label": "1 ball",
+      "serving_g": 150,
       "calories_kcal": 230,
       "protein_g": 5,
       "carbs_g": 50,
@@ -691,12 +841,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "quinoa_pulao",
       "name": "Quinoa pulao",
       "serving_label": "1 cup",
+      "serving_g": 180,
       "calories_kcal": 250,
       "protein_g": 8,
       "carbs_g": 40,
@@ -705,12 +859,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "brown_bread",
       "name": "Brown bread",
       "serving_label": "2 slices",
+      "serving_g": 50,
       "calories_kcal": 140,
       "protein_g": 6,
       "carbs_g": 24,
@@ -719,12 +875,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "dal_tadka",
       "name": "Dal tadka",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 180,
       "protein_g": 9,
       "carbs_g": 22,
@@ -733,12 +891,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "moong_dal",
       "name": "Moong dal",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 150,
       "protein_g": 9,
       "carbs_g": 20,
@@ -747,12 +907,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "masoor_dal",
       "name": "Masoor dal",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 160,
       "protein_g": 10,
       "carbs_g": 22,
@@ -761,12 +923,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sambar",
       "name": "Sambar",
       "serving_label": "1 bowl",
+      "serving_g": 220,
       "calories_kcal": 140,
       "protein_g": 6,
       "carbs_g": 20,
@@ -776,12 +940,16 @@
         "breakfast",
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "rasam",
       "name": "Rasam",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 60,
       "protein_g": 2,
       "carbs_g": 10,
@@ -790,12 +958,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "rajma",
       "name": "Rajma",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 220,
       "protein_g": 11,
       "carbs_g": 30,
@@ -804,12 +976,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "chole",
       "name": "Chole",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 240,
       "protein_g": 11,
       "carbs_g": 32,
@@ -818,12 +994,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "kadhi",
       "name": "Kadhi",
       "serving_label": "1 bowl",
+      "serving_g": 220,
       "calories_kcal": 180,
       "protein_g": 6,
       "carbs_g": 14,
@@ -832,12 +1012,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "dal_makhani",
       "name": "Dal makhani",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 330,
       "protein_g": 12,
       "carbs_g": 28,
@@ -846,12 +1030,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "palak_paneer",
       "name": "Palak paneer",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 280,
       "protein_g": 14,
       "carbs_g": 10,
@@ -860,12 +1048,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "paneer_butter_masala",
       "name": "Paneer butter masala",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 380,
       "protein_g": 15,
       "carbs_g": 14,
@@ -874,12 +1066,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "matar_paneer",
       "name": "Matar paneer",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 300,
       "protein_g": 14,
       "carbs_g": 16,
@@ -888,12 +1084,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "paneer_bhurji",
       "name": "Paneer bhurji",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 280,
       "protein_g": 18,
       "carbs_g": 8,
@@ -903,12 +1103,14 @@
         "breakfast",
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "paneer_tikka",
       "name": "Paneer tikka",
       "serving_label": "6 pieces",
+      "serving_g": 150,
       "calories_kcal": 300,
       "protein_g": 20,
       "carbs_g": 8,
@@ -918,12 +1120,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "aloo_gobi",
       "name": "Aloo gobi",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 180,
       "protein_g": 4,
       "carbs_g": 20,
@@ -932,12 +1136,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "bhindi_masala",
       "name": "Bhindi masala",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 160,
       "protein_g": 3,
       "carbs_g": 14,
@@ -946,12 +1154,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "baingan_bharta",
       "name": "Baingan bharta",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 150,
       "protein_g": 3,
       "carbs_g": 14,
@@ -960,12 +1170,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "mixed_vegetable_curry",
       "name": "Mixed vegetable curry",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 180,
       "protein_g": 5,
       "carbs_g": 18,
@@ -974,12 +1188,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "potato_sabzi",
       "name": "Potato sabzi",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 200,
       "protein_g": 3,
       "carbs_g": 26,
@@ -989,12 +1205,14 @@
         "breakfast",
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "cabbage_poriyal",
       "name": "Cabbage poriyal",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 110,
       "protein_g": 3,
       "carbs_g": 12,
@@ -1003,12 +1221,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "beans_thoran",
       "name": "Beans thoran",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 120,
       "protein_g": 3,
       "carbs_g": 12,
@@ -1017,12 +1239,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "avial",
       "name": "Avial",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 180,
       "protein_g": 4,
       "carbs_g": 14,
@@ -1031,12 +1257,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "mushroom_masala",
       "name": "Mushroom masala",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 180,
       "protein_g": 6,
       "carbs_g": 12,
@@ -1045,12 +1275,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "lauki_sabzi",
       "name": "Lauki sabzi",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 100,
       "protein_g": 2,
       "carbs_g": 10,
@@ -1059,12 +1291,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "soya_chunks_curry",
       "name": "Soya chunks curry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 250,
       "protein_g": 22,
       "carbs_g": 18,
@@ -1073,12 +1307,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "tofu_stir_fry",
       "name": "Tofu stir-fry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 220,
       "protein_g": 16,
       "carbs_g": 10,
@@ -1087,12 +1323,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "methi_aloo",
       "name": "Methi aloo",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 170,
       "protein_g": 3,
       "carbs_g": 20,
@@ -1101,12 +1339,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chana_dal",
       "name": "Chana dal",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 200,
       "protein_g": 11,
       "carbs_g": 28,
@@ -1115,12 +1355,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_biryani",
       "name": "Vegetable biryani",
       "serving_label": "1 plate",
+      "serving_g": 300,
       "calories_kcal": 400,
       "protein_g": 9,
       "carbs_g": 60,
@@ -1129,12 +1371,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_pulao",
       "name": "Vegetable pulao",
       "serving_label": "1 plate",
+      "serving_g": 250,
       "calories_kcal": 330,
       "protein_g": 7,
       "carbs_g": 52,
@@ -1143,12 +1387,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "curd_rice",
       "name": "Curd rice",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 280,
       "protein_g": 8,
       "carbs_g": 42,
@@ -1157,12 +1403,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "lemon_rice",
       "name": "Lemon rice",
       "serving_label": "1 bowl",
+      "serving_g": 220,
       "calories_kcal": 300,
       "protein_g": 5,
       "carbs_g": 48,
@@ -1171,12 +1421,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "moong_dal_khichdi",
       "name": "Moong dal khichdi",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 300,
       "protein_g": 11,
       "carbs_g": 48,
@@ -1185,12 +1439,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "pav_bhaji",
       "name": "Pav bhaji",
       "serving_label": "2 pav with bhaji",
+      "serving_g": 300,
       "calories_kcal": 450,
       "protein_g": 11,
       "carbs_g": 60,
@@ -1200,12 +1456,16 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "vegetable_fried_rice",
       "name": "Vegetable fried rice",
       "serving_label": "1 plate",
+      "serving_g": 250,
       "calories_kcal": 350,
       "protein_g": 7,
       "carbs_g": 55,
@@ -1214,12 +1474,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_hakka_noodles",
       "name": "Vegetable hakka noodles",
       "serving_label": "1 plate",
+      "serving_g": 250,
       "calories_kcal": 380,
       "protein_g": 8,
       "carbs_g": 58,
@@ -1228,12 +1490,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_momos",
       "name": "Vegetable momos",
       "serving_label": "6 pieces",
+      "serving_g": 180,
       "calories_kcal": 250,
       "protein_g": 7,
       "carbs_g": 40,
@@ -1243,12 +1507,17 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "northeast",
+        "north"
       ]
     },
     {
       "code": "bisi_bele_bath",
       "name": "Bisi bele bath",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 330,
       "protein_g": 9,
       "carbs_g": 52,
@@ -1257,12 +1526,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "tomato_rice",
       "name": "Tomato rice",
       "serving_label": "1 bowl",
+      "serving_g": 220,
       "calories_kcal": 290,
       "protein_g": 5,
       "carbs_g": 48,
@@ -1271,12 +1544,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "south"
       ]
     },
     {
       "code": "sprouts_salad",
       "name": "Sprouts salad",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 150,
       "protein_g": 10,
       "carbs_g": 22,
@@ -1286,12 +1563,14 @@
         "breakfast",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "green_salad",
       "name": "Green salad",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 50,
       "protein_g": 2,
       "carbs_g": 9,
@@ -1300,12 +1579,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "kachumber_salad",
       "name": "Kachumber salad",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 60,
       "protein_g": 2,
       "carbs_g": 10,
@@ -1314,12 +1595,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "cucumber_raita",
       "name": "Cucumber raita",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 100,
       "protein_g": 4,
       "carbs_g": 8,
@@ -1328,12 +1611,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "plain_curd",
       "name": "Plain curd",
       "serving_label": "1 bowl (150 g)",
+      "serving_g": 150,
       "calories_kcal": 90,
       "protein_g": 5,
       "carbs_g": 7,
@@ -1344,12 +1629,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "greek_yogurt",
       "name": "Greek yogurt",
       "serving_label": "150 g",
+      "serving_g": 150,
       "calories_kcal": 130,
       "protein_g": 15,
       "carbs_g": 6,
@@ -1358,12 +1645,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "buttermilk",
       "name": "Buttermilk",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 40,
       "protein_g": 2,
       "carbs_g": 5,
@@ -1372,12 +1661,14 @@
       "meal_types": [
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "roasted_papad",
       "name": "Roasted papad",
       "serving_label": "1 papad",
+      "serving_g": 12,
       "calories_kcal": 35,
       "protein_g": 2,
       "carbs_g": 6,
@@ -1386,12 +1677,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "ghee",
       "name": "Ghee",
       "serving_label": "1 teaspoon",
+      "serving_g": 5,
       "calories_kcal": 45,
       "protein_g": 0,
       "carbs_g": 0,
@@ -1401,12 +1694,14 @@
         "breakfast",
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "tomato_soup",
       "name": "Tomato soup",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 90,
       "protein_g": 2,
       "carbs_g": 14,
@@ -1415,12 +1710,14 @@
       "meal_types": [
         "dinner",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "paneer",
       "name": "Paneer",
       "serving_label": "100 g",
+      "serving_g": 100,
       "calories_kcal": 265,
       "protein_g": 18,
       "carbs_g": 3,
@@ -1430,12 +1727,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "tofu",
       "name": "Tofu",
       "serving_label": "100 g",
+      "serving_g": 100,
       "calories_kcal": 76,
       "protein_g": 8,
       "carbs_g": 2,
@@ -1445,12 +1744,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "toned_milk",
       "name": "Toned milk",
       "serving_label": "1 glass (250 ml)",
+      "serving_g": 250,
       "calories_kcal": 150,
       "protein_g": 8,
       "carbs_g": 12,
@@ -1459,12 +1760,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "skimmed_milk",
       "name": "Skimmed milk",
       "serving_label": "1 glass (250 ml)",
+      "serving_g": 250,
       "calories_kcal": 90,
       "protein_g": 9,
       "carbs_g": 12,
@@ -1473,12 +1776,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "soy_milk",
       "name": "Soy milk",
       "serving_label": "1 glass (250 ml)",
+      "serving_g": 250,
       "calories_kcal": 100,
       "protein_g": 7,
       "carbs_g": 8,
@@ -1487,12 +1792,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "whey_protein_in_water",
       "name": "Whey protein in water",
       "serving_label": "1 scoop",
+      "serving_g": 30,
       "calories_kcal": 120,
       "protein_g": 24,
       "carbs_g": 3,
@@ -1501,12 +1808,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_curry",
       "name": "Chicken curry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 300,
       "protein_g": 26,
       "carbs_g": 8,
@@ -1515,12 +1824,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "butter_chicken",
       "name": "Butter chicken",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 450,
       "protein_g": 28,
       "carbs_g": 12,
@@ -1529,12 +1840,16 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "tandoori_chicken",
       "name": "Tandoori chicken",
       "serving_label": "2 pieces",
+      "serving_g": 200,
       "calories_kcal": 260,
       "protein_g": 32,
       "carbs_g": 4,
@@ -1544,12 +1859,16 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "grilled_chicken_breast",
       "name": "Grilled chicken breast",
       "serving_label": "100 g",
+      "serving_g": 100,
       "calories_kcal": 165,
       "protein_g": 31,
       "carbs_g": 0,
@@ -1558,12 +1877,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_tikka",
       "name": "Chicken tikka",
       "serving_label": "6 pieces",
+      "serving_g": 150,
       "calories_kcal": 280,
       "protein_g": 34,
       "carbs_g": 6,
@@ -1573,12 +1894,16 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "chicken_biryani",
       "name": "Chicken biryani",
       "serving_label": "1 plate",
+      "serving_g": 350,
       "calories_kcal": 500,
       "protein_g": 25,
       "carbs_g": 60,
@@ -1587,12 +1912,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_65",
       "name": "Chicken 65",
       "serving_label": "8 pieces",
+      "serving_g": 150,
       "calories_kcal": 380,
       "protein_g": 26,
       "carbs_g": 14,
@@ -1602,12 +1929,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_soup",
       "name": "Chicken soup",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 120,
       "protein_g": 12,
       "carbs_g": 8,
@@ -1616,12 +1945,14 @@
       "meal_types": [
         "dinner",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_fried_rice",
       "name": "Chicken fried rice",
       "serving_label": "1 plate",
+      "serving_g": 300,
       "calories_kcal": 450,
       "protein_g": 18,
       "carbs_g": 58,
@@ -1630,12 +1961,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_shawarma_roll",
       "name": "Chicken shawarma roll",
       "serving_label": "1 roll",
+      "serving_g": 250,
       "calories_kcal": 450,
       "protein_g": 25,
       "carbs_g": 45,
@@ -1644,12 +1977,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_sandwich",
       "name": "Chicken sandwich",
       "serving_label": "1 sandwich",
+      "serving_g": 180,
       "calories_kcal": 350,
       "protein_g": 22,
       "carbs_g": 34,
@@ -1659,12 +1994,14 @@
         "breakfast",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_salad_bowl",
       "name": "Chicken salad bowl",
       "serving_label": "1 bowl",
+      "serving_g": 250,
       "calories_kcal": 250,
       "protein_g": 28,
       "carbs_g": 10,
@@ -1673,12 +2010,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_momos",
       "name": "Chicken momos",
       "serving_label": "6 pieces",
+      "serving_g": 180,
       "calories_kcal": 290,
       "protein_g": 16,
       "carbs_g": 34,
@@ -1688,12 +2027,17 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "northeast",
+        "north"
       ]
     },
     {
       "code": "chicken_keema",
       "name": "Chicken keema",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 320,
       "protein_g": 26,
       "carbs_g": 8,
@@ -1702,12 +2046,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "mutton_curry",
       "name": "Mutton curry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 380,
       "protein_g": 25,
       "carbs_g": 8,
@@ -1716,12 +2062,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "mutton_biryani",
       "name": "Mutton biryani",
       "serving_label": "1 plate",
+      "serving_g": 350,
       "calories_kcal": 550,
       "protein_g": 25,
       "carbs_g": 60,
@@ -1730,12 +2078,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "mutton_keema",
       "name": "Mutton keema",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 350,
       "protein_g": 22,
       "carbs_g": 10,
@@ -1744,12 +2094,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "fish_curry",
       "name": "Fish curry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 250,
       "protein_g": 22,
       "carbs_g": 8,
@@ -1758,12 +2110,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "fish_fry",
       "name": "Fish fry",
       "serving_label": "2 pieces",
+      "serving_g": 150,
       "calories_kcal": 280,
       "protein_g": 24,
       "carbs_g": 8,
@@ -1772,12 +2126,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "grilled_fish",
       "name": "Grilled fish",
       "serving_label": "150 g",
+      "serving_g": 150,
       "calories_kcal": 200,
       "protein_g": 34,
       "carbs_g": 0,
@@ -1786,12 +2142,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "fish_tikka",
       "name": "Fish tikka",
       "serving_label": "6 pieces",
+      "serving_g": 150,
       "calories_kcal": 250,
       "protein_g": 30,
       "carbs_g": 6,
@@ -1801,12 +2159,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "prawn_curry",
       "name": "Prawn curry",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 230,
       "protein_g": 22,
       "carbs_g": 8,
@@ -1815,12 +2175,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "tuna_in_water",
       "name": "Tuna in water",
       "serving_label": "100 g",
+      "serving_g": 100,
       "calories_kcal": 116,
       "protein_g": 26,
       "carbs_g": 0,
@@ -1830,12 +2192,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chicken_sausage",
       "name": "Chicken sausage",
       "serving_label": "2 sausages",
+      "serving_g": 80,
       "calories_kcal": 160,
       "protein_g": 10,
       "carbs_g": 4,
@@ -1844,12 +2208,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_curry",
       "name": "Egg curry",
       "serving_label": "2 eggs",
+      "serving_g": 250,
       "calories_kcal": 260,
       "protein_g": 14,
       "carbs_g": 8,
@@ -1858,12 +2224,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_fried_rice",
       "name": "Egg fried rice",
       "serving_label": "1 plate",
+      "serving_g": 300,
       "calories_kcal": 420,
       "protein_g": 13,
       "carbs_g": 58,
@@ -1872,12 +2240,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_biryani",
       "name": "Egg biryani",
       "serving_label": "1 plate",
+      "serving_g": 350,
       "calories_kcal": 450,
       "protein_g": 17,
       "carbs_g": 60,
@@ -1886,12 +2256,14 @@
       "meal_types": [
         "dinner",
         "lunch"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "egg_roll",
       "name": "Egg roll",
       "serving_label": "1 roll",
+      "serving_g": 220,
       "calories_kcal": 400,
       "protein_g": 14,
       "carbs_g": 40,
@@ -1901,12 +2273,16 @@
         "dinner",
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "east"
       ]
     },
     {
       "code": "banana",
       "name": "Banana",
       "serving_label": "1 medium",
+      "serving_g": 120,
       "calories_kcal": 105,
       "protein_g": 1.3,
       "carbs_g": 27,
@@ -1915,12 +2291,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "apple",
       "name": "Apple",
       "serving_label": "1 medium",
+      "serving_g": 180,
       "calories_kcal": 95,
       "protein_g": 0.5,
       "carbs_g": 25,
@@ -1929,12 +2307,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "orange",
       "name": "Orange",
       "serving_label": "1 medium",
+      "serving_g": 130,
       "calories_kcal": 62,
       "protein_g": 1.2,
       "carbs_g": 15,
@@ -1943,12 +2323,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "papaya",
       "name": "Papaya",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 60,
       "protein_g": 0.7,
       "carbs_g": 15,
@@ -1957,12 +2339,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "mango",
       "name": "Mango",
       "serving_label": "1 cup",
+      "serving_g": 165,
       "calories_kcal": 100,
       "protein_g": 1.4,
       "carbs_g": 25,
@@ -1971,12 +2355,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "guava",
       "name": "Guava",
       "serving_label": "1 medium",
+      "serving_g": 125,
       "calories_kcal": 70,
       "protein_g": 2.6,
       "carbs_g": 14,
@@ -1984,12 +2370,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "watermelon",
       "name": "Watermelon",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 46,
       "protein_g": 1,
       "carbs_g": 12,
@@ -1997,12 +2385,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "pomegranate",
       "name": "Pomegranate",
       "serving_label": "1/2 cup seeds",
+      "serving_g": 85,
       "calories_kcal": 72,
       "protein_g": 1.5,
       "carbs_g": 16,
@@ -2011,12 +2401,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "grapes",
       "name": "Grapes",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 104,
       "protein_g": 1,
       "carbs_g": 27,
@@ -2024,12 +2416,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chikoo",
       "name": "Chikoo",
       "serving_label": "1 medium",
+      "serving_g": 100,
       "calories_kcal": 95,
       "protein_g": 0.5,
       "carbs_g": 24,
@@ -2037,12 +2431,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "pear",
       "name": "Pear",
       "serving_label": "1 medium",
+      "serving_g": 180,
       "calories_kcal": 100,
       "protein_g": 0.6,
       "carbs_g": 27,
@@ -2050,12 +2446,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "dates",
       "name": "Dates",
       "serving_label": "3 dates",
+      "serving_g": 24,
       "calories_kcal": 70,
       "protein_g": 0.6,
       "carbs_g": 19,
@@ -2064,12 +2462,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "roasted_chana",
       "name": "Roasted chana",
       "serving_label": "30 g",
+      "serving_g": 30,
       "calories_kcal": 110,
       "protein_g": 6,
       "carbs_g": 18,
@@ -2077,12 +2477,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "roasted_peanuts",
       "name": "Roasted peanuts",
       "serving_label": "30 g",
+      "serving_g": 30,
       "calories_kcal": 170,
       "protein_g": 7,
       "carbs_g": 5,
@@ -2090,12 +2492,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "almonds",
       "name": "Almonds",
       "serving_label": "10 almonds",
+      "serving_g": 12,
       "calories_kcal": 70,
       "protein_g": 2.6,
       "carbs_g": 2.5,
@@ -2104,12 +2508,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "cashews",
       "name": "Cashews",
       "serving_label": "10 cashews",
+      "serving_g": 15,
       "calories_kcal": 90,
       "protein_g": 3,
       "carbs_g": 5,
@@ -2117,12 +2523,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "walnuts",
       "name": "Walnuts",
       "serving_label": "5 halves",
+      "serving_g": 10,
       "calories_kcal": 65,
       "protein_g": 1.5,
       "carbs_g": 1.4,
@@ -2131,12 +2539,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "mixed_nuts",
       "name": "Mixed nuts",
       "serving_label": "30 g",
+      "serving_g": 30,
       "calories_kcal": 180,
       "protein_g": 5,
       "carbs_g": 6,
@@ -2144,12 +2554,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "roasted_makhana",
       "name": "Roasted makhana",
       "serving_label": "1 cup",
+      "serving_g": 30,
       "calories_kcal": 100,
       "protein_g": 3,
       "carbs_g": 20,
@@ -2157,12 +2569,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "bhel_puri",
       "name": "Bhel puri",
       "serving_label": "1 plate",
+      "serving_g": 120,
       "calories_kcal": 250,
       "protein_g": 6,
       "carbs_g": 40,
@@ -2170,12 +2584,16 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "sev_puri",
       "name": "Sev puri",
       "serving_label": "6 pieces",
+      "serving_g": 120,
       "calories_kcal": 300,
       "protein_g": 6,
       "carbs_g": 36,
@@ -2183,12 +2601,16 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "pani_puri",
       "name": "Pani puri",
       "serving_label": "6 pieces",
+      "serving_g": 120,
       "calories_kcal": 200,
       "protein_g": 4,
       "carbs_g": 34,
@@ -2196,12 +2618,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "samosa",
       "name": "Samosa",
       "serving_label": "1 samosa",
+      "serving_g": 100,
       "calories_kcal": 260,
       "protein_g": 4,
       "carbs_g": 30,
@@ -2209,12 +2633,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "vegetable_pakora",
       "name": "Vegetable pakora",
       "serving_label": "6 pieces",
+      "serving_g": 100,
       "calories_kcal": 270,
       "protein_g": 5,
       "carbs_g": 24,
@@ -2222,12 +2648,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "kachori",
       "name": "Kachori",
       "serving_label": "1 kachori",
+      "serving_g": 60,
       "calories_kcal": 190,
       "protein_g": 4,
       "carbs_g": 20,
@@ -2235,12 +2663,17 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
+      ],
+      "regions": [
+        "north",
+        "central"
       ]
     },
     {
       "code": "vada_pav",
       "name": "Vada pav",
       "serving_label": "1 vada pav",
+      "serving_g": 150,
       "calories_kcal": 300,
       "protein_g": 7,
       "carbs_g": 42,
@@ -2249,12 +2682,16 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "peanut_chikki",
       "name": "Peanut chikki",
       "serving_label": "1 piece",
+      "serving_g": 25,
       "calories_kcal": 120,
       "protein_g": 3,
       "carbs_g": 14,
@@ -2262,12 +2699,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "murmura_chivda",
       "name": "Murmura chivda",
       "serving_label": "1 cup",
+      "serving_g": 40,
       "calories_kcal": 150,
       "protein_g": 3,
       "carbs_g": 20,
@@ -2275,12 +2714,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "khakhra",
       "name": "Khakhra",
       "serving_label": "2 pieces",
+      "serving_g": 30,
       "calories_kcal": 120,
       "protein_g": 4,
       "carbs_g": 18,
@@ -2289,12 +2730,16 @@
       "meal_types": [
         "breakfast",
         "snack"
+      ],
+      "regions": [
+        "west"
       ]
     },
     {
       "code": "marie_biscuits",
       "name": "Marie biscuits",
       "serving_label": "4 biscuits",
+      "serving_g": 28,
       "calories_kcal": 120,
       "protein_g": 2,
       "carbs_g": 22,
@@ -2302,12 +2747,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "digestive_biscuits",
       "name": "Digestive biscuits",
       "serving_label": "2 biscuits",
+      "serving_g": 30,
       "calories_kcal": 140,
       "protein_g": 2,
       "carbs_g": 20,
@@ -2315,12 +2762,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "rusk",
       "name": "Rusk",
       "serving_label": "2 pieces",
+      "serving_g": 25,
       "calories_kcal": 100,
       "protein_g": 3,
       "carbs_g": 18,
@@ -2329,12 +2778,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "corn_chaat",
       "name": "Corn chaat",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 150,
       "protein_g": 4,
       "carbs_g": 30,
@@ -2342,12 +2793,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "boiled_sweet_corn",
       "name": "Boiled sweet corn",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 130,
       "protein_g": 5,
       "carbs_g": 29,
@@ -2355,12 +2808,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "popcorn_plain",
       "name": "Popcorn (plain)",
       "serving_label": "2 cups",
+      "serving_g": 16,
       "calories_kcal": 60,
       "protein_g": 2,
       "carbs_g": 12,
@@ -2368,12 +2823,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "potato_chips",
       "name": "Potato chips",
       "serving_label": "30 g",
+      "serving_g": 30,
       "calories_kcal": 160,
       "protein_g": 2,
       "carbs_g": 15,
@@ -2381,12 +2838,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "boiled_sweet_potato",
       "name": "Boiled sweet potato",
       "serving_label": "1 medium",
+      "serving_g": 130,
       "calories_kcal": 115,
       "protein_g": 2,
       "carbs_g": 27,
@@ -2394,12 +2853,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "boiled_potato",
       "name": "Boiled potato",
       "serving_label": "1 medium",
+      "serving_g": 170,
       "calories_kcal": 130,
       "protein_g": 3,
       "carbs_g": 30,
@@ -2407,12 +2868,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "chana_chaat",
       "name": "Chana chaat",
       "serving_label": "1 bowl",
+      "serving_g": 180,
       "calories_kcal": 200,
       "protein_g": 10,
       "carbs_g": 30,
@@ -2420,12 +2883,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sprouted_moong",
       "name": "Sprouted moong",
       "serving_label": "1 cup",
+      "serving_g": 100,
       "calories_kcal": 100,
       "protein_g": 8,
       "carbs_g": 18,
@@ -2434,12 +2899,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "cucumber",
       "name": "Cucumber",
       "serving_label": "1 medium",
+      "serving_g": 200,
       "calories_kcal": 16,
       "protein_g": 0.7,
       "carbs_g": 3.6,
@@ -2449,12 +2916,14 @@
         "dinner",
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "carrot",
       "name": "Carrot",
       "serving_label": "1 medium",
+      "serving_g": 60,
       "calories_kcal": 25,
       "protein_g": 0.6,
       "carbs_g": 6,
@@ -2463,12 +2932,14 @@
       "meal_types": [
         "lunch",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "dark_chocolate",
       "name": "Dark chocolate",
       "serving_label": "20 g",
+      "serving_g": 20,
       "calories_kcal": 110,
       "protein_g": 1.5,
       "carbs_g": 9,
@@ -2476,12 +2947,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "masala_chai_with_sugar",
       "name": "Masala chai with sugar",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 90,
       "protein_g": 3,
       "carbs_g": 13,
@@ -2490,12 +2963,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "tea_with_milk_no_sugar",
       "name": "Tea with milk, no sugar",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 40,
       "protein_g": 2,
       "carbs_g": 4,
@@ -2504,12 +2979,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "black_coffee",
       "name": "Black coffee",
       "serving_label": "1 cup",
+      "serving_g": 200,
       "calories_kcal": 5,
       "protein_g": 0.3,
       "carbs_g": 0,
@@ -2518,12 +2995,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "coffee_with_milk_and_sugar",
       "name": "Coffee with milk and sugar",
       "serving_label": "1 cup",
+      "serving_g": 150,
       "calories_kcal": 100,
       "protein_g": 3,
       "carbs_g": 14,
@@ -2532,12 +3011,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sweet_lassi",
       "name": "Sweet lassi",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 220,
       "protein_g": 7,
       "carbs_g": 34,
@@ -2546,12 +3027,16 @@
       "meal_types": [
         "lunch",
         "snack"
+      ],
+      "regions": [
+        "north"
       ]
     },
     {
       "code": "coconut_water",
       "name": "Coconut water",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 45,
       "protein_g": 0.5,
       "carbs_g": 10,
@@ -2559,12 +3044,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "fresh_lime_soda_sweet",
       "name": "Fresh lime soda (sweet)",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 60,
       "protein_g": 0,
       "carbs_g": 15,
@@ -2572,12 +3059,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "fruit_smoothie",
       "name": "Fruit smoothie",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 200,
       "protein_g": 6,
       "carbs_g": 36,
@@ -2586,12 +3075,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "banana_milkshake",
       "name": "Banana milkshake",
       "serving_label": "1 glass",
+      "serving_g": 250,
       "calories_kcal": 240,
       "protein_g": 8,
       "carbs_g": 40,
@@ -2600,12 +3091,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "gulab_jamun",
       "name": "Gulab jamun",
       "serving_label": "2 pieces",
+      "serving_g": 80,
       "calories_kcal": 300,
       "protein_g": 4,
       "carbs_g": 40,
@@ -2613,12 +3106,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "jalebi",
       "name": "Jalebi",
       "serving_label": "2 pieces",
+      "serving_g": 60,
       "calories_kcal": 300,
       "protein_g": 2,
       "carbs_g": 46,
@@ -2626,12 +3121,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "rasgulla",
       "name": "Rasgulla",
       "serving_label": "2 pieces",
+      "serving_g": 100,
       "calories_kcal": 240,
       "protein_g": 4,
       "carbs_g": 50,
@@ -2639,12 +3136,16 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
+      ],
+      "regions": [
+        "east"
       ]
     },
     {
       "code": "rice_kheer",
       "name": "Rice kheer",
       "serving_label": "1 bowl",
+      "serving_g": 200,
       "calories_kcal": 250,
       "protein_g": 7,
       "carbs_g": 38,
@@ -2653,12 +3154,14 @@
       "meal_types": [
         "dinner",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "besan_ladoo",
       "name": "Besan ladoo",
       "serving_label": "1 ladoo",
+      "serving_g": 40,
       "calories_kcal": 180,
       "protein_g": 3,
       "carbs_g": 20,
@@ -2666,12 +3169,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sooji_halwa",
       "name": "Sooji halwa",
       "serving_label": "1 bowl",
+      "serving_g": 150,
       "calories_kcal": 300,
       "protein_g": 4,
       "carbs_g": 40,
@@ -2680,12 +3185,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "ice_cream",
       "name": "Ice cream",
       "serving_label": "1 scoop",
+      "serving_g": 70,
       "calories_kcal": 140,
       "protein_g": 2,
       "carbs_g": 16,
@@ -2693,12 +3200,14 @@
       "diet_type": "veg",
       "meal_types": [
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "honey",
       "name": "Honey",
       "serving_label": "1 tablespoon",
+      "serving_g": 21,
       "calories_kcal": 64,
       "protein_g": 0,
       "carbs_g": 17,
@@ -2707,12 +3216,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "jaggery",
       "name": "Jaggery",
       "serving_label": "10 g",
+      "serving_g": 10,
       "calories_kcal": 38,
       "protein_g": 0,
       "carbs_g": 10,
@@ -2721,12 +3232,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "sugar",
       "name": "Sugar",
       "serving_label": "1 teaspoon",
+      "serving_g": 4,
       "calories_kcal": 16,
       "protein_g": 0,
       "carbs_g": 4,
@@ -2735,12 +3248,14 @@
       "meal_types": [
         "breakfast",
         "snack"
-      ]
+      ],
+      "regions": []
     },
     {
       "code": "pickle",
       "name": "Pickle",
       "serving_label": "1 tablespoon",
+      "serving_g": 15,
       "calories_kcal": 30,
       "protein_g": 0.2,
       "carbs_g": 1,
@@ -2749,6 +3264,1946 @@
       "meal_types": [
         "dinner",
         "lunch"
+      ],
+      "regions": []
+    },
+    {
+      "code": "puttu_kadala",
+      "name": "Puttu with kadala curry",
+      "serving_label": "1 plate",
+      "serving_g": 250,
+      "calories_kcal": 380,
+      "protein_g": 12,
+      "carbs_g": 62,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "kerala_parotta",
+      "name": "Kerala parotta",
+      "serving_label": "1 parotta",
+      "serving_g": 90,
+      "calories_kcal": 290,
+      "protein_g": 6,
+      "carbs_g": 38,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "dinner",
+        "lunch"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "neer_dosa",
+      "name": "Neer dosa",
+      "serving_label": "3 dosas",
+      "serving_g": 120,
+      "calories_kcal": 200,
+      "protein_g": 3,
+      "carbs_g": 42,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "set_dosa",
+      "name": "Set dosa",
+      "serving_label": "3 dosas",
+      "serving_g": 180,
+      "calories_kcal": 330,
+      "protein_g": 7,
+      "carbs_g": 58,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "rava_dosa",
+      "name": "Rava dosa",
+      "serving_label": "1 dosa",
+      "serving_g": 120,
+      "calories_kcal": 240,
+      "protein_g": 5,
+      "carbs_g": 34,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "akki_rotti",
+      "name": "Akki rotti",
+      "serving_label": "1 rotti",
+      "serving_g": 90,
+      "calories_kcal": 200,
+      "protein_g": 4,
+      "carbs_g": 36,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "paniyaram",
+      "name": "Kuzhi paniyaram",
+      "serving_label": "6 pieces",
+      "serving_g": 150,
+      "calories_kcal": 240,
+      "protein_g": 6,
+      "carbs_g": 38,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "adai",
+      "name": "Adai",
+      "serving_label": "1 adai",
+      "serving_g": 120,
+      "calories_kcal": 250,
+      "protein_g": 11,
+      "carbs_g": 34,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "puliyogare",
+      "name": "Puliyogare (tamarind rice)",
+      "serving_label": "1 bowl",
+      "serving_g": 220,
+      "calories_kcal": 330,
+      "protein_g": 6,
+      "carbs_g": 56,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "vangi_bath",
+      "name": "Vangi bath",
+      "serving_label": "1 bowl",
+      "serving_g": 220,
+      "calories_kcal": 310,
+      "protein_g": 6,
+      "carbs_g": 52,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "coconut_rice",
+      "name": "Coconut rice",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 330,
+      "protein_g": 5,
+      "carbs_g": 48,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "kootu",
+      "name": "Kootu",
+      "serving_label": "1 bowl",
+      "serving_g": 180,
+      "calories_kcal": 170,
+      "protein_g": 8,
+      "carbs_g": 20,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "more_kuzhambu",
+      "name": "Mor kuzhambu",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 140,
+      "protein_g": 5,
+      "carbs_g": 12,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "vatha_kuzhambu",
+      "name": "Vatha kuzhambu",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 130,
+      "protein_g": 3,
+      "carbs_g": 14,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "keerai_masiyal",
+      "name": "Keerai masiyal (mashed greens)",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 90,
+      "protein_g": 5,
+      "carbs_g": 8,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "gongura_pachadi",
+      "name": "Gongura pachadi",
+      "serving_label": "1 tablespoon",
+      "serving_g": 20,
+      "calories_kcal": 35,
+      "protein_g": 1,
+      "carbs_g": 3,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "pappu",
+      "name": "Andhra pappu (dal with greens)",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 180,
+      "protein_g": 10,
+      "carbs_g": 24,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "kerala_fish_curry",
+      "name": "Kerala fish curry",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 22,
+      "carbs_g": 8,
+      "fat_g": 15,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "chettinad_chicken",
+      "name": "Chettinad chicken",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 330,
+      "protein_g": 28,
+      "carbs_g": 8,
+      "fat_g": 20,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "hyderabadi_chicken_biryani",
+      "name": "Hyderabadi chicken biryani",
+      "serving_label": "1 plate",
+      "serving_g": 350,
+      "calories_kcal": 520,
+      "protein_g": 26,
+      "carbs_g": 62,
+      "fat_g": 18,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "kerala_egg_roast",
+      "name": "Kerala egg roast",
+      "serving_label": "2 eggs",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 14,
+      "carbs_g": 10,
+      "fat_g": 18,
+      "diet_type": "egg",
+      "meal_types": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "prawn_fry",
+      "name": "Prawn fry",
+      "serving_label": "1 plate",
+      "serving_g": 120,
+      "calories_kcal": 220,
+      "protein_g": 22,
+      "carbs_g": 6,
+      "fat_g": 12,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "meen_pollichathu",
+      "name": "Fish pollichathu",
+      "serving_label": "1 piece",
+      "serving_g": 150,
+      "calories_kcal": 240,
+      "protein_g": 24,
+      "carbs_g": 6,
+      "fat_g": 13,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "filter_coffee",
+      "name": "Filter coffee with milk and sugar",
+      "serving_label": "1 tumbler",
+      "serving_g": 150,
+      "calories_kcal": 110,
+      "protein_g": 3,
+      "carbs_g": 15,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "sundal",
+      "name": "Chana sundal",
+      "serving_label": "1 bowl",
+      "serving_g": 120,
+      "calories_kcal": 170,
+      "protein_g": 8,
+      "carbs_g": 24,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "banana_chips",
+      "name": "Kerala banana chips",
+      "serving_label": "30 g",
+      "serving_g": 30,
+      "calories_kcal": 160,
+      "protein_g": 1,
+      "carbs_g": 17,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "mysore_pak",
+      "name": "Mysore pak",
+      "serving_label": "1 piece",
+      "serving_g": 30,
+      "calories_kcal": 160,
+      "protein_g": 1,
+      "carbs_g": 14,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "payasam",
+      "name": "Semiya payasam",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 250,
+      "protein_g": 6,
+      "carbs_g": 36,
+      "fat_g": 9,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack",
+        "dinner"
+      ],
+      "regions": [
+        "south"
+      ]
+    },
+    {
+      "code": "sarson_ka_saag",
+      "name": "Sarson ka saag",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 190,
+      "protein_g": 6,
+      "carbs_g": 14,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "makki_di_roti",
+      "name": "Makki di roti",
+      "serving_label": "1 roti",
+      "serving_g": 70,
+      "calories_kcal": 180,
+      "protein_g": 4,
+      "carbs_g": 30,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "chole_bhature",
+      "name": "Chole bhature",
+      "serving_label": "2 bhature with chole",
+      "serving_g": 350,
+      "calories_kcal": 650,
+      "protein_g": 18,
+      "carbs_g": 80,
+      "fat_g": 28,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "kadhi_pakora",
+      "name": "Punjabi kadhi pakora",
+      "serving_label": "1 bowl",
+      "serving_g": 250,
+      "calories_kcal": 260,
+      "protein_g": 8,
+      "carbs_g": 20,
+      "fat_g": 16,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "rajma_chawal",
+      "name": "Rajma chawal",
+      "serving_label": "1 plate",
+      "serving_g": 350,
+      "calories_kcal": 450,
+      "protein_g": 15,
+      "carbs_g": 78,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "aloo_puri",
+      "name": "Aloo puri",
+      "serving_label": "3 puris with aloo",
+      "serving_g": 250,
+      "calories_kcal": 480,
+      "protein_g": 8,
+      "carbs_g": 60,
+      "fat_g": 23,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "stuffed_mooli_paratha",
+      "name": "Mooli paratha",
+      "serving_label": "1 paratha",
+      "serving_g": 130,
+      "calories_kcal": 260,
+      "protein_g": 6,
+      "carbs_g": 36,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "gobi_paratha",
+      "name": "Gobi paratha",
+      "serving_label": "1 paratha",
+      "serving_g": 140,
+      "calories_kcal": 270,
+      "protein_g": 6,
+      "carbs_g": 38,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "dal_baati",
+      "name": "Dal baati",
+      "serving_label": "2 baati with dal",
+      "serving_g": 300,
+      "calories_kcal": 620,
+      "protein_g": 18,
+      "carbs_g": 78,
+      "fat_g": 26,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "gatte_ki_sabzi",
+      "name": "Gatte ki sabzi",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 10,
+      "carbs_g": 22,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "ker_sangri",
+      "name": "Ker sangri",
+      "serving_label": "1 bowl",
+      "serving_g": 120,
+      "calories_kcal": 180,
+      "protein_g": 5,
+      "carbs_g": 16,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "kadhai_paneer",
+      "name": "Kadhai paneer",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 340,
+      "protein_g": 15,
+      "carbs_g": 12,
+      "fat_g": 26,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "shahi_paneer",
+      "name": "Shahi paneer",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 370,
+      "protein_g": 14,
+      "carbs_g": 14,
+      "fat_g": 29,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "dum_aloo",
+      "name": "Kashmiri dum aloo",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 4,
+      "carbs_g": 28,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "rogan_josh",
+      "name": "Rogan josh",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 380,
+      "protein_g": 28,
+      "carbs_g": 6,
+      "fat_g": 27,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "amritsari_fish",
+      "name": "Amritsari fish fry",
+      "serving_label": "4 pieces",
+      "serving_g": 150,
+      "calories_kcal": 300,
+      "protein_g": 24,
+      "carbs_g": 14,
+      "fat_g": 16,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner",
+        "snack"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "chicken_tikka_masala",
+      "name": "Chicken tikka masala",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 380,
+      "protein_g": 30,
+      "carbs_g": 10,
+      "fat_g": 24,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "mutton_rogan_rice",
+      "name": "Mutton yakhni pulao",
+      "serving_label": "1 plate",
+      "serving_g": 350,
+      "calories_kcal": 540,
+      "protein_g": 28,
+      "carbs_g": 60,
+      "fat_g": 20,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "aloo_tikki",
+      "name": "Aloo tikki",
+      "serving_label": "2 pieces",
+      "serving_g": 120,
+      "calories_kcal": 220,
+      "protein_g": 4,
+      "carbs_g": 28,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "dahi_bhalla",
+      "name": "Dahi bhalla",
+      "serving_label": "1 plate",
+      "serving_g": 200,
+      "calories_kcal": 280,
+      "protein_g": 10,
+      "carbs_g": 36,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "moong_dal_halwa",
+      "name": "Moong dal halwa",
+      "serving_label": "1 bowl",
+      "serving_g": 100,
+      "calories_kcal": 380,
+      "protein_g": 8,
+      "carbs_g": 40,
+      "fat_g": 21,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "north"
+      ]
+    },
+    {
+      "code": "chaas_masala",
+      "name": "Masala chaas",
+      "serving_label": "1 glass",
+      "serving_g": 250,
+      "calories_kcal": 50,
+      "protein_g": 3,
+      "carbs_g": 5,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "snack"
+      ],
+      "regions": [
+        "north",
+        "west"
+      ]
+    },
+    {
+      "code": "undhiyu",
+      "name": "Undhiyu",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 7,
+      "carbs_g": 26,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "gujarati_dal",
+      "name": "Gujarati dal (sweet and sour)",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 150,
+      "protein_g": 7,
+      "carbs_g": 22,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "handvo",
+      "name": "Handvo",
+      "serving_label": "2 pieces",
+      "serving_g": 150,
+      "calories_kcal": 280,
+      "protein_g": 9,
+      "carbs_g": 36,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "khandvi",
+      "name": "Khandvi",
+      "serving_label": "6 pieces",
+      "serving_g": 100,
+      "calories_kcal": 170,
+      "protein_g": 7,
+      "carbs_g": 18,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "sev_tameta",
+      "name": "Sev tameta nu shaak",
+      "serving_label": "1 bowl",
+      "serving_g": 180,
+      "calories_kcal": 230,
+      "protein_g": 5,
+      "carbs_g": 22,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "varan_bhaat",
+      "name": "Varan bhaat with ghee",
+      "serving_label": "1 plate",
+      "serving_g": 300,
+      "calories_kcal": 380,
+      "protein_g": 11,
+      "carbs_g": 66,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "pithla_bhakri",
+      "name": "Pithla bhakri",
+      "serving_label": "1 plate",
+      "serving_g": 250,
+      "calories_kcal": 420,
+      "protein_g": 14,
+      "carbs_g": 58,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "sabudana_vada",
+      "name": "Sabudana vada",
+      "serving_label": "3 pieces",
+      "serving_g": 120,
+      "calories_kcal": 330,
+      "protein_g": 4,
+      "carbs_g": 42,
+      "fat_g": 16,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "thalipeeth",
+      "name": "Thalipeeth",
+      "serving_label": "1 piece",
+      "serving_g": 100,
+      "calories_kcal": 230,
+      "protein_g": 7,
+      "carbs_g": 32,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "kanda_poha",
+      "name": "Kanda poha with sev",
+      "serving_label": "1 plate",
+      "serving_g": 200,
+      "calories_kcal": 300,
+      "protein_g": 6,
+      "carbs_g": 46,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "zunka_bhakar",
+      "name": "Zunka bhakar",
+      "serving_label": "1 plate",
+      "serving_g": 250,
+      "calories_kcal": 400,
+      "protein_g": 13,
+      "carbs_g": 56,
+      "fat_g": 13,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "kolhapuri_chicken",
+      "name": "Kolhapuri chicken",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 340,
+      "protein_g": 28,
+      "carbs_g": 8,
+      "fat_g": 22,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "goan_fish_curry",
+      "name": "Goan fish curry with rice",
+      "serving_label": "1 plate",
+      "serving_g": 350,
+      "calories_kcal": 480,
+      "protein_g": 24,
+      "carbs_g": 58,
+      "fat_g": 16,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "bombil_fry",
+      "name": "Bombil fry",
+      "serving_label": "4 pieces",
+      "serving_g": 120,
+      "calories_kcal": 260,
+      "protein_g": 18,
+      "carbs_g": 12,
+      "fat_g": 15,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "dal_dhokli",
+      "name": "Dal dhokli",
+      "serving_label": "1 bowl",
+      "serving_g": 300,
+      "calories_kcal": 380,
+      "protein_g": 13,
+      "carbs_g": 58,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "puran_poli",
+      "name": "Puran poli",
+      "serving_label": "1 poli",
+      "serving_g": 90,
+      "calories_kcal": 290,
+      "protein_g": 6,
+      "carbs_g": 50,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "shrikhand",
+      "name": "Shrikhand",
+      "serving_label": "1 bowl",
+      "serving_g": 100,
+      "calories_kcal": 260,
+      "protein_g": 6,
+      "carbs_g": 36,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "modak",
+      "name": "Ukadiche modak",
+      "serving_label": "2 pieces",
+      "serving_g": 100,
+      "calories_kcal": 260,
+      "protein_g": 3,
+      "carbs_g": 38,
+      "fat_g": 11,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "west"
+      ]
+    },
+    {
+      "code": "machher_jhol",
+      "name": "Machher jhol",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 230,
+      "protein_g": 22,
+      "carbs_g": 8,
+      "fat_g": 12,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "shorshe_ilish",
+      "name": "Shorshe ilish",
+      "serving_label": "1 piece",
+      "serving_g": 150,
+      "calories_kcal": 340,
+      "protein_g": 22,
+      "carbs_g": 4,
+      "fat_g": 26,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "chingri_malai_curry",
+      "name": "Chingri malai curry",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 330,
+      "protein_g": 20,
+      "carbs_g": 8,
+      "fat_g": 24,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "kosha_mangsho",
+      "name": "Kosha mangsho",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 400,
+      "protein_g": 28,
+      "carbs_g": 8,
+      "fat_g": 28,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "dalma",
+      "name": "Dalma",
+      "serving_label": "1 bowl",
+      "serving_g": 220,
+      "calories_kcal": 200,
+      "protein_g": 10,
+      "carbs_g": 30,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "litti_chokha",
+      "name": "Litti chokha",
+      "serving_label": "2 litti with chokha",
+      "serving_g": 250,
+      "calories_kcal": 440,
+      "protein_g": 14,
+      "carbs_g": 62,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "sattu_drink",
+      "name": "Sattu sharbat",
+      "serving_label": "1 glass",
+      "serving_g": 250,
+      "calories_kcal": 160,
+      "protein_g": 9,
+      "carbs_g": 26,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "sattu_paratha",
+      "name": "Sattu paratha",
+      "serving_label": "1 paratha",
+      "serving_g": 130,
+      "calories_kcal": 290,
+      "protein_g": 11,
+      "carbs_g": 40,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "aloo_posto",
+      "name": "Aloo posto",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 250,
+      "protein_g": 5,
+      "carbs_g": 26,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "shukto",
+      "name": "Shukto",
+      "serving_label": "1 bowl",
+      "serving_g": 180,
+      "calories_kcal": 150,
+      "protein_g": 4,
+      "carbs_g": 16,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "cholar_dal",
+      "name": "Cholar dal",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 240,
+      "protein_g": 11,
+      "carbs_g": 32,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "luchi",
+      "name": "Luchi",
+      "serving_label": "3 luchis",
+      "serving_g": 75,
+      "calories_kcal": 300,
+      "protein_g": 5,
+      "carbs_g": 33,
+      "fat_g": 17,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "pakhala_bhata",
+      "name": "Pakhala bhata",
+      "serving_label": "1 bowl",
+      "serving_g": 300,
+      "calories_kcal": 240,
+      "protein_g": 5,
+      "carbs_g": 52,
+      "fat_g": 1,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "ghugni",
+      "name": "Ghugni",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 240,
+      "protein_g": 11,
+      "carbs_g": 34,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "jhalmuri",
+      "name": "Jhalmuri",
+      "serving_label": "1 cup",
+      "serving_g": 60,
+      "calories_kcal": 210,
+      "protein_g": 5,
+      "carbs_g": 30,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "mishti_doi",
+      "name": "Mishti doi",
+      "serving_label": "1 cup",
+      "serving_g": 100,
+      "calories_kcal": 170,
+      "protein_g": 4,
+      "carbs_g": 26,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "sandesh",
+      "name": "Sandesh",
+      "serving_label": "2 pieces",
+      "serving_g": 60,
+      "calories_kcal": 200,
+      "protein_g": 6,
+      "carbs_g": 26,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "egg_chowmein",
+      "name": "Egg chowmein",
+      "serving_label": "1 plate",
+      "serving_g": 250,
+      "calories_kcal": 420,
+      "protein_g": 13,
+      "carbs_g": 52,
+      "fat_g": 17,
+      "diet_type": "egg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "chicken_kathi_roll",
+      "name": "Chicken kathi roll",
+      "serving_label": "1 roll",
+      "serving_g": 220,
+      "calories_kcal": 430,
+      "protein_g": 22,
+      "carbs_g": 42,
+      "fat_g": 19,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner",
+        "snack"
+      ],
+      "regions": [
+        "east"
+      ]
+    },
+    {
+      "code": "thukpa_veg",
+      "name": "Veg thukpa",
+      "serving_label": "1 bowl",
+      "serving_g": 350,
+      "calories_kcal": 300,
+      "protein_g": 9,
+      "carbs_g": 50,
+      "fat_g": 7,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "thukpa_chicken",
+      "name": "Chicken thukpa",
+      "serving_label": "1 bowl",
+      "serving_g": 350,
+      "calories_kcal": 360,
+      "protein_g": 22,
+      "carbs_g": 46,
+      "fat_g": 9,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "masor_tenga",
+      "name": "Masor tenga (Assamese fish curry)",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 200,
+      "protein_g": 20,
+      "carbs_g": 8,
+      "fat_g": 10,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "aloo_pitika",
+      "name": "Aloo pitika",
+      "serving_label": "1 bowl",
+      "serving_g": 120,
+      "calories_kcal": 140,
+      "protein_g": 2,
+      "carbs_g": 20,
+      "fat_g": 6,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "khar",
+      "name": "Khar",
+      "serving_label": "1 bowl",
+      "serving_g": 180,
+      "calories_kcal": 120,
+      "protein_g": 4,
+      "carbs_g": 16,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "jadoh",
+      "name": "Jadoh (rice with pork)",
+      "serving_label": "1 plate",
+      "serving_g": 300,
+      "calories_kcal": 520,
+      "protein_g": 22,
+      "carbs_g": 58,
+      "fat_g": 22,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "eromba",
+      "name": "Eromba",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 110,
+      "protein_g": 6,
+      "carbs_g": 12,
+      "fat_g": 4,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "pork_bamboo_shoot",
+      "name": "Pork with bamboo shoot",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 380,
+      "protein_g": 24,
+      "carbs_g": 6,
+      "fat_g": 29,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "smoked_pork_curry",
+      "name": "Smoked pork curry",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 420,
+      "protein_g": 24,
+      "carbs_g": 5,
+      "fat_g": 34,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "chicken_with_axone",
+      "name": "Chicken with axone",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 300,
+      "protein_g": 28,
+      "carbs_g": 6,
+      "fat_g": 18,
+      "diet_type": "non_veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "pitha",
+      "name": "Til pitha",
+      "serving_label": "2 pieces",
+      "serving_g": 80,
+      "calories_kcal": 240,
+      "protein_g": 4,
+      "carbs_g": 38,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "northeast"
+      ]
+    },
+    {
+      "code": "red_rice",
+      "name": "Red rice",
+      "serving_label": "1 cup cooked",
+      "serving_g": 160,
+      "calories_kcal": 210,
+      "protein_g": 5,
+      "carbs_g": 44,
+      "fat_g": 2,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "northeast",
+        "south"
+      ]
+    },
+    {
+      "code": "bafla_dal",
+      "name": "Dal bafla",
+      "serving_label": "2 bafla with dal",
+      "serving_g": 300,
+      "calories_kcal": 600,
+      "protein_g": 18,
+      "carbs_g": 76,
+      "fat_g": 24,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "central"
+      ]
+    },
+    {
+      "code": "indori_poha_jalebi",
+      "name": "Indori poha with jalebi",
+      "serving_label": "1 plate",
+      "serving_g": 250,
+      "calories_kcal": 480,
+      "protein_g": 7,
+      "carbs_g": 78,
+      "fat_g": 15,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "central"
+      ]
+    },
+    {
+      "code": "bhutte_ka_kees",
+      "name": "Bhutte ka kees",
+      "serving_label": "1 bowl",
+      "serving_g": 150,
+      "calories_kcal": 220,
+      "protein_g": 5,
+      "carbs_g": 28,
+      "fat_g": 10,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "snack"
+      ],
+      "regions": [
+        "central"
+      ]
+    },
+    {
+      "code": "chila_cg",
+      "name": "Chhattisgarhi chila",
+      "serving_label": "2 pieces",
+      "serving_g": 150,
+      "calories_kcal": 240,
+      "protein_g": 5,
+      "carbs_g": 44,
+      "fat_g": 5,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast"
+      ],
+      "regions": [
+        "central"
+      ]
+    },
+    {
+      "code": "dal_pitha",
+      "name": "Dal pitha",
+      "serving_label": "6 pieces",
+      "serving_g": 180,
+      "calories_kcal": 260,
+      "protein_g": 10,
+      "carbs_g": 46,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "dinner"
+      ],
+      "regions": [
+        "central",
+        "east"
+      ]
+    },
+    {
+      "code": "sabudana_kheer",
+      "name": "Sabudana kheer",
+      "serving_label": "1 bowl",
+      "serving_g": 200,
+      "calories_kcal": 260,
+      "protein_g": 6,
+      "carbs_g": 40,
+      "fat_g": 8,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "central",
+        "west"
+      ]
+    },
+    {
+      "code": "mawa_bati",
+      "name": "Mawa bati",
+      "serving_label": "1 piece",
+      "serving_g": 60,
+      "calories_kcal": 260,
+      "protein_g": 5,
+      "carbs_g": 30,
+      "fat_g": 14,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "central"
+      ]
+    },
+    {
+      "code": "kuttu_puri",
+      "name": "Kuttu (buckwheat) puri",
+      "serving_label": "3 puris",
+      "serving_g": 90,
+      "calories_kcal": 330,
+      "protein_g": 7,
+      "carbs_g": 38,
+      "fat_g": 17,
+      "diet_type": "veg",
+      "meal_types": [
+        "breakfast",
+        "lunch"
+      ],
+      "regions": [
+        "north",
+        "central"
+      ]
+    },
+    {
+      "code": "samak_rice",
+      "name": "Samak (barnyard millet) rice",
+      "serving_label": "1 bowl",
+      "serving_g": 180,
+      "calories_kcal": 220,
+      "protein_g": 5,
+      "carbs_g": 44,
+      "fat_g": 3,
+      "diet_type": "veg",
+      "meal_types": [
+        "lunch",
+        "dinner"
+      ],
+      "regions": [
+        "north",
+        "central"
+      ]
+    },
+    {
+      "code": "rajgira_ladoo",
+      "name": "Rajgira ladoo",
+      "serving_label": "2 pieces",
+      "serving_g": 40,
+      "calories_kcal": 160,
+      "protein_g": 4,
+      "carbs_g": 28,
+      "fat_g": 4,
+      "diet_type": "veg",
+      "meal_types": [
+        "snack"
+      ],
+      "regions": [
+        "north",
+        "west"
       ]
     }
   ]

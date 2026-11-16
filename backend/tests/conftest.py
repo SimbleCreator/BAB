@@ -26,8 +26,9 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 async def _recreate_schema() -> None:
     eng = create_async_engine(TEST_DB_URL, poolclass=NullPool)
     async with eng.begin() as conn:
-        await conn.execute(text("DROP SCHEMA public CASCADE"))
-        await conn.execute(text("CREATE SCHEMA public"))
+        # Drops every table, type and sequence the test user owns. Unlike dropping the
+        # public schema, this works whoever owns the schema itself.
+        await conn.execute(text("DROP OWNED BY CURRENT_USER CASCADE"))
     await eng.dispose()
 
 

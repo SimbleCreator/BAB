@@ -4,6 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Query, status
 
 from app.core.deps import CurrentUser, SessionDep
+from app.models.enums import DietType
 from app.schemas.common import ErrorOut
 from app.schemas.nutrition import (
     CustomFoodIn,
@@ -14,6 +15,7 @@ from app.schemas.nutrition import (
     ItemPatch,
     MealType,
     NutritionSummaryOut,
+    StapleOut,
     SuggestionsOut,
     TargetsOut,
 )
@@ -89,6 +91,19 @@ async def search_foods(
     meal_type: MealType | None = None,
 ) -> list[FoodOut]:
     return await svc.search_foods(session, user, q, meal_type)
+
+
+@router.get(
+    "/foods/staples",
+    response_model=list[StapleOut],
+    summary="Dishes to pick usual home foods from (works before onboarding); region first",
+)
+async def staples(
+    user: CurrentUser,
+    diet_type: DietType,
+    state: Annotated[str | None, Query(max_length=3)] = None,
+) -> list[StapleOut]:
+    return svc.staples(diet_type.value, state)
 
 
 @router.get("/foods/custom", response_model=list[CustomFoodOut])

@@ -29,6 +29,12 @@ SERVING_STEPS = (0.5, 1.0, 1.5)
 # Each half serving away from 1 counts like 12.5% of the budget left unused, so a normal
 # single serving is preferred over doubling a dish just to fill the budget.
 SERVING_PENALTY_PER_STEP = 0.125
+# Familiar food first: usual home dishes, then dishes from the user's region, as long as
+# they fill at least this share of the meal's budget.
+FAMILIAR_MIN_FILL = 0.5
+# Logging by weight: allowed grams for one item.
+GRAMS_MIN = 1
+GRAMS_MAX = 3000
 
 # Which diets may eat which foods.
 ALLOWED_DIETS = {"veg": {"veg"}, "egg": {"veg", "egg"}, "non_veg": {"veg", "egg", "non_veg"}}
@@ -115,6 +121,8 @@ class Food:
     fat_g: float
     diet_type: str
     meal_types: tuple[str, ...]
+    serving_g: float = 0
+    regions: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -137,6 +145,8 @@ def suggest(
     budget_kcal: int,
     rotation: int = 0,
     count: int = SUGGESTIONS_PER_MEAL,
+    usual: frozenset[str] = frozenset(),
+    region: str | None = None,
 ) -> list[Suggestion]:
     """Up to `count` foods for a meal that fit the diet and come close to the budget.
 
@@ -145,9 +155,13 @@ def suggest(
     fit even at half a serving are left out. The best
     matches (closest to budget, then most protein per kcal) form a short list, and
     `rotation` (for example the day number) picks a different few from it each day.
+
+    Familiar food first: foods the user eats at home (`usual`) rank ahead of dishes from
+    the user's `region`, which rank ahead of the rest, provided they fill at least
+    FAMILIAR_MIN_FILL of the budget; within a tier the closest fit wins.
     """
     allowed = ALLOWED_DIETS[diet_type]
-    scored: list[tuple[float, float, Suggestion]] = []
+    scored: list[tuple[int, float, float, Suggestion]] = []
     for f in foods:
         if f.diet_type not in allowed or meal not in f.meal_types or f.calories_kcal <= 0:
             continue
@@ -162,21 +176,39 @@ def suggest(
         servings = min(fitting, key=lambda s: (cost(s), -s))
         kcal = servings * f.calories_kcal
         gap = cost(servings)
+        tier = familiarity(f, usual, region) if kcal >= FAMILIAR_MIN_FILL * budget_kcal else 2
         protein_density = f.protein_g / f.calories_kcal
         scored.append(
             (
+                tier,
                 round(gap, 2),
                 -protein_density,
                 Suggestion(f, servings, round(kcal), round(servings * f.protein_g, 1)),
             )
         )
-    scored.sort(key=lambda t: (t[0], t[1], t[2].food.code))
-    shortlist = [s for _, _, s in scored[: count * 3]]
+    scored.sort(key=lambda t: (t[0], t[1], t[2], t[3].food.code))
+    shortlist = [s for *_, s in scored[: count * 3]]
     if not shortlist:
         return []
     start = (rotation * count) % len(shortlist)
     rotated = shortlist[start:] + shortlist[:start]
     return rotated[:count]
+
+
+def familiarity(food: Food, usual: frozenset[str], region: str | None) -> int:
+    """0 for a usual home food, 1 for a dish from the user's region, 2 otherwise."""
+    if food.code in usual:
+        return 0
+    if region is not None and region in food.regions:
+        return 1
+    return 2
+
+
+def servings_for_grams(food: Food, grams: float) -> float:
+    """Servings eaten for a weight in grams. Needs the food's serving weight."""
+    if food.serving_g <= 0:
+        raise ValueError("This food has no serving weight.")
+    return grams / food.serving_g
 
 
 def scale(food: Food, servings: float) -> Macros:

@@ -160,4 +160,121 @@
       </mat-form-field>
     </div>
   }
+  @case ('life') {
+    <div class="fields" [formGroup]="group()">
+      <div class="row pair">
+        <mat-form-field>
+          <mat-label>City or town</mat-label>
+          <input matInput formControlName="city" autocomplete="address-level2" maxlength="60" />
+          <mat-error>Enter your city or town.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state">
+            @for (s of options.value()?.states ?? []; track s.code) {
+              <mat-option [value]="s.code">{{ s.name }}</mat-option>
+            }
+          </mat-select>
+          @if (options.error()) {
+            <mat-hint>Could not load the list. Reload the page.</mat-hint>
+          }
+          <mat-error>Choose your state.</mat-error>
+        </mat-form-field>
+      </div>
+      <span class="hint">Used to suggest dishes from your region first.</span>
+
+      <span class="field-label">Your work day</span>
+      <mat-radio-group formControlName="work_type" aria-label="Your work day" class="stack">
+        @for (w of works; track w.value) {
+          <mat-radio-button [value]="w.value">
+            <span class="opt">{{ w.label }}</span>
+            <span class="hint">{{ w.hint }}</span>
+          </mat-radio-button>
+        }
+      </mat-radio-group>
+      @if (group().controls['work_type'].touched && group().controls['work_type'].invalid) {
+        <p class="bab-field-error inline">Choose one.</p>
+      }
+
+      <span class="field-label">Most of your food comes from</span>
+      <mat-button-toggle-group
+        formControlName="food_source"
+        aria-label="Where your food comes from"
+      >
+        @for (f of foodSources; track f.value) {
+          <mat-button-toggle [value]="f.value">{{ f.label }}</mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+      @if (group().controls['food_source'].touched && group().controls['food_source'].invalid) {
+        <p class="bab-field-error inline">Choose one.</p>
+      }
+
+      <mat-form-field class="minutes">
+        <mat-label>Usual wake-up time</mat-label>
+        <input matInput type="time" formControlName="wake_time" />
+        <mat-hint>Bounce times your workouts around it.</mat-hint>
+        <mat-error>Enter a time.</mat-error>
+      </mat-form-field>
+    </div>
+  }
+  @case ('plate') {
+    <app-usual-foods-picker [control]="usualControl()" [dietType]="dietType()" [state]="state()" />
+  }
+  @case ('more') {
+    <div class="fields" [formGroup]="group()">
+      <p class="hint">Optional. Each answer makes your plan fit a little better.</p>
+      <div class="row pair">
+        <mat-form-field>
+          <mat-label>Sleep</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="decimal"
+            step="0.5"
+            formControlName="sleep_hours"
+          />
+          <span matTextSuffix>hours</span>
+          <mat-hint>A usual night</mat-hint>
+          <mat-error>3 to 12.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sweet drinks</mat-label>
+          <input
+            matInput
+            type="number"
+            inputmode="numeric"
+            formControlName="sweet_drinks_per_day"
+          />
+          <span matTextSuffix>a day</span>
+          <mat-hint>Sweet tea, coffee or soft drinks</mat-hint>
+          <mat-error>0 to 20.</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="row pair">
+        <mat-form-field>
+          <mat-label>Food budget</mat-label>
+          <span matTextPrefix>₹&nbsp;</span>
+          <input
+            matInput
+            type="number"
+            inputmode="numeric"
+            step="50"
+            formControlName="food_budget_inr"
+          />
+          <span matTextSuffix>a day</span>
+          <mat-error>₹50 to ₹5,000.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Fasting days</mat-label>
+          <input
+            matInput
+            formControlName="fasting_note"
+            maxlength="80"
+            placeholder="e.g. Ekadashi, Mondays"
+          />
+          <mat-error>Up to 80 characters.</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  }
 }

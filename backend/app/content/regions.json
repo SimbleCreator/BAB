@@ -1,0 +1,198 @@
+{
+  "_note": "Indian states and union territories, each mapped to the food region used to rank dishes. OUT means outside India (no region).",
+  "regions": [
+    "north",
+    "south",
+    "east",
+    "west",
+    "central",
+    "northeast"
+  ],
+  "states": [
+    {
+      "code": "AN",
+      "name": "Andaman and Nicobar Islands",
+      "region": "south"
+    },
+    {
+      "code": "AP",
+      "name": "Andhra Pradesh",
+      "region": "south"
+    },
+    {
+      "code": "AR",
+      "name": "Arunachal Pradesh",
+      "region": "northeast"
+    },
+    {
+      "code": "AS",
+      "name": "Assam",
+      "region": "northeast"
+    },
+    {
+      "code": "BR",
+      "name": "Bihar",
+      "region": "east"
+    },
+    {
+      "code": "CH",
+      "name": "Chandigarh",
+      "region": "north"
+    },
+    {
+      "code": "CT",
+      "name": "Chhattisgarh",
+      "region": "central"
+    },
+    {
+      "code": "DH",
+      "name": "Dadra and Nagar Haveli and Daman and Diu",
+      "region": "west"
+    },
+    {
+      "code": "DL",
+      "name": "Delhi",
+      "region": "north"
+    },
+    {
+      "code": "GA",
+      "name": "Goa",
+      "region": "west"
+    },
+    {
+      "code": "GJ",
+      "name": "Gujarat",
+      "region": "west"
+    },
+    {
+      "code": "HR",
+      "name": "Haryana",
+      "region": "north"
+    },
+    {
+      "code": "HP",
+      "name": "Himachal Pradesh",
+      "region": "north"
+    },
+    {
+      "code": "JK",
+      "name": "Jammu and Kashmir",
+      "region": "north"
+    },
+    {
+      "code": "JH",
+      "name": "Jharkhand",
+      "region": "east"
+    },
+    {
+      "code": "KA",
+      "name": "Karnataka",
+      "region": "south"
+    },
+    {
+      "code": "KL",
+      "name": "Kerala",
+      "region": "south"
+    },
+    {
+      "code": "LA",
+      "name": "Ladakh",
+      "region": "north"
+    },
+    {
+      "code": "LD",
+      "name": "Lakshadweep",
+      "region": "south"
+    },
+    {
+      "code": "MP",
+      "name": "Madhya Pradesh",
+      "region": "central"
+    },
+    {
+      "code": "MH",
+      "name": "Maharashtra",
+      "region": "west"
+    },
+    {
+      "code": "MN",
+      "name": "Manipur",
+      "region": "northeast"
+    },
+    {
+      "code": "ML",
+      "name": "Meghalaya",
+      "region": "northeast"
+    },
+    {
+      "code": "MZ",
+      "name": "Mizoram",
+      "region": "northeast"
+    },
+    {
+      "code": "NL",
+      "name": "Nagaland",
+      "region": "northeast"
+    },
+    {
+      "code": "OR",
+      "name": "Odisha",
+      "region": "east"
+    },
+    {
+      "code": "PY",
+      "name": "Puducherry",
+      "region": "south"
+    },
+    {
+      "code": "PB",
+      "name": "Punjab",
+      "region": "north"
+    },
+    {
+      "code": "RJ",
+      "name": "Rajasthan",
+      "region": "north"
+    },
+    {
+      "code": "SK",
+      "name": "Sikkim",
+      "region": "northeast"
+    },
+    {
+      "code": "TN",
+      "name": "Tamil Nadu",
+      "region": "south"
+    },
+    {
+      "code": "TG",
+      "name": "Telangana",
+      "region": "south"
+    },
+    {
+      "code": "TR",
+      "name": "Tripura",
+      "region": "northeast"
+    },
+    {
+      "code": "UP",
+      "name": "Uttar Pradesh",
+      "region": "north"
+    },
+    {
+      "code": "UT",
+      "name": "Uttarakhand",
+      "region": "north"
+    },
+    {
+      "code": "WB",
+      "name": "West Bengal",
+      "region": "east"
+    },
+    {
+      "code": "OUT",
+      "name": "Outside India",
+      "region": null
+    }
+  ]
+}
