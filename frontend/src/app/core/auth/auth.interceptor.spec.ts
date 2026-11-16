@@ -15,7 +15,15 @@ function token(value: string): TokenOut {
     access_token: value,
     token_type: 'bearer',
     expires_in: 900,
-    user: { id: 1, email: 'a@example.com', is_admin: false, created_at: '', has_profile: true },
+    user: {
+      id: 1,
+      email: 'a@example.com',
+      is_admin: false,
+      created_at: '',
+      has_profile: true,
+      has_password: true,
+      google_linked: false,
+    },
   };
 }
 

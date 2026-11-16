@@ -151,6 +151,17 @@ script and popup from `accounts.google.com/gsi/`.
 Push to `main`: Render rebuilds the API when `backend/` changes and Cloudflare rebuilds
 the frontend on every push. Migrations run automatically when the API starts.
 
+### Keeping the API awake
+
+Render's free plan puts the API to sleep after about 15 minutes with no requests; the next
+visitor then waits up to a minute (the app shows its loader, retries quietly and, if it
+still fails, says the server is waking up). `.github/workflows/keep-awake.yml` calls the
+health check every 10 minutes from GitHub Actions (free for public repositories) so that
+rarely happens. It does not touch the database, so Neon still pauses. One always-on free
+Render service fits the 750 free hours a month; with a second free service, delete the
+workflow. Run it by hand under **Actions > Keep API awake > Run workflow**. If the API
+address changes, update the URL in that file.
+
 ### What the free plans mean for users
 
 - The API sleeps after about 15 minutes without visitors; the next visit waits up to a
