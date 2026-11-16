@@ -99,6 +99,31 @@
           </mat-form-field>
         </div>
 
+        <fieldset class="wins">
+          <legend>Wins beyond the scale (optional)</legend>
+          @for (q of winQuestions; track q.name) {
+            <div class="win" role="group" [attr.aria-label]="q.label">
+              <span class="win-label">{{ q.label }}</span>
+              <div class="scores">
+                <span class="end">{{ q.low }}</span>
+                @for (n of scores; track n) {
+                  <button
+                    type="button"
+                    class="score"
+                    [class.on]="form.controls[q.name].value === n"
+                    [attr.aria-pressed]="form.controls[q.name].value === n"
+                    [attr.aria-label]="q.label + ' ' + n + ' of 5'"
+                    (click)="setScore(q.name, n)"
+                  >
+                    {{ n }}
+                  </button>
+                }
+                <span class="end">{{ q.high }}</span>
+              </div>
+            </div>
+          }
+        </fieldset>
+
         <mat-form-field>
           <mat-label>Note (optional)</mat-label>
           <textarea matInput formControlName="note" rows="2" maxlength="500"></textarea>
@@ -168,6 +193,9 @@
               <span class="weight">{{ c.weight_kg.toFixed(1) }} kg</span>
             </div>
             @if (summary(c); as text) {
+              <div class="bab-muted small">{{ text }}</div>
+            }
+            @if (wins(c); as text) {
               <div class="bab-muted small">{{ text }}</div>
             }
           </button>

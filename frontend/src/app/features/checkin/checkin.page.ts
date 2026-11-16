@@ -27,6 +27,18 @@ import { LoaderComponent } from '../../shared/components/loader.component';
 
 const cm = [Validators.min(20), Validators.max(250)];
 
+const WIN_QUESTIONS = [
+  { name: 'energy', label: 'Energy this week', short: 'energy', low: 'Low', high: 'Great' },
+  { name: 'sleep', label: 'Sleep this week', short: 'sleep', low: 'Poor', high: 'Great' },
+  {
+    name: 'stairs',
+    label: 'Stairs without getting out of breath',
+    short: 'stairs',
+    low: 'Hard',
+    high: 'Easy',
+  },
+] as const;
+
 @Component({
   selector: 'app-checkin-page',
   imports: [
@@ -68,7 +80,13 @@ export class CheckinPage {
     arms_cm: [null as number | null, cm],
     thighs_cm: [null as number | null, cm],
     note: ['', Validators.maxLength(500)],
+    energy: [null as number | null],
+    sleep: [null as number | null],
+    stairs: [null as number | null],
   });
+  /** Wins beyond the scale, each scored 1 to 5. */
+  protected readonly winQuestions = WIN_QUESTIONS;
+  protected readonly scores = [1, 2, 3, 4, 5];
   protected readonly saving = signal(false);
   protected readonly error = signal<string | null>(null);
   protected readonly confirmDelete = signal(false);
@@ -126,6 +144,19 @@ export class CheckinPage {
     return parts.join(' · ');
   }
 
+  protected setScore(name: 'energy' | 'sleep' | 'stairs', value: number): void {
+    const c = this.form.controls[name];
+    c.setValue(c.value === value ? null : value);
+    c.markAsDirty();
+  }
+
+  /** "energy 4/5 · sleep 3/5" for the history list. */
+  protected wins(c: CheckinOut): string {
+    return WIN_QUESTIONS.filter((q) => c[q.name] != null)
+      .map((q) => `${q.short} ${c[q.name]}/5`)
+      .join(' · ');
+  }
+
   protected edit(c: CheckinOut): void {
     this.confirmDelete.set(false);
     this.error.set(null);
@@ -137,6 +168,9 @@ export class CheckinPage {
       arms_cm: c.arms_cm,
       thighs_cm: c.thighs_cm,
       note: c.note ?? '',
+      energy: c.energy ?? null,
+      sleep: c.sleep ?? null,
+      stairs: c.stairs ?? null,
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -155,6 +189,9 @@ export class CheckinPage {
       arms_cm: num(v.arms_cm),
       thighs_cm: num(v.thighs_cm),
       note: v.note.trim() || null,
+      energy: v.energy,
+      sleep: v.sleep,
+      stairs: v.stairs,
     };
     this.saving.set(true);
     this.error.set(null);
@@ -199,6 +236,9 @@ export class CheckinPage {
           arms_cm: null,
           thighs_cm: null,
           note: '',
+          energy: null,
+          sleep: null,
+          stairs: null,
         });
         this.status.reload();
         this.history.reload();

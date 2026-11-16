@@ -25,6 +25,7 @@ from app.routers import (
     milestones,
     nutrition,
     profile,
+    progress,
     runs,
     today,
     training,
@@ -82,6 +83,7 @@ def create_app() -> FastAPI:
         history.router,
         account.router,
         bounce.router,
+        progress.router,
     ):
         app.include_router(r, prefix=settings.api_prefix)
     return app

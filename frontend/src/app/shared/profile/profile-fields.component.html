@@ -113,6 +113,20 @@
       </mat-form-field>
 
       <mat-slide-toggle formControlName="has_pullup_bar">I have a pull-up bar</mat-slide-toggle>
+
+      <mat-form-field class="minutes">
+        <mat-label>Target weight (optional)</mat-label>
+        <input
+          matInput
+          type="number"
+          inputmode="decimal"
+          step="0.5"
+          formControlName="target_weight_kg"
+        />
+        <span matTextSuffix>kg</span>
+        <mat-hint>We show how long it could take.</mat-hint>
+        <mat-error>30 to 300 kg.</mat-error>
+      </mat-form-field>
     </div>
   }
 

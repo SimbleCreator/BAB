@@ -58,6 +58,7 @@ endpoints.
 | PUT | `/checkins/{day}` | bearer | Create or replace a check-in; the newest one updates profile weight and may run the weekly adjustment (`adjustment`, or `adjustment_note` saying why not) |
 | DELETE | `/checkins/{day}` | bearer | Remove a check-in |
 | GET | `/checkins/adjustments` | bearer | Weekly adjustments, newest first, with plain summary lines |
+| GET | `/progress` | bearer | Goal projection (status, method, weeks and date range, weekly rate, safe rate) and then-vs-now cards every 4 weeks, newest first, with `next_card_on` |
 | GET | `/milestones` | bearer | Every milestone with progress, `unlocked_at` and `seen` |
 | POST | `/milestones/seen` | bearer | Mark unlocked milestones as seen after celebrating |
 

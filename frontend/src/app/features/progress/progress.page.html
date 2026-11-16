@@ -1,0 +1,132 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Progress</h1>
+
+  @if (data.isLoading() && !data.hasValue()) {
+    <app-loader label="Adding up your progress" />
+  } @else if (data.error()) {
+    <p class="bab-form-error" role="alert">Could not load your progress.</p>
+    <button mat-button type="button" (click)="data.reload()">Try again</button>
+  } @else if (data.value(); as d) {
+    @if (text(); as t) {
+      <div class="goal bab-panel" [class.caution]="t.caution">
+        <div class="goal-head">
+          <span class="g-icon"><mat-icon>flag</mat-icon></span>
+          <span class="bab-muted">Your goal</span>
+          @if (d.projection.status === 'on_track') {
+            <app-estimate />
+          }
+        </div>
+        <p class="headline">{{ t.headline }}</p>
+        <p class="detail">{{ t.detail }}</p>
+        @if (t.basis) {
+          <p class="bab-muted small">{{ t.basis }}</p>
+        }
+        @if (t.note) {
+          <p class="note" [class.warn]="t.caution">
+            <mat-icon>{{ t.caution ? 'error_outline' : 'bolt' }}</mat-icon>{{ t.note }}
+          </p>
+        }
+        @if (d.projection.status === 'no_target' || d.projection.status === 'reached') {
+          <a mat-flat-button routerLink="/account">Set target weight</a>
+        }
+        <div class="now-target">
+          <div>
+            <span class="bab-muted small">Now</span>
+            <strong>{{ kg(d.projection.current_kg) }}</strong>
+          </div>
+          @if (d.projection.target_kg !== null) {
+            <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+            <div>
+              <span class="bab-muted small">Target</span>
+              <strong>{{ kg(d.projection.target_kg) }}</strong>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <h2>Then vs now</h2>
+    @if (d.next_card_on; as next) {
+      <p class="bab-muted">
+        A new card every 4 weeks.
+        {{ d.cards.length ? 'Next one' : 'Your first one' }} is ready on {{ day(next) }}.
+      </p>
+    } @else {
+      <p class="bab-muted">Your first check-in starts the clock. A card arrives every 4 weeks.</p>
+      <a mat-flat-button routerLink="/checkin">Check in</a>
+    }
+
+    @for (c of d.cards; track c.number; let first = $first) {
+      <article class="card bab-panel" [class.newest]="first">
+        <header>
+          <span class="num">{{ c.number }}</span>
+          <div>
+            <h3>Weeks {{ c.number * 4 - 3 }} to {{ c.number * 4 }}</h3>
+            <span class="bab-muted small">{{ range(c.start, c.end) }}</span>
+          </div>
+        </header>
+
+        <ul class="highlights">
+          @for (h of c.highlights; track h) {
+            <li><mat-icon>star</mat-icon>{{ h }}</li>
+          }
+        </ul>
+
+        @if (c.measures.length || c.wins.length) {
+          <table class="compare">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">{{ day(c.then_day) }}</th>
+                <th scope="col">{{ day(c.now_day) }}</th>
+                <th scope="col">Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (m of [...c.measures, ...c.wins]; track m.name) {
+                <tr>
+                  <th scope="row">{{ label(m) }}</th>
+                  <td>{{ value(m, m.then) }}</td>
+                  <td>{{ value(m, m.now) }}</td>
+                  <td class="delta">{{ delta(m) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+
+        <div class="stats">
+          <div>
+            <strong>{{ steps(c.block) }}</strong>
+            <span>steps a day</span>
+            @if (c.previous_block) {
+              <small>before: {{ steps(c.previous_block) }}</small>
+            }
+          </div>
+          <div>
+            <strong>{{ c.block.workouts }}</strong>
+            <span>workouts</span>
+            @if (c.previous_block) {
+              <small>before: {{ c.previous_block.workouts }}</small>
+            }
+          </div>
+          <div>
+            <strong>{{ c.block.run_km }}</strong>
+            <span>km run</span>
+            @if (c.previous_block) {
+              <small>before: {{ c.previous_block.run_km }}</small>
+            }
+          </div>
+          <div>
+            <strong>{{ c.block.meal_days }}</strong>
+            <span>days of meals</span>
+            @if (c.previous_block) {
+              <small>before: {{ c.previous_block.meal_days }}</small>
+            }
+          </div>
+        </div>
+      </article>
+    }
+  }
+  <p class="bab-disclaimer">Weights, dates and rates are estimates only, not medical advice.</p>
+</section>

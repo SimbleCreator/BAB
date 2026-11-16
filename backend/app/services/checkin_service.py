@@ -29,6 +29,9 @@ def _out(row: Checkin, previous: Checkin | None) -> CheckinOut:
         arms_cm=_f(row.arms_cm),
         thighs_cm=_f(row.thighs_cm),
         note=row.note,
+        energy=row.energy,
+        sleep=row.sleep,
+        stairs=row.stairs,
         weight_change_kg=eng.change(
             _f(row.weight_kg), _f(previous.weight_kg) if previous else None
         ),
@@ -67,6 +70,7 @@ async def save(session: AsyncSession, user: User, day: date, data: CheckinIn) ->
     row.waist_cm, row.chest_cm = data.waist_cm, data.chest_cm
     row.arms_cm, row.thighs_cm = data.arms_cm, data.thighs_cm
     row.note = data.note
+    row.energy, row.sleep, row.stairs = data.energy, data.sleep, data.stairs
     await session.flush()
 
     latest = await checkin_repo.latest(session, user.id)

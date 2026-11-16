@@ -63,6 +63,15 @@ async def counts_by_day(session: AsyncSession, user_id: int, start, end) -> dict
     return {d: int(n) for d, n in rows.all()}
 
 
+async def metres_by_day(session: AsyncSession, user_id: int, start, end) -> dict:
+    rows = await session.execute(
+        select(Run.day, func.sum(Run.distance_m))
+        .where(Run.user_id == user_id, Run.day >= start, Run.day <= end)
+        .group_by(Run.day)
+    )
+    return {d: int(m or 0) for d, m in rows.all()}
+
+
 async def on_day(session: AsyncSession, user_id: int, day) -> list[tuple[Run, bool]]:
     rows = await session.execute(
         select(Run, _has_track)

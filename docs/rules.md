@@ -48,6 +48,7 @@ medical advice" note.
 | sweet_drinks_per_day | optional, 0 to 20 |
 | fasting_note | optional, up to 80 characters |
 | food_budget_inr | optional, 50 to 5,000 rupees a day |
+| target_weight_kg | optional, 30 to 300, one decimal (Account, "Goal and training") |
 
 Onboarding asks city, state, work, food source and wake time ("Your day") and usual
 foods ("Your plate"); the rest is on the Account page. The API accepts all of them as
@@ -119,13 +120,38 @@ Same line all day for a user; changes every day.
 
 | Rule | Value |
 | --- | --- |
-| Fields | weight 30 to 300 kg (required); waist, chest, arm, thigh 20 to 250 cm (optional); note 500 chars |
+| Fields | weight 30 to 300 kg (required); waist, chest, arm, thigh 20 to 250 cm (optional); note 500 chars; energy, sleep and stairs (climbing without getting out of breath) 1 to 5 (optional) |
 | One per day | saving the same day again replaces it; future days rejected |
 | Due | no check-in yet, or the newest one is more than 7 days old (day 8 onward) |
 | Change | value minus the previous check-in's value (by date), rounded to 0.1 |
 | Profile weight | saving the newest check-in (latest date) sets the profile weight; back-filling an older date does not |
 | Deleting | does not change the profile weight |
 | Adjustment | the weekly adjustment may run after saving the newest check-in (see below) |
+
+## Goal projection (`app/engines/projection_engine.py`)
+
+An estimate shown with "estimate", never a promise.
+
+| Rule | Value |
+| --- | --- |
+| Statuses | no_target (no target weight); reached (within 0.3 kg); on_track; stalled; no_gap |
+| Daily gap | maintenance (BMR x activity factor) minus today's calorie target (including weekly adjustments); positive is a deficit |
+| Formula rate | gap x 7 / 7,700 kg a week, toward the target only (a deficit for a lower target, a surplus for a higher one); otherwise no_gap |
+| Range | the rate is taken as 80% to 120% effective; weeks = kg to go / rate, rounded up, at least 1, at most 156 |
+| Safe cap (formula) | never faster than 1% of current weight a week for loss, 0.5% for gain |
+| Trend | used instead of the formula once there are 3 or more check-ins in the last 56 days spanning 14 or more days: least-squares slope x 7, rounded to 0.01 kg; same 80-120% range, no cap |
+| Too fast | trend faster than the safe cap: shown with a caution to eat enough |
+| Stalled | trend toward the target under 0.05 kg a week (flat or moving away) |
+
+## Progress cards (`app/engines/progress_engine.py`)
+
+| Rule | Value |
+| --- | --- |
+| When | card n covers days 28(n-1) to 28n-1 from the first check-in and is ready once those 28 days are over; newest first, at most 12 |
+| Then vs now | first known value of each measure (weight, waist, chest, arms, thighs, energy, sleep, stairs) against the latest known value up to the card's last day; shown when both exist |
+| Block | for the card's 28 days: average steps over days with a step count, workouts done, km run, days with any meal logged; compared with the 28 days before (not on card 1) |
+| Highlights (up to 4, in order) | weight: lose fat 0.3 kg or more down, build muscle 0.3 kg or more up, stay fit within 1 kg; waist 0.5 cm or more smaller; each win score that went up; 500 or more extra steps a day versus the block before; workouts done; km run. If none: an encouraging line |
+| New-card banner | Home shows "Your 4-week card is ready" until the Progress page is opened (remembered in browser storage) |
 
 ## Milestones (`app/engines/milestone_engine.py`)
 

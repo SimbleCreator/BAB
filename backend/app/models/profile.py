@@ -40,6 +40,7 @@ class Profile(Base):
     sweet_drinks_per_day: Mapped[int | None] = mapped_column(Integer)
     fasting_note: Mapped[str | None] = mapped_column(String(80))
     food_budget_inr: Mapped[int | None] = mapped_column(Integer)
+    target_weight_kg: Mapped[Decimal | None] = mapped_column(Numeric(5, 1))
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

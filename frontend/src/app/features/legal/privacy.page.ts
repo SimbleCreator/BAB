@@ -34,8 +34,9 @@ import { publicConfigResource } from './legal';
         </li>
         <li>
           What you log: daily steps, distance and calories; runs and GPS tracks from files you
-          upload; workouts; meals and your own foods; weekly check-ins and measurements; and, if you
-          use one, your smoking or drinking reduction plan.
+          upload; workouts; meals and your own foods; weekly check-ins, measurements and how your
+          energy, sleep and stairs feel; a target weight if you set one; and, if you use one, your
+          smoking or drinking reduction plan.
         </li>
         <li>
           What the app works out from that: training plans, calorie targets, weekly adjustments,
@@ -63,11 +64,11 @@ import { publicConfigResource } from './legal';
         Bounce, the AI coach, is the one exception. Only when you ask Bounce for a plan, the server
         sends the numbers it needs (age, sex, height, weight, goal, level, training time, diet type,
         how you train, recent check-ins and step averages, your gym and supplement answers, and your
-        "about your day" answers including city, state and usual dishes) to
-        the AI service set up by the owner (by default OpenRouter, which passes the request to the
-        company running the chosen model, such as Google or NVIDIA; free models may keep requests to
-        improve their services). Your name, email and account details are never sent. The plan that
-        comes back is stored with your data and is removed when you delete your account.
+        "about your day" answers including city, state and usual dishes) to the AI service set up by
+        the owner (by default OpenRouter, which passes the request to the company running the chosen
+        model, such as Google or NVIDIA; free models may keep requests to improve their services).
+        Your name, email and account details are never sent. The plan that comes back is stored with
+        your data and is removed when you delete your account.
         <!-- Placeholder for the owner: name the AI provider you use and link its privacy policy. -->
       </p>
 

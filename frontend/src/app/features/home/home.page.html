@@ -68,6 +68,14 @@
       </a>
     }
 
+    @if (newCard(); as c) {
+      <a class="alert win" routerLink="/progress">
+        <span class="alert-icon"><mat-icon>auto_awesome</mat-icon></span>
+        <span><strong>Your 4-week card is ready.</strong> {{ c.highlights[0] }}</span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+
     <!-- Mission -->
     @if (mission(); as m) {
       <div class="mission bab-panel">
@@ -334,6 +342,11 @@
         </div>
         @if (latestCheckin(); as c) {
           <p class="big-title">{{ c.weight_kg.toFixed(1) }} <span class="unit">kg</span></p>
+          @if (goalLine(); as g) {
+            <a class="goal-line" routerLink="/progress"
+              ><mat-icon>flag</mat-icon>{{ g }} <app-estimate
+            /></a>
+          }
           @if (weightPoints().length > 1) {
             <app-weight-chart [points]="weightPoints()" />
           }

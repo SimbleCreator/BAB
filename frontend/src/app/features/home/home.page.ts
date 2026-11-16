@@ -9,6 +9,7 @@ import { CheckinsApi } from '../../core/api/checkins.api';
 import { MilestonesApi } from '../../core/api/milestones.api';
 import { HabitType } from '../../core/api/models';
 import { NutritionApi } from '../../core/api/nutrition.api';
+import { ProgressApi } from '../../core/api/progress.api';
 import { TodayApi } from '../../core/api/today.api';
 import { TrainingApi } from '../../core/api/training.api';
 import { CaloriesChartComponent } from '../../shared/components/calories-chart.component';
@@ -21,6 +22,8 @@ import { WeightChartComponent } from '../../shared/components/weight-chart.compo
 import { IntPipe, KmPipe } from '../../shared/format/format.pipes';
 import { HABIT } from '../habits/wording';
 import { mealForNow } from '../nutrition/meals';
+import { projectionText } from '../progress/projection-text';
+import { seenCard } from '../progress/seen-card';
 
 const DATE = new Intl.DateTimeFormat(undefined, { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -59,6 +62,7 @@ export class HomePage {
   private readonly trainingApi = inject(TrainingApi);
   private readonly checkinsApi = inject(CheckinsApi);
   private readonly milestonesApi = inject(MilestonesApi);
+  private readonly progressApi = inject(ProgressApi);
 
   protected readonly today = rxResource({ stream: () => this.todayApi.get() });
   protected readonly steps = rxResource({ stream: () => this.activityApi.summary(7) });
@@ -66,6 +70,21 @@ export class HomePage {
   protected readonly week = rxResource({ stream: () => this.trainingApi.week() });
   protected readonly checkins = rxResource({ stream: () => this.checkinsApi.list() });
   protected readonly milestones = rxResource({ stream: () => this.milestonesApi.list() });
+  protected readonly progress = rxResource({ stream: () => this.progressApi.get() });
+  /** Short goal line for the weight card, e.g. "60 kg in 11 to 16 weeks". */
+  protected readonly goalLine = computed(() => {
+    const p = this.progress.value()?.projection;
+    if (!p || p.status === 'no_target') return null;
+    const t = projectionText(p);
+    return p.status === 'on_track'
+      ? `${p.target_kg} kg in ${t.headline.toLowerCase()}`
+      : t.headline;
+  });
+  /** A then-vs-now card the user has not opened yet. */
+  protected readonly newCard = computed(() => {
+    const newest = this.progress.value()?.cards[0];
+    return newest && newest.number > seenCard() ? newest : null;
+  });
 
   protected readonly mealNow = mealForNow;
 

@@ -25,6 +25,13 @@ export const MORE_NAV: readonly NavItem[] = [
     hint: 'Routes and pace',
   },
   {
+    path: '/progress',
+    label: 'Progress',
+    icon: 'trending_down',
+    gradient: 'var(--bab-grad-checkin)',
+    hint: 'Your goal and 4-week cards',
+  },
+  {
     path: '/checkin',
     label: 'Check-in',
     icon: 'monitor_weight',

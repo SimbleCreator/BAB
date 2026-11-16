@@ -106,6 +106,7 @@ export function buildProfileForm(fb: NonNullableFormBuilder) {
       days_per_week: [3, Validators.required],
       has_pullup_bar: [false],
       training_mode: fb.control<TrainingMode>('activity', Validators.required),
+      target_weight_kg: fb.control<number | null>(null, [Validators.min(30), Validators.max(300)]),
     }),
     life: fb.group({
       city: ['', [Validators.required, Validators.maxLength(60), Validators.pattern(/\S/)]],
@@ -164,6 +165,7 @@ export function profileFromForm(form: ProfileForm): ProfileIn {
     sweet_drinks_per_day: num(more.sweet_drinks_per_day),
     fasting_note: more.fasting_note.trim() || null,
     food_budget_inr: num(more.food_budget_inr),
+    target_weight_kg: num(training.target_weight_kg),
   };
 }
 
@@ -183,6 +185,7 @@ export function patchProfileForm(form: ProfileForm, p: ProfileOut): void {
       days_per_week: p.days_per_week,
       has_pullup_bar: p.has_pullup_bar,
       training_mode: p.training_mode ?? 'activity',
+      target_weight_kg: p.target_weight_kg ?? null,
     },
     life: {
       city: p.city ?? '',

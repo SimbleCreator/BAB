@@ -54,6 +54,14 @@ class ProfileIn(BaseModel):
     food_budget_inr: int | None = Field(
         default=None, ge=50, le=5000, description="Daily food budget in rupees"
     )
+    target_weight_kg: float | None = Field(
+        default=None, ge=30, le=300, description="Optional goal weight, kilograms"
+    )
+
+    @field_validator("target_weight_kg")
+    @classmethod
+    def _target_one_decimal(cls, v: float | None) -> float | None:
+        return None if v is None else round(v, 1)
 
     @field_validator("city", "fasting_note")
     @classmethod

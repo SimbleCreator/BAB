@@ -140,6 +140,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/checkin/checkin.page').then((m) => m.CheckinPage),
       },
       {
+        path: 'progress',
+        title: 'Progress - B.A.B',
+        loadComponent: () =>
+          import('./features/progress/progress.page').then((m) => m.ProgressPage),
+      },
+      {
         path: 'bounce',
         title: 'Bounce - B.A.B',
         loadComponent: () => import('./features/bounce/bounce.page').then((m) => m.BouncePage),

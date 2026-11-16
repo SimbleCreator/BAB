@@ -84,6 +84,8 @@ export interface ProfileIn {
   fasting_note?: string | null;
   /** Daily food budget in rupees. */
   food_budget_inr?: number | null;
+  /** Optional goal weight. */
+  target_weight_kg?: number | null;
 }
 
 export type WorkType = 'desk' | 'standing' | 'physical' | 'shifts';
@@ -282,6 +284,10 @@ export interface CheckinIn {
   arms_cm: number | null;
   thighs_cm: number | null;
   note: string | null;
+  /** Wins beyond the scale, 1 (poor) to 5 (great). */
+  energy?: number | null;
+  sleep?: number | null;
+  stairs?: number | null;
 }
 
 export interface CheckinOut extends CheckinIn {
@@ -881,4 +887,66 @@ export interface GymProfileIn {
 
 export interface GymProfileOut extends GymProfileIn {
   updated_at: string;
+}
+
+// progress router ------------------------------------------------------------
+
+export type ProjectionStatus = 'no_target' | 'reached' | 'on_track' | 'stalled' | 'no_gap';
+
+/** Weeks to the target weight: an estimate, never a promise. */
+export interface ProjectionOut {
+  status: ProjectionStatus;
+  method: 'formula' | 'trend' | null;
+  current_kg: number;
+  target_kg: number | null;
+  /** Target minus current; negative to lose. */
+  kg_to_go: number | null;
+  /** Signed weekly change; negative is loss. */
+  weekly_rate_kg: number | null;
+  weeks_min: number | null;
+  weeks_max: number | null;
+  date_min: string | null;
+  date_max: string | null;
+  too_fast: boolean;
+  safe_rate_kg: number;
+  daily_gap_kcal: number;
+  checkins_for_trend: number;
+}
+
+export interface ChangeOut {
+  name: string;
+  then: number;
+  now: number;
+  change: number;
+}
+
+export interface BlockOut {
+  start: string;
+  end: string;
+  avg_steps: number | null;
+  workouts: number;
+  run_km: number;
+  meal_days: number;
+}
+
+export interface ProgressCardOut {
+  number: number;
+  start: string;
+  end: string;
+  then_day: string;
+  now_day: string;
+  measures: ChangeOut[];
+  wins: ChangeOut[];
+  block: BlockOut;
+  previous_block: BlockOut | null;
+  highlights: string[];
+}
+
+export interface ProgressOut {
+  today: string;
+  goal: Goal;
+  projection: ProjectionOut;
+  /** Newest first. */
+  cards: ProgressCardOut[];
+  next_card_on: string | null;
 }

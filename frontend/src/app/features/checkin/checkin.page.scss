@@ -159,3 +159,53 @@ h2 {
     padding-left: 18px;
   }
 }
+
+.wins {
+  border: 0;
+  margin: 4px 0 12px;
+  padding: 0;
+
+  legend {
+    font: var(--mat-sys-title-small);
+    margin-bottom: 6px;
+  }
+}
+
+.win {
+  margin-bottom: 10px;
+
+  .win-label {
+    display: block;
+    font: var(--mat-sys-body-medium);
+    margin-bottom: 4px;
+  }
+}
+
+.scores {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .end {
+    font: var(--mat-sys-label-small);
+    color: var(--mat-sys-on-surface-variant);
+    min-width: 30px;
+  }
+}
+
+.score {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-label-large);
+  cursor: pointer;
+
+  &.on {
+    border-color: transparent;
+    background: var(--bab-grad-checkin);
+    color: #fff;
+  }
+}

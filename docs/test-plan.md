@@ -202,3 +202,16 @@
   phone the paired fields stack.
 - Bounce: a new plan's meals lean on the usual dishes and the region (check by eye).
 
+### M12 (goal projection, then-vs-now cards, wins at check-in)
+- Account > Goal and training: set a target weight. More > Progress shows a weeks
+  range, a date range and "Based on your calorie target"; Home's weight card shows
+  "72 kg in N to M weeks" with "estimate".
+- Without a target: Progress says "Set a target weight" with a button to Account.
+  A target in the wrong direction for the goal (e.g. higher while losing fat) shows
+  "No date yet".
+- Check-in: the energy, sleep and stairs buttons toggle (tap again to clear) and show
+  in the history ("energy 4/5 · stairs 3/5").
+- After 3 check-ins over 14+ days the basis line says "Based on your check-ins".
+- 28 days after the first check-in a card appears: highlights, a then/now table and
+  4-week stats; Home shows "Your 4-week card is ready" until Progress is opened.
+
