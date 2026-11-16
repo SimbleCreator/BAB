@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -22,6 +23,13 @@ class TodayNutrition(BaseModel):
     target_protein_g: int
 
 
+class EventOut(BaseModel):
+    code: str
+    name: str
+    kind: Literal["festival", "fasting", "season"]
+    tip: str
+
+
 class TodayOut(BaseModel):
     """Everything for the "what do I do today" screen. Sections grow with each milestone."""
 
@@ -36,3 +44,7 @@ class TodayOut(BaseModel):
     workout: WorkoutBrief | None = Field(description="Today's planned workout; null on a rest day")
     nutrition: TodayNutrition
     habits: list[TodayHabit] = Field(description="Active reduction plans; empty if none")
+    easy_day: bool = Field(default=False, description="Today is an easy day")
+    events: list["EventOut"] = Field(
+        default_factory=list, description="Festivals, fasting periods and seasons on today"
+    )

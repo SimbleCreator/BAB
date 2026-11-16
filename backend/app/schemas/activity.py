@@ -84,3 +84,22 @@ class CsvImportOut(BaseModel):
     updated: int
     skipped_existing: int
     skipped_invalid: int
+
+
+class DrillOut(BaseModel):
+    code: str
+    name: str
+    seconds: int
+    instructions: str
+
+
+class EasyDayOut(BaseModel):
+    """The "Easy day": a 10-minute plan that still counts for the step-goal streak."""
+
+    day: date
+    taken: bool = Field(description="Today is an easy day")
+    left_this_week: int = Field(description="Easy days still available this week (Mon-Sun)")
+    per_week: int
+    suggested: bool = Field(description="Nothing was logged on each of the last 3 days")
+    minutes: int
+    plan: list[DrillOut]

@@ -91,6 +91,7 @@ async def test_prompt_carries_know_me_answers(client):
         assert text in prompt
     assert "hostel or mess food" in prompt and '"Idli"' in prompt and '"Sambar"' in prompt
     assert '"food_budget_inr_per_day": 200' in prompt
+    assert '"calendar": [' in prompt
 
 
 async def test_gym_mode_needs_gym_profile_and_analyses_supplements(client):

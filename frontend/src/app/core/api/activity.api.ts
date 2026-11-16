@@ -3,7 +3,14 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ActivityIn, ActivityOut, ActivitySummaryOut, CsvImportOut, CsvPreviewOut } from './models';
+import {
+  ActivityIn,
+  ActivityOut,
+  ActivitySummaryOut,
+  CsvImportOut,
+  CsvPreviewOut,
+  EasyDayOut,
+} from './models';
 
 /** Client for the backend `activity` router. */
 @Injectable({ providedIn: 'root' })
@@ -13,6 +20,18 @@ export class ActivityApi {
 
   list(from: string, to: string): Observable<ActivityOut[]> {
     return this.http.get<ActivityOut[]>(this.base, { params: { from, to } });
+  }
+
+  easyDay(): Observable<EasyDayOut> {
+    return this.http.get<EasyDayOut>(`${this.base}/easy-day`);
+  }
+
+  takeEasyDay(): Observable<EasyDayOut> {
+    return this.http.post<EasyDayOut>(`${this.base}/easy-day`, null);
+  }
+
+  undoEasyDay(): Observable<EasyDayOut> {
+    return this.http.delete<EasyDayOut>(`${this.base}/easy-day`);
   }
 
   summary(days: number): Observable<ActivitySummaryOut> {

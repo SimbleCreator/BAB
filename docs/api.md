@@ -44,6 +44,9 @@ endpoints.
 | GET | `/activity/csv-template` | none | CSV template download |
 | POST | `/activity/import/preview` | bearer | Multipart `file`; parse and report row errors, nothing saved |
 | POST | `/activity/import` | bearer | Multipart `file` and `overwrite` (true/false); saves valid rows |
+| GET | `/activity/easy-day` | bearer | Today's easy-day status, easy days left this week, whether one is suggested, and the 10-minute plan |
+| POST | `/activity/easy-day` | bearer | Make today an easy day (counts for step streaks); 409 `easy_days_used` after 2 this week |
+| DELETE | `/activity/easy-day` | bearer | Undo today's easy day |
 | GET | `/activity/{day}` | bearer | One day; 404 `activity_missing` if nothing logged |
 | PUT | `/activity/{day}` | bearer | Create or replace a day (`source` becomes `manual`); future days rejected |
 | DELETE | `/activity/{day}` | bearer | Remove a day |
@@ -78,6 +81,8 @@ endpoints.
 | DELETE | `/nutrition/items/{id}` | bearer | Remove an item; returns the day |
 | GET | `/nutrition/days/{day}/suggestions` | bearer | 3 options per meal within each meal's calorie budget, usual and regional dishes first, with grams and `why` |
 | GET | `/nutrition/summary?days=7` | bearer | Calories eaten and target per day |
+| GET | `/nutrition/plate-tips` | bearer | Portion tips for each usual food (keep the dish, change the amount) |
+| POST | `/nutrition/days/{day}/mess-plate` | bearer | `{meal_type, food_codes}`: best plate from what was served, within the meal budget; logs nothing |
 | GET | `/foods?q=&meal_type=` | bearer | Built-in foods for the user's diet and their custom foods: recent, then usual, then regional first; each has `serving_g`, `regions`, `usual`, `regional` |
 | GET | `/foods/staples?diet_type=&state=` | bearer | Dishes to pick usual home foods from (works before onboarding), own region first |
 | GET/POST | `/foods/custom` | bearer | List or create custom foods |

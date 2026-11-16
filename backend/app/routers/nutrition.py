@@ -14,7 +14,10 @@ from app.schemas.nutrition import (
     ItemIn,
     ItemPatch,
     MealType,
+    MessPlateIn,
+    MessPlateOut,
     NutritionSummaryOut,
+    PlateTipsOut,
     StapleOut,
     SuggestionsOut,
     TargetsOut,
@@ -69,6 +72,29 @@ async def delete_item(item_id: int, user: CurrentUser, session: SessionDep) -> D
 @router.get("/nutrition/days/{day}/suggestions", response_model=SuggestionsOut, responses=_errors)
 async def get_suggestions(day: date, user: CurrentUser, session: SessionDep) -> SuggestionsOut:
     return await svc.suggestions(session, user, day)
+
+
+@router.get(
+    "/nutrition/plate-tips",
+    response_model=PlateTipsOut,
+    responses=_errors,
+    summary="Portion tips for the user's usual home foods (keep the dish, change the amount)",
+)
+async def plate_tips(user: CurrentUser, session: SessionDep) -> PlateTipsOut:
+    return await svc.plate_tips(session, user)
+
+
+@router.post(
+    "/nutrition/days/{day}/mess-plate",
+    response_model=MessPlateOut,
+    responses=_errors,
+    summary="Best plate from what the mess or canteen served, within the meal's budget",
+    description="Does not log anything; the app logs the chosen items afterwards.",
+)
+async def mess_plate(
+    day: date, data: MessPlateIn, user: CurrentUser, session: SessionDep
+) -> MessPlateOut:
+    return await svc.mess_plate(session, user, day, data)
 
 
 @router.get("/nutrition/summary", response_model=NutritionSummaryOut, responses=_errors)

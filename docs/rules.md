@@ -356,12 +356,21 @@ The model writes the plan; these rules decide what is accepted (`rules.py`).
 | Immediate suggestions | steps left to goal with a walk of `round(left / 100 / 5) x 5` minutes (at least 5), check-in due, today's part of the plan, then plan tips; at most 4 |
 | Gym profile | experience beginner/intermediate/advanced, 1 to 7 days, 20 to 180 minutes, supplements from a fixed list ("none" clears the rest), notes up to 300 characters |
 
+### Bounce and the calendar
+
+The plan prompt gets `calendar`: the festivals, fasting periods and seasons in the plan's
+week (Monday to Sunday) for the user's region, each with its tip, and is told to adjust
+(fasting-friendly meals and lighter training if the user fasts, indoor options in the
+monsoon, early or late sessions in the heat). It is also told to keep each day's meals
+within the daily food budget when one is set. Bounce's tips add the first event on today.
+
 ### Bounce notifications (`rules.pick_nudge`)
 
 At most one, in this order. Hours are the user's local time.
 
 | Kind | When | Message |
 | --- | --- | --- |
+| easy | nothing (activity numbers, workout or meal) was logged on each of the 3 days before today, the account is at least 3 days old, today is not an easy day and one is left this week | "Rough few days?": take an easy day |
 | checkin | the weekly check-in is due (none yet, or the last is more than 7 days old) | weigh in so the plan can adapt |
 | meals | the latest meal whose hour has passed is not logged: breakfast 10:00, lunch 15:00, snack 18:00, dinner 21:00 | what did you have for that meal |
 | activity | no activity numbers for today from 12:00 | add today's steps |
@@ -370,3 +379,46 @@ At most one, in this order. Hours are the user's local time.
 The `id` (for example `meals:2026-11-15:lunch`) is stable for the day and reason. The web
 app remembers dismissed ids in browser storage (last 30), so "Later" hides that one
 notification until the reason or the day changes.
+
+## Keep your plate (`app/engines/plate_engine.py`)
+
+Tips for each usual food change the amount and the sides, never the dish.
+
+| Rule | Value |
+| --- | --- |
+| Kind of food | protein if protein is 25%+ of its calories; else fatty if fat is 45%+; else carb if carbs are 60%+; else balanced |
+| Lose fat | carb 0.75 serving plus a protein side; fatty 0.5 serving (or less oil or ghee); protein 1.25; balanced 1 |
+| Build muscle | carb 1 serving plus a protein side; fatty 1; protein 1.5; balanced 1 |
+| Stay fit | fatty 0.75; everything else 1, carb with a protein side |
+| Light food | under 60 kcal a serving: keep as it is |
+| Protein side by diet | veg: dal, curd or a little paneer; egg: adds eggs; non-veg: adds chicken or fish |
+
+## Mess or canteen plate (`plate_engine.mess_plate`)
+
+| Rule | Value |
+| --- | --- |
+| Input | up to 12 dishes served; dishes outside the diet type are left out |
+| Budget | the meal's budget as for suggestions (its share of the target, capped by what is left today) |
+| Order | protein, balanced, carb, then fatty; within a kind most protein per kcal first; at most 6 dishes |
+| Filling | half a serving of each in order while it fits, then half a serving more at a time in the same order, up to 2 servings each, never over budget. Losing fat: fatty dishes stay at half a serving |
+| Skipped | dishes that did not fit even at half a serving |
+| Logging | nothing is logged until the user presses "Log this plate" (items are logged by grams) |
+
+## Easy day (`app/engines/activity_engine.py`)
+
+| Rule | Value |
+| --- | --- |
+| What | today only; a 10-minute plan (`easy_day` in `content/exercises.json`, 6 moves, 600 s) |
+| Streaks | an easy day counts as a step-goal day for the current and longest streak and the streak milestones. It does not count as a workout or unlock a habit allowance |
+| Limit | 2 per Monday-to-Sunday week (`easy_days_used` once both are used); taking the same day again is fine; undo is allowed |
+| Suggested | nothing logged on each of the 3 days before today, and the account is at least 3 days old |
+
+## Festival and season calendar (`content/calendar.json`, `app/engines/calendar_engine.py`)
+
+| Rule | Value |
+| --- | --- |
+| Events | festival, fasting or season; one-off (YYYY-MM-DD) or recurring every year (MM-DD, may wrap over the new year) |
+| Region | events with no regions apply everywhere; regional ones only to users whose state is in that region |
+| Today | Home shows the first event on today (festivals and fasting before seasons) with its tip |
+| Dates | lunar festival dates are approximate, to be verified by the owner, and need adding for each new year |
+

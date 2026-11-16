@@ -152,6 +152,7 @@ mat-card {
 
 .meal-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
 }
@@ -205,4 +206,65 @@ mat-card {
     background: linear-gradient(135deg, #10b981, #14b8a6);
     color: #fff;
   }
+}
+
+.plate-tips {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 20px;
+
+  ul {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+  }
+
+  li {
+    padding: 8px 0;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+
+    p {
+      margin: 4px 0 0;
+    }
+  }
+}
+
+.plate-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+
+  > span:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+}
+
+.p-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--bab-grad-food);
+  color: #fff;
+}
+
+.tip-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.small {
+  font: var(--mat-sys-body-small);
 }

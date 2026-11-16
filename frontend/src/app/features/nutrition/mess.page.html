@@ -1,0 +1,112 @@
+<section class="bab-page">
+  <a mat-button [routerLink]="['/eat']" [queryParams]="{ day: day() }" class="back">
+    <mat-icon>arrow_back</mat-icon>
+    Eat
+  </a>
+  <h1 class="bab-page-title">What's served?</h1>
+  <p class="bab-muted">
+    At a hostel, mess or canteen? Tick what is on offer and Bounce picks the best plate from it for
+    your goal.
+  </p>
+
+  <mat-button-toggle-group
+    class="meals"
+    [value]="chosenMeal()"
+    (change)="setMeal($event.value)"
+    aria-label="Meal"
+    hideSingleSelectionIndicator
+  >
+    @for (m of meals; track m.type) {
+      <mat-button-toggle [value]="m.type">{{ m.label }}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  @if (plate(); as p) {
+    <div class="plate bab-panel">
+      <h2>Your plate</h2>
+      @if (p.items.length) {
+        <ul>
+          @for (i of p.items; track i.food_code) {
+            <li>
+              <span class="name">{{ i.name }}</span>
+              <span class="amount">about {{ i.grams }} g</span>
+              <span class="kcal">{{ i.calories_kcal }} kcal</span>
+            </li>
+          }
+        </ul>
+        <p class="total">
+          {{ p.calories_kcal }} kcal <app-estimate /> &middot; {{ p.protein_g }} g protein
+          <span class="bab-muted">(about {{ p.budget_kcal }} kcal fits this meal)</span>
+        </p>
+      } @else {
+        <p class="bab-muted">
+          None of these fit what is left for today. A small portion of the lightest dish is fine.
+        </p>
+      }
+      @if (p.skipped.length) {
+        <p class="bab-muted small">
+          Skip today:
+          @for (s of p.skipped; track s.food_code; let isLast = $last) {
+            {{ s.name }}{{ isLast ? '.' : ', ' }}
+          }
+        </p>
+      }
+      <div class="actions">
+        <button
+          mat-flat-button
+          type="button"
+          (click)="log()"
+          [disabled]="busy() || !p.items.length"
+        >
+          Log this plate
+        </button>
+        <button mat-button type="button" (click)="plate.set(null)">Change dishes</button>
+      </div>
+    </div>
+  } @else {
+    @if (served().length) {
+      <div class="served" aria-label="Served today">
+        @for (f of served(); track f.food_code) {
+          <button type="button" class="chip on" (click)="toggle(f)">
+            {{ f.name }} <span aria-hidden="true">✕</span>
+          </button>
+        }
+      </div>
+    }
+    <p class="count">{{ served().length }} of {{ max }} dishes</p>
+    <input
+      class="search"
+      type="search"
+      placeholder="Search dishes, e.g. dal, rice, sabzi"
+      aria-label="Search dishes"
+      [value]="typed()"
+      (input)="typed.set($any($event.target).value)"
+    />
+    @if (foods.error()) {
+      <p class="bab-form-error">Could not load dishes.</p>
+    }
+    <div class="options">
+      @for (f of options(); track f.food_code) {
+        <button
+          type="button"
+          class="chip"
+          [class.on]="isServed(f)"
+          [attr.aria-pressed]="isServed(f)"
+          (click)="toggle(f)"
+        >
+          {{ f.name }}
+        </button>
+      }
+    </div>
+    <button
+      mat-flat-button
+      type="button"
+      class="make"
+      (click)="make()"
+      [disabled]="busy() || !served().length"
+    >
+      Make my plate
+    </button>
+  }
+  <p class="bab-disclaimer">Food values are approximate. Estimates only, not medical advice.</p>
+</section>

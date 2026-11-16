@@ -1,0 +1,105 @@
+{
+  "_note": "Festival and season calendar. Festival dates move every year with the lunar calendar: dates are approximate, to be verified by the owner, and need adding for each new year. 'recurring' events use month-day and repeat every year. regions empty means everywhere in India.",
+  "events": [
+    {
+      "code": "new_year",
+      "name": "Christmas and New Year",
+      "kind": "festival",
+      "recurring": true,
+      "start": "12-24",
+      "end": "01-01",
+      "regions": [],
+      "tip": "Party season: enjoy the special meals, keep normal portions on the other days and keep walking."
+    },
+    {
+      "code": "harvest",
+      "name": "Sankranti, Pongal, Lohri and Bihu",
+      "kind": "festival",
+      "recurring": true,
+      "start": "01-13",
+      "end": "01-16",
+      "regions": [],
+      "tip": "Harvest festival sweets are rich in jaggery and ghee. Have a small piece, not the whole plate."
+    },
+    {
+      "code": "summer_heat",
+      "name": "Summer heat",
+      "kind": "season",
+      "recurring": true,
+      "start": "04-01",
+      "end": "06-15",
+      "regions": ["north", "central", "west", "east"],
+      "tip": "Hot days: walk or train early morning or after sunset, drink water through the day and have buttermilk, curd and fruit."
+    },
+    {
+      "code": "monsoon",
+      "name": "Monsoon",
+      "kind": "season",
+      "recurring": true,
+      "start": "06-15",
+      "end": "09-30",
+      "regions": [],
+      "tip": "Rainy days: swap the outdoor walk for indoor marching, stairs or a home workout, and go easy on fried monsoon snacks."
+    },
+    {
+      "code": "ramadan_2027",
+      "name": "Ramadan",
+      "kind": "fasting",
+      "recurring": false,
+      "start": "2027-02-08",
+      "end": "2027-03-09",
+      "regions": [],
+      "tip": "If you fast: train lightly after iftar, eat protein and slow carbs at sehri, and drink plenty of water between iftar and sehri."
+    },
+    {
+      "code": "holi_2027",
+      "name": "Holi",
+      "kind": "festival",
+      "recurring": false,
+      "start": "2027-03-21",
+      "end": "2027-03-23",
+      "regions": ["north", "central", "west", "east"],
+      "tip": "Holi: enjoy the gujiya and thandai, then get back to your normal plate the next day."
+    },
+    {
+      "code": "chaitra_navratri_2027",
+      "name": "Chaitra Navratri",
+      "kind": "fasting",
+      "recurring": false,
+      "start": "2027-04-07",
+      "end": "2027-04-15",
+      "regions": ["north", "central", "west"],
+      "tip": "If you fast: pick roasted makhana, fruit, curd and kuttu or samak dishes over fried vrat snacks, and keep workouts light."
+    },
+    {
+      "code": "sharad_navratri_2027",
+      "name": "Navratri and Durga Puja",
+      "kind": "fasting",
+      "recurring": false,
+      "start": "2027-09-30",
+      "end": "2027-10-09",
+      "regions": [],
+      "tip": "Festival nights: if you fast, choose fruit, curd, makhana and kuttu or samak dishes; garba and pandal walks count as activity."
+    },
+    {
+      "code": "diwali_2027",
+      "name": "Diwali week",
+      "kind": "festival",
+      "recurring": false,
+      "start": "2027-10-26",
+      "end": "2027-11-01",
+      "regions": [],
+      "tip": "Diwali week: pick two sweets you love most, skip the rest, and keep your daily walk going."
+    },
+    {
+      "code": "diwali_2026",
+      "name": "Diwali week",
+      "kind": "festival",
+      "recurring": false,
+      "start": "2026-11-05",
+      "end": "2026-11-11",
+      "regions": [],
+      "tip": "Diwali week: pick two sweets you love most, skip the rest, and keep your daily walk going."
+    }
+  ]
+}

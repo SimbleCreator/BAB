@@ -1,13 +1,15 @@
 """Daily activity: entry, editing, summary and CSV import."""
 
 from datetime import date, timedelta
+from zoneinfo import ZoneInfo
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import AppError, NotFoundError
+from app.content import exercise_library
+from app.core.errors import AppError, ConflictError, NotFoundError
 from app.core.timeutil import local_today
 from app.engines import activity_engine as eng
-from app.models.activity import DailyActivity
+from app.models.activity import DailyActivity, EasyDay
 from app.models.enums import Source
 from app.models.profile import Profile
 from app.models.user import User
@@ -20,6 +22,8 @@ from app.schemas.activity import (
     CsvPreviewOut,
     CsvRowOut,
     DayPoint,
+    DrillOut,
+    EasyDayOut,
 )
 from app.services import activity_csv, milestone_service
 from app.services.common import require_profile
@@ -191,3 +195,57 @@ async def csv_import(
         skipped_existing=skipped,
         skipped_invalid=len(parsed.rows) - len(valid),
     )
+
+
+# Easy day (M14) ----------------------------------------------------------------------
+
+
+async def easy_day(session: AsyncSession, user: User) -> EasyDayOut:
+    profile = await require_profile(session, user)
+    today = local_today(profile.timezone)
+    days = await activity_repo.easy_days(session, user.id)
+    logged = await activity_repo.logged_days(
+        session, user.id, today - timedelta(days=eng.QUIET_DAYS), today
+    )
+    plan = exercise_library().easy_day
+    return EasyDayOut(
+        day=today,
+        taken=today in days,
+        left_this_week=eng.easy_days_left(days, today),
+        per_week=eng.EASY_DAYS_PER_WEEK,
+        suggested=eng.quiet_streak(logged, today, _joined(user, profile)) and today not in days,
+        minutes=round(sum(d.seconds for d in plan) / 60),
+        plan=[DrillOut(**d.__dict__) for d in plan],
+    )
+
+
+async def take_easy_day(session: AsyncSession, user: User) -> EasyDayOut:
+    """Make today an easy day (at most EASY_DAYS_PER_WEEK a week). Repeats are fine."""
+    profile = await require_profile(session, user)
+    today = local_today(profile.timezone)
+    if await activity_repo.get_easy_day(session, user.id, today) is None:
+        if eng.easy_days_left(await activity_repo.easy_days(session, user.id), today) == 0:
+            raise ConflictError(
+                f"You have used your {eng.EASY_DAYS_PER_WEEK} easy days this week. "
+                "Even a short walk today counts.",
+                code="easy_days_used",
+            )
+        session.add(EasyDay(user_id=user.id, day=today))
+        await session.flush()
+        await milestone_service.evaluate(session, user.id)
+        await session.commit()
+    return await easy_day(session, user)
+
+
+async def undo_easy_day(session: AsyncSession, user: User) -> EasyDayOut:
+    profile = await require_profile(session, user)
+    row = await activity_repo.get_easy_day(session, user.id, local_today(profile.timezone))
+    if row is not None:
+        await session.delete(row)
+        await session.commit()
+    return await easy_day(session, user)
+
+
+def _joined(user: User, profile: Profile) -> date:
+    """The user's local date when the account was created."""
+    return user.created_at.astimezone(ZoneInfo(profile.timezone)).date()

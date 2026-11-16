@@ -1,0 +1,85 @@
+<section class="bab-page">
+  <h1 class="bab-page-title">Easy day</h1>
+
+  @if (data.isLoading() && !data.hasValue()) {
+    <app-loader />
+  } @else if (data.error()) {
+    <p class="bab-form-error" role="alert">Could not load your easy day.</p>
+    <button mat-button type="button" (click)="data.reload()">Try again</button>
+  } @else if (data.value(); as d) {
+    <div class="intro bab-panel">
+      @if (d.taken) {
+        <p class="lead"><mat-icon>verified</mat-icon> Today is an easy day. Your streak is safe.</p>
+        <p class="bab-muted">
+          Do the {{ d.minutes }}-minute plan below when you can. Tomorrow is a normal day again.
+        </p>
+        <button mat-button type="button" (click)="undo()" [disabled]="busy()">Undo easy day</button>
+      } @else {
+        <p class="lead">
+          @if (d.suggested) {
+            Rough few days? That happens to everyone.
+          } @else {
+            Low on time or energy today?
+          }
+        </p>
+        <p class="bab-muted">
+          Swap today for a {{ d.minutes }}-minute plan. It still counts for your step streak. You
+          have {{ d.left_this_week }} of {{ d.per_week }} easy days left this week.
+        </p>
+        <button
+          mat-flat-button
+          type="button"
+          (click)="take()"
+          [disabled]="busy() || d.left_this_week === 0"
+        >
+          Make today an easy day
+        </button>
+        @if (d.left_this_week === 0) {
+          <p class="bab-muted small">
+            Both easy days are used this week. Even a short walk today counts.
+          </p>
+        }
+      }
+    </div>
+
+    <h2>Your {{ d.minutes }} minutes</h2>
+    @if (current(); as c) {
+      <div class="timer bab-panel" aria-live="polite">
+        <span class="bab-muted small">Move {{ step()! + 1 }} of {{ d.plan.length }}</span>
+        <p class="move">{{ c.name }}</p>
+        <p class="clock">{{ clock(left()) }}</p>
+        <p class="how">{{ c.instructions }}</p>
+        <div class="timer-actions">
+          <button mat-flat-button type="button" (click)="toggle()">
+            {{ running() ? 'Pause' : 'Resume' }}
+          </button>
+          <button mat-button type="button" (click)="next()">Next move</button>
+          <button mat-button type="button" (click)="reset()">Stop</button>
+        </div>
+      </div>
+    } @else if (done()) {
+      <div class="timer bab-panel done">
+        <p class="move">Done. That counts.</p>
+        <p class="bab-muted">Showing up on a hard day is how habits stick.</p>
+        <a mat-flat-button routerLink="/home">Back to Home</a>
+      </div>
+    } @else {
+      <button mat-flat-button type="button" class="start" (click)="start()">
+        <mat-icon>play_arrow</mat-icon> Start the 10 minutes
+      </button>
+    }
+
+    <ol class="plan">
+      @for (m of d.plan; track m.code; let i = $index) {
+        <li [class.now]="step() === i">
+          <div class="plan-head">
+            <strong>{{ m.name }}</strong>
+            <span class="bab-muted">{{ mins(m.seconds) }}</span>
+          </div>
+          <p class="bab-muted small">{{ m.instructions }}</p>
+        </li>
+      }
+    </ol>
+  }
+  <p class="bab-disclaimer">Estimates only, not medical advice. Stop if anything hurts.</p>
+</section>

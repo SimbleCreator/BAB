@@ -17,7 +17,7 @@ from app.core.errors import (
     UpstreamError,
 )
 from app.core.timeutil import local_today
-from app.engines import checkin_engine
+from app.engines import activity_engine, checkin_engine
 from app.models.bounce import BouncePlan, GymProfile
 from app.models.profile import Profile
 from app.models.user import User
@@ -37,10 +37,12 @@ from app.schemas.bounce import (
     PlanContent,
     Targets,
 )
+from app.services import calendar_service
 from app.services.bounce import rules
 from app.services.bounce.llm import LLMClient, LLMError, extract_json
 from app.services.bounce.prompt import (
     BounceContext,
+    CalendarNote,
     CheckinPoint,
     GymInfo,
     Lifestyle,
@@ -197,6 +199,10 @@ async def _notification(
 ) -> BounceNotificationOut | None:
     row = await activity_repo.get(session, user.id, today)
     meals = await nutrition_repo.meals_on(session, user.id, today)
+    easy = await activity_repo.easy_days(session, user.id)
+    logged = await activity_repo.logged_days(
+        session, user.id, today - timedelta(days=activity_engine.QUIET_DAYS), today
+    )
     nudge = rules.pick_nudge(
         today,
         datetime.now(ZoneInfo(profile.timezone)).hour,
@@ -204,6 +210,9 @@ async def _notification(
         {m.meal_type for m in meals if m.items},
         row.steps if row is not None else None,
         profile.daily_step_goal,
+        offer_easy_day=activity_engine.quiet_streak(logged, today, _joined(user, profile))
+        and today not in easy
+        and activity_engine.easy_days_left(easy, today) > 0,
     )
     if nudge is None:
         return None
@@ -239,6 +248,7 @@ async def _tips(
         tips.append("Step goal done today. A few minutes of stretching will help you recover.")
     if checkin_engine.checkin_due(latest_checkin.day if latest_checkin else None, today):
         tips.append("Your weekly check-in is due. It is what lets your plan adapt.")
+    tips += [e.tip for e in calendar_service.events_today(profile, today)][:1]
     if plan is not None:
         weekday = today.strftime("%a")
         content = PlanContent.model_validate(plan.content)
@@ -343,6 +353,10 @@ async def _context(
         if gym is not None and profile.training_mode != "activity"
         else None,
         life=_lifestyle(profile),
+        calendar=[
+            CalendarNote(name=e.name, kind=e.kind, tip=e.tip)
+            for e in calendar_service.events_in_week(profile, _monday(today))
+        ],
         checkins=[
             CheckinPoint(
                 day=c.day.isoformat(),
@@ -461,3 +475,8 @@ def _lifestyle(profile: Profile) -> Lifestyle:
         fasting=profile.fasting_note,
         food_budget_inr_per_day=profile.food_budget_inr,
     )
+
+
+def _joined(user: User, profile: Profile) -> date:
+    """The user's local date when the account was created."""
+    return user.created_at.astimezone(ZoneInfo(profile.timezone)).date()

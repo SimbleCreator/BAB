@@ -201,7 +201,7 @@ PlanState = Literal["disabled", "none", "active", "checkin_needed", "update_read
 
 class BounceNotificationOut(BaseModel):
     id: str = Field(description="Stable per day and reason; clients may hide it once dismissed")
-    kind: Literal["checkin", "meals", "activity"]
+    kind: Literal["checkin", "meals", "activity", "easy"]
     title: str
     message: str
     action_label: str

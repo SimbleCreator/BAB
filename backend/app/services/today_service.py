@@ -7,7 +7,13 @@ from app.engines.lines_engine import line_of_the_day
 from app.models.user import User
 from app.repositories import activity_repo, checkin_repo, habit_repo
 from app.schemas.today import TodayHabit, TodayNutrition, TodayOut
-from app.services import habit_service, milestone_service, nutrition_service, training_service
+from app.services import (
+    calendar_service,
+    habit_service,
+    milestone_service,
+    nutrition_service,
+    training_service,
+)
 from app.services.activity_service import to_out
 from app.services.common import require_profile
 
@@ -45,4 +51,6 @@ async def get_today(session: AsyncSession, user: User) -> TodayOut:
             target_protein_g=food.target.protein_g,
         ),
         habits=habits,
+        easy_day=await activity_repo.get_easy_day(session, user.id, today) is not None,
+        events=calendar_service.events_today(profile, today),
     )

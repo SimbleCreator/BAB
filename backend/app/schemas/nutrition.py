@@ -199,3 +199,49 @@ class StapleOut(BaseModel):
     serving_label: str
     meal_types: list[str]
     regional: bool
+
+
+class PlateTipOut(BaseModel):
+    """How to keep one of the user's usual dishes on the plate (portion, not a swap)."""
+
+    food_code: str
+    name: str
+    kind: Literal["protein", "fatty", "carb", "balanced"] = Field(
+        description="Where most of its calories come from"
+    )
+    servings: float = Field(description="Suggested servings for the user's goal")
+    grams: int
+    tip: str
+
+
+class PlateTipsOut(BaseModel):
+    goal: str
+    tips: list[PlateTipOut] = Field(description="One per usual food; empty if none picked")
+
+
+class MessPlateIn(BaseModel):
+    meal_type: MealType
+    food_codes: list[str] = Field(min_length=1, max_length=12, description="What was served")
+
+
+class MessPlateItemOut(BaseModel):
+    food_code: str
+    name: str
+    servings: float
+    grams: int
+    calories_kcal: int
+    protein_g: float
+
+
+class SkippedFoodOut(BaseModel):
+    food_code: str
+    name: str
+
+
+class MessPlateOut(BaseModel):
+    meal_type: MealType
+    budget_kcal: int
+    items: list[MessPlateItemOut]
+    skipped: list[SkippedFoodOut] = Field(description="Served, but did not fit today")
+    calories_kcal: int
+    protein_g: float

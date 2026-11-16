@@ -88,3 +88,30 @@ def longest_streak(goal_days: Iterable[date]) -> int:
         best = max(best, run)
         previous = day
     return best
+
+
+# Easy days ---------------------------------------------------------------------
+
+EASY_DAYS_PER_WEEK = 2
+QUIET_DAYS = 3
+
+
+def week_start(day: date) -> date:
+    return day - timedelta(days=day.weekday())
+
+
+def easy_days_left(easy_days: Iterable[date], today: date) -> int:
+    """Easy days still available this Monday-to-Sunday week."""
+    start = week_start(today)
+    used = sum(1 for d in set(easy_days) if start <= d <= today)
+    return max(0, EASY_DAYS_PER_WEEK - used)
+
+
+def quiet_streak(logged_days: Iterable[date], today: date, joined: date) -> bool:
+    """True when nothing at all was logged on each of the QUIET_DAYS days before today.
+
+    Only for users who have been around that long: a new account is not "quiet"."""
+    if joined > today - timedelta(days=QUIET_DAYS):
+        return False
+    logged = set(logged_days)
+    return all(today - timedelta(days=i) not in logged for i in range(1, QUIET_DAYS + 1))

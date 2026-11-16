@@ -23,3 +23,15 @@ class DailyActivity(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
+
+
+class EasyDay(Base):
+    """A day the user chose the short 10-minute plan. It still counts for step streaks."""
+
+    __tablename__ = "easy_days"
+    __table_args__ = (UniqueConstraint("user_id", "day"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    day: Mapped[date] = mapped_column(Date)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

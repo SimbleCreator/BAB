@@ -10,6 +10,7 @@ from app.schemas.activity import (
     ActivitySummaryOut,
     CsvImportOut,
     CsvPreviewOut,
+    EasyDayOut,
 )
 from app.schemas.common import ErrorOut
 from app.services import activity_csv, activity_service
@@ -71,6 +72,30 @@ async def csv_import(
     overwrite: Annotated[bool, Form()] = False,
 ) -> CsvImportOut:
     return await activity_service.csv_import(session, user, await _read_limited(file), overwrite)
+
+
+@router.get(
+    "/easy-day",
+    response_model=EasyDayOut,
+    summary="Today's easy-day status, the 10-minute plan and whether Bounce suggests one",
+)
+async def get_easy_day(user: CurrentUser, session: SessionDep) -> EasyDayOut:
+    return await activity_service.easy_day(session, user)
+
+
+@router.post(
+    "/easy-day",
+    response_model=EasyDayOut,
+    responses=_errors,
+    summary="Make today an easy day (counts for step streaks; at most 2 a week)",
+)
+async def take_easy_day(user: CurrentUser, session: SessionDep) -> EasyDayOut:
+    return await activity_service.take_easy_day(session, user)
+
+
+@router.delete("/easy-day", response_model=EasyDayOut, summary="Undo today's easy day")
+async def undo_easy_day(user: CurrentUser, session: SessionDep) -> EasyDayOut:
+    return await activity_service.undo_easy_day(session, user)
 
 
 @router.get("/{day}", response_model=ActivityOut, responses={404: {"model": ErrorOut}, **_errors})

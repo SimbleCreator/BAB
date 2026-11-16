@@ -186,6 +186,10 @@
             <mat-icon>lightbulb</mat-icon>
             Ideas
           </button>
+          <a mat-button [routerLink]="['/eat/mess']" [queryParams]="{ day: d.day, meal: m.type }">
+            <mat-icon>restaurant_menu</mat-icon>
+            What's served?
+          </a>
         </div>
         @if (openIdeas() === m.type) {
           @let mi = ideasFor(m.type);
@@ -230,6 +234,42 @@
               }
             }
           </div>
+        }
+      </div>
+    }
+
+    @if (plateTips.value(); as pt) {
+      <div class="plate-tips bab-panel">
+        <button
+          type="button"
+          class="plate-head"
+          (click)="showPlate.set(!showPlate())"
+          [attr.aria-expanded]="showPlate()"
+        >
+          <span class="p-icon"><mat-icon>rice_bowl</mat-icon></span>
+          <span>
+            <strong>Keep your plate</strong>
+            <span class="bab-muted small">Your usual food, in the right amounts</span>
+          </span>
+          <mat-icon class="chev">{{ showPlate() ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+        @if (showPlate()) {
+          @if (pt.tips.length) {
+            <ul>
+              @for (t of pt.tips; track t.food_code) {
+                <li>
+                  <strong>{{ t.name }}</strong>
+                  <p>{{ t.tip }}</p>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="bab-muted">
+              Pick the dishes you eat at home in Account, under "Your plate", and Bounce shows how
+              to keep them in your plan.
+            </p>
+            <a mat-button routerLink="/account">Pick my dishes</a>
+          }
         }
       </div>
     }

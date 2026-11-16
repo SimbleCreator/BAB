@@ -73,3 +73,34 @@ def test_longest_streak():
     assert eng.longest_streak(days_back(0, 1, 5, 6, 7, 8, 20)) == 4
     assert eng.longest_streak([]) == 0
     assert eng.longest_streak(days_back(3)) == 1
+
+
+# Easy days (M14) -----------------------------------------------------------------------
+
+
+def test_easy_days_left_per_monday_week():
+    from datetime import date
+
+    from app.engines import activity_engine as ae
+
+    wed = date(2026, 11, 18)
+    assert ae.easy_days_left([], wed) == 2
+    assert ae.easy_days_left([date(2026, 11, 16)], wed) == 1
+    assert ae.easy_days_left([date(2026, 11, 16), date(2026, 11, 17)], wed) == 0
+    # Last week's do not count.
+    assert ae.easy_days_left([date(2026, 11, 15), date(2026, 11, 14)], wed) == 2
+
+
+def test_quiet_streak():
+    from datetime import date, timedelta
+
+    from app.engines import activity_engine as ae
+
+    today = date(2026, 11, 18)
+    joined = today - timedelta(days=30)
+    assert ae.quiet_streak([], today, joined) is True
+    assert ae.quiet_streak([today], today, joined) is True  # today does not count
+    assert ae.quiet_streak([today - timedelta(days=2)], today, joined) is False
+    assert ae.quiet_streak([today - timedelta(days=4)], today, joined) is True
+    assert ae.quiet_streak([], today, today - timedelta(days=2)) is False  # new account
+    assert ae.quiet_streak([], today, today - timedelta(days=3)) is True

@@ -852,5 +852,43 @@
       "seconds": 60,
       "instructions": "Lie or sit comfortably. Breathe in for four counts and out for six."
     }
+  ],
+  "easy_day": [
+    {
+      "code": "easy_march",
+      "name": "March in place",
+      "seconds": 120,
+      "instructions": "Lift your knees to a comfortable height and swing your arms. Breathe easy."
+    },
+    {
+      "code": "easy_chair_squat",
+      "name": "Chair squats",
+      "seconds": 90,
+      "instructions": "Sit down to a chair and stand up again, slowly. Rest when you need to."
+    },
+    {
+      "code": "easy_wall_pushup",
+      "name": "Wall push-ups",
+      "seconds": 90,
+      "instructions": "Hands on a wall at shoulder height. Bend your elbows to bring your chest close, then push away."
+    },
+    {
+      "code": "easy_glute_bridge",
+      "name": "Glute bridges",
+      "seconds": 90,
+      "instructions": "Lie on your back, knees bent. Lift your hips, squeeze, and lower slowly."
+    },
+    {
+      "code": "easy_walk",
+      "name": "Easy walk",
+      "seconds": 120,
+      "instructions": "Walk around your room, corridor or outside at a relaxed pace."
+    },
+    {
+      "code": "easy_stretch",
+      "name": "Stretch and breathe",
+      "seconds": 90,
+      "instructions": "Reach up tall, fold forward gently, then take five slow breaths."
+    }
   ]
 }

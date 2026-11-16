@@ -76,6 +76,26 @@
       </a>
     }
 
+    @if (t.easy_day) {
+      <a class="alert easy" routerLink="/easy-day">
+        <span class="alert-icon"><mat-icon>self_improvement</mat-icon></span>
+        <span><strong>Easy day.</strong> Your 10-minute plan is ready. Your streak is safe.</span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
+    @for (e of t.events.slice(0, 1); track e.code) {
+      <div class="alert event" role="note">
+        <span class="alert-icon"
+          ><mat-icon>{{
+            e.kind === 'season' ? 'wb_sunny' : e.kind === 'fasting' ? 'nightlight' : 'celebration'
+          }}</mat-icon></span
+        >
+        <span
+          ><strong>{{ e.name }}.</strong> {{ e.tip }}</span
+        >
+      </div>
+    }
+
     <!-- Mission -->
     @if (mission(); as m) {
       <div class="mission bab-panel">
@@ -104,6 +124,12 @@
             </a>
           }
         </div>
+        @if (!t.easy_day && m.done < 4) {
+          <a class="easy-link" routerLink="/easy-day">
+            <mat-icon>self_improvement</mat-icon> Rough day? Take an easy day: 10 minutes keeps your
+            streak.
+          </a>
+        }
       </div>
     }
 

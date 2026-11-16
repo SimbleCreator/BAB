@@ -140,6 +140,16 @@ export const routes: Routes = [
         loadComponent: () => import('./features/checkin/checkin.page').then((m) => m.CheckinPage),
       },
       {
+        path: 'easy-day',
+        title: 'Easy day - B.A.B',
+        loadComponent: () => import('./features/easy-day/easy-day.page').then((m) => m.EasyDayPage),
+      },
+      {
+        path: 'eat/mess',
+        title: "What's served - B.A.B",
+        loadComponent: () => import('./features/nutrition/mess.page').then((m) => m.MessPage),
+      },
+      {
         path: 'progress',
         title: 'Progress - B.A.B',
         loadComponent: () =>

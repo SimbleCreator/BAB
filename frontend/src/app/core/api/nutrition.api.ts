@@ -11,7 +11,10 @@ import {
   ItemIn,
   ItemPatch,
   MealType,
+  MessPlateIn,
+  MessPlateOut,
   NutritionSummaryOut,
+  PlateTipsOut,
   StapleOut,
   SuggestionsOut,
   TargetsOut,
@@ -58,6 +61,16 @@ export class NutritionApi {
     const params: Record<string, string> = { diet_type: dietType };
     if (state) params['state'] = state;
     return this.http.get<StapleOut[]>(`${this.base}/foods/staples`, { params });
+  }
+
+  /** Portion tips for the user's usual home foods. */
+  plateTips(): Observable<PlateTipsOut> {
+    return this.http.get<PlateTipsOut>(`${this.base}/nutrition/plate-tips`);
+  }
+
+  /** Best plate from what the mess served; logs nothing. */
+  messPlate(day: string, body: MessPlateIn): Observable<MessPlateOut> {
+    return this.http.post<MessPlateOut>(`${this.base}/nutrition/days/${day}/mess-plate`, body);
   }
 
   foods(q: string, mealType: MealType | null): Observable<FoodOut[]> {

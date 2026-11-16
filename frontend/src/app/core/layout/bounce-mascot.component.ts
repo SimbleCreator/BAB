@@ -21,6 +21,7 @@ const KEY_BALL = 34; // px, size of the ball sitting in the dock key
 const SEEN_KEY = 'bab.bounce.seen';
 
 const ROUTE: Record<BounceNotificationOut['kind'], string> = {
+  easy: '/easy-day',
   checkin: '/checkin',
   meals: '/eat',
   activity: '/activity',

@@ -8,6 +8,7 @@ from app.content import food_list, foods_by_code, region_for
 from app.core.errors import AppError, NotFoundError
 from app.core.timeutil import local_today
 from app.engines import nutrition_engine as eng
+from app.engines import plate_engine
 from app.models.nutrition import CustomFood, Meal, MealItem, NutritionTarget
 from app.models.profile import Profile
 from app.models.user import User
@@ -22,8 +23,14 @@ from app.schemas.nutrition import (
     ItemPatch,
     MealOut,
     MealSuggestionsOut,
+    MessPlateIn,
+    MessPlateItemOut,
+    MessPlateOut,
     NutritionDayPoint,
     NutritionSummaryOut,
+    PlateTipOut,
+    PlateTipsOut,
+    SkippedFoodOut,
     StapleOut,
     SuggestionOut,
     SuggestionsOut,
@@ -545,3 +552,65 @@ async def summary(session: AsyncSession, user: User, days: int) -> NutritionSumm
             )
         )
     return NutritionSummaryOut(days=points)
+
+
+# Personal plate (M14) -----------------------------------------------------------------
+
+
+async def plate_tips(session: AsyncSession, user: User) -> PlateTipsOut:
+    """Keep-your-plate tips for each usual food: portions and sides, never swaps."""
+    profile = await require_profile(session, user)
+    by_code = foods_by_code()
+    usual = [by_code[c] for c in profile.usual_foods or () if c in by_code]
+    return PlateTipsOut(
+        goal=profile.goal,
+        tips=[
+            PlateTipOut(
+                food_code=t.food.code,
+                name=t.food.name,
+                kind=t.kind,
+                servings=t.servings,
+                grams=t.grams,
+                tip=t.tip,
+            )
+            for t in plate_engine.plate_tips(usual, profile.goal, profile.diet_type)
+        ],
+    )
+
+
+async def mess_plate(
+    session: AsyncSession, user: User, day: date, data: MessPlateIn
+) -> MessPlateOut:
+    """The best plate from what the mess or canteen served, within the meal's budget."""
+    profile = await require_profile(session, user)
+    _check_day(profile, day)
+    by_code = foods_by_code()
+    allowed = eng.ALLOWED_DIETS[profile.diet_type]
+    served = []
+    for code in data.food_codes:
+        f = by_code.get(code)
+        if f is None:
+            raise NotFoundError("Food not found.", code="food_missing")
+        if f.diet_type in allowed:
+            served.append(f)
+    d = await get_day(session, user, day)
+    budget = eng.meal_budget(d.target.calories_kcal, d.remaining_kcal, data.meal_type)
+    plate = plate_engine.mess_plate(served, budget, profile.goal)
+    return MessPlateOut(
+        meal_type=data.meal_type,
+        budget_kcal=budget,
+        items=[
+            MessPlateItemOut(
+                food_code=i.food.code,
+                name=i.food.name,
+                servings=i.servings,
+                grams=i.grams,
+                calories_kcal=i.calories_kcal,
+                protein_g=i.protein_g,
+            )
+            for i in plate.items
+        ],
+        skipped=[SkippedFoodOut(food_code=f.code, name=f.name) for f in plate.skipped],
+        calories_kcal=plate.calories_kcal,
+        protein_g=plate.protein_g,
+    )

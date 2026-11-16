@@ -1,6 +1,6 @@
 """Import every model module here so Alembic autogenerate sees all tables."""
 
-from app.models.activity import DailyActivity
+from app.models.activity import DailyActivity, EasyDay
 from app.models.adjustment import WeeklyAdjustment
 from app.models.base import Base
 from app.models.bounce import BouncePlan, GymProfile
@@ -23,6 +23,7 @@ __all__ = [
     "Checkin",
     "Milestone",
     "DailyActivity",
+    "EasyDay",
     "GymProfile",
     "Habit",
     "HabitLog",

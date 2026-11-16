@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
+from app.engines.calendar_engine import KINDS as EVENT_KINDS
+from app.engines.calendar_engine import Event
 from app.engines.nutrition_engine import Food
 from app.engines.training_engine import Drill, Exercise
 
@@ -30,6 +32,7 @@ class ExerciseLibrary:
     exercises: tuple[Exercise, ...]
     warmup: tuple[Drill, ...]
     cooldown: tuple[Drill, ...]
+    easy_day: tuple[Drill, ...] = ()
 
     def by_code(self) -> dict[str, Exercise]:
         return {e.code: e for e in self.exercises}
@@ -61,6 +64,7 @@ def exercise_library() -> ExerciseLibrary:
         exercises,
         tuple(Drill(**d) for d in raw["warmup"]),
         tuple(Drill(**d) for d in raw["cooldown"]),
+        tuple(Drill(**d) for d in raw.get("easy_day", [])),
     )
 
 
@@ -127,9 +131,33 @@ def foods_by_code() -> dict[str, Food]:
     return {f.code: f for f in food_list()}
 
 
+@lru_cache
+def calendar_events() -> tuple[Event, ...]:
+    from datetime import date
+
+    out = []
+    for e in _read("calendar.json")["events"]:
+        ev = Event(**(e | {"regions": tuple(e["regions"])}))
+        if ev.kind not in EVENT_KINDS or not set(ev.regions) <= set(REGIONS) or not ev.tip:
+            raise ValueError(f"calendar.json: bad kind, region or tip for {ev.code}")
+        try:
+            if ev.recurring:
+                for s in (ev.start, ev.end):
+                    date(2000, *map(int, s.split("-")))
+            elif date.fromisoformat(ev.start) > date.fromisoformat(ev.end):
+                raise ValueError
+        except (ValueError, TypeError) as exc:
+            raise ValueError(f"calendar.json: bad dates for {ev.code}") from exc
+        out.append(ev)
+    if len({e.code for e in out}) != len(out):
+        raise ValueError("calendar.json: duplicate codes")
+    return tuple(out)
+
+
 def load_all() -> None:
     """Load and validate every content file. Called at startup so bad content fails fast."""
     motivational_lines()
     exercise_library()
     states()
     food_list()
+    calendar_events()

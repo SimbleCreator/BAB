@@ -81,7 +81,11 @@ it with unfamiliar "diet" food.
 - Fit the user's life when given: wake time (when to train), kind of work (desk jobs get \
 short movement breaks; physical work needs less extra cardio), where food comes from \
 (hostel or mess: best picks from typical mess food; eating out: sensible orders), the \
-daily food budget in rupees (use affordable staples), fasting days and sleep.
+daily food budget in rupees (keep each day's meals within it, using affordable \
+staples), fasting days and sleep.
+- "calendar" lists festivals, fasting periods and seasons in this plan's week, each with a \
+tip: adjust the plan to them (fasting-friendly meals and lighter training if the user \
+fasts, indoor options in the monsoon, early or late sessions in summer heat).
 - Weight loss: daily walking or steps first, then home or gym strength work; never crash diets.
 - If check-ins show progress, progress the plan a little; if weight is stuck or rising \
 against the goal, adjust gently and say so in the summary.
@@ -126,6 +130,13 @@ class Lifestyle:
 
 
 @dataclass
+class CalendarNote:
+    name: str
+    kind: str
+    tip: str
+
+
+@dataclass
 class BounceContext:
     mode: str
     age: int
@@ -144,6 +155,7 @@ class BounceContext:
     fat_g: int
     gym: GymInfo | None = None
     life: Lifestyle = field(default_factory=Lifestyle)
+    calendar: list[CalendarNote] = field(default_factory=list)
     checkins: list[CheckinPoint] = field(default_factory=list)
     avg_steps_7d: int | None = None
     step_goal_days_7d: int = 0

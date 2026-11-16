@@ -224,6 +224,36 @@ export interface TodayOut {
   nutrition: TodayNutrition;
   /** Active reduction plans; empty if none. */
   habits: TodayHabit[];
+  /** Today is an easy day. */
+  easy_day: boolean;
+  /** Festivals, fasting periods and seasons on today. */
+  events: CalendarEventOut[];
+}
+
+export interface CalendarEventOut {
+  code: string;
+  name: string;
+  kind: 'festival' | 'fasting' | 'season';
+  tip: string;
+}
+
+export interface DrillOut {
+  code: string;
+  name: string;
+  seconds: number;
+  instructions: string;
+}
+
+/** The "Easy day": a 10-minute plan that still counts for the step-goal streak. */
+export interface EasyDayOut {
+  day: string;
+  taken: boolean;
+  left_this_week: number;
+  per_week: number;
+  /** Nothing was logged on each of the last 3 days. */
+  suggested: boolean;
+  minutes: number;
+  plan: DrillOut[];
 }
 
 export interface TodayHabit {
@@ -873,7 +903,7 @@ export interface BouncePlanOut {
 export interface BounceNotificationOut {
   /** Stable per day and reason; the app hides it once dismissed. */
   id: string;
-  kind: 'checkin' | 'meals' | 'activity';
+  kind: 'easy' | 'checkin' | 'meals' | 'activity';
   title: string;
   message: string;
   action_label: string;
@@ -969,4 +999,44 @@ export interface ProgressOut {
   /** Newest first. */
   cards: ProgressCardOut[];
   next_card_on: string | null;
+}
+
+// personal plate (nutrition router) ---------------------------------------------------
+
+export interface PlateTipOut {
+  food_code: string;
+  name: string;
+  kind: 'protein' | 'fatty' | 'carb' | 'balanced';
+  servings: number;
+  grams: number;
+  tip: string;
+}
+
+export interface PlateTipsOut {
+  goal: Goal;
+  tips: PlateTipOut[];
+}
+
+export interface MessPlateIn {
+  meal_type: MealType;
+  food_codes: string[];
+}
+
+export interface MessPlateItemOut {
+  food_code: string;
+  name: string;
+  servings: number;
+  grams: number;
+  calories_kcal: number;
+  protein_g: number;
+}
+
+export interface MessPlateOut {
+  meal_type: MealType;
+  budget_kcal: number;
+  items: MessPlateItemOut[];
+  /** Served, but did not fit today. */
+  skipped: { food_code: string; name: string }[];
+  calories_kcal: number;
+  protein_g: number;
 }

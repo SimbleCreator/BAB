@@ -169,7 +169,7 @@ STEPS_NUDGE_HOUR = 18  # numbers logged but under the step goal
 @dataclass(frozen=True)
 class Nudge:
     id: str  # stable per day and reason, so the app can remember it was dismissed
-    kind: str  # checkin | meals | activity
+    kind: str  # easy | checkin | meals | activity
     title: str
     message: str
     action_label: str
@@ -182,7 +182,18 @@ def pick_nudge(
     meals_logged: set[str],
     steps: int | None,
     step_goal: int,
+    offer_easy_day: bool = False,
 ) -> Nudge | None:
+    """At most one notification, most important first. A user who has gone quiet for a
+    few days is offered an easy day before anything else, so coming back feels small."""
+    if offer_easy_day:
+        return Nudge(
+            f"easy:{day}",
+            "easy",
+            "Rough few days?",
+            "Take an easy day: 10 minutes keeps your streak alive. Small steps still count.",
+            "Easy day",
+        )
     if checkin_due:
         return Nudge(
             f"checkin:{day}",

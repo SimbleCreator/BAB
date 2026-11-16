@@ -247,6 +247,40 @@
   }
 }
 
+.alert.easy {
+  background: linear-gradient(135deg, #ede9fe, #fce7f3);
+
+  .alert-icon {
+    background: var(--bab-grad-train);
+  }
+}
+
+.alert.event {
+  background: linear-gradient(135deg, #e0f2fe, #fef3c7);
+  box-shadow: none;
+
+  .alert-icon {
+    background: var(--bab-grad-sky);
+  }
+}
+
+.easy-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--bab-text-dim);
+  font: var(--mat-sys-label-large);
+  text-decoration: none;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #7c3aed;
+  }
+}
+
 .alert-icon {
   display: grid;
   place-items: center;

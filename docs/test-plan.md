@@ -229,3 +229,19 @@
 - Email sign-in for a Google-only account says to use the Google button.
 - Live site: no CSP errors in the console when the Google button loads or its popup opens.
 
+### M14 (Bounce knows your life)
+- Eat > "Keep your plate" lists each usual dish with a tip that keeps the dish and changes
+  the amount (losing fat: rice "three quarters of your usual amount" plus a protein side).
+  With no usual dishes it links to Account.
+- Eat > a meal's "What's served?": pick 3-6 dishes; "Make my plate" shows grams and kcal
+  within the meal budget, protein dishes first, rich food at half a serving when losing
+  fat, and "Skip today" for what does not fit. "Log this plate" adds them to the meal.
+- Home > "Rough day? Take an easy day" opens Easy day: "Make today an easy day" turns on
+  the Home banner and keeps the step streak; the timer runs the six moves (Pause, Next,
+  Stop); Undo works; a third easy day in one week is refused.
+- An account with nothing logged for 3 days gets Bounce's "Rough few days?" letter with an
+  "Easy day" button.
+- Calendar: on a festival, fasting or season day (for example during the monsoon, or set
+  the device date inside Diwali week) Home shows the event tip; a Bounce plan made that
+  week mentions it.
+

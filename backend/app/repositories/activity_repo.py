@@ -4,7 +4,9 @@ from datetime import date
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.activity import DailyActivity
+from app.models.activity import DailyActivity, EasyDay
+from app.models.nutrition import Meal
+from app.models.training import WorkoutSession
 
 
 async def get(session: AsyncSession, user_id: int, day: date) -> DailyActivity | None:
@@ -29,12 +31,37 @@ async def list_range(
 
 
 async def goal_days(session: AsyncSession, user_id: int, step_goal: int) -> list[date]:
-    rows = await session.scalars(
+    """Days that count for step-goal streaks: the goal was met, or it was an easy day."""
+    met = await session.scalars(
         select(DailyActivity.day).where(
             DailyActivity.user_id == user_id, DailyActivity.steps >= step_goal
         )
     )
+    return sorted(set(met) | set(await easy_days(session, user_id)))
+
+
+async def easy_days(session: AsyncSession, user_id: int) -> list[date]:
+    rows = await session.scalars(
+        select(EasyDay.day).where(EasyDay.user_id == user_id).order_by(EasyDay.day)
+    )
     return list(rows)
+
+
+async def get_easy_day(session: AsyncSession, user_id: int, day: date) -> EasyDay | None:
+    return await session.scalar(
+        select(EasyDay).where(EasyDay.user_id == user_id, EasyDay.day == day)
+    )
+
+
+async def logged_days(session: AsyncSession, user_id: int, start: date, end: date) -> set[date]:
+    """Days with any activity numbers, workout or meal between start and end."""
+    out: set[date] = set()
+    for model in (DailyActivity, WorkoutSession, Meal):
+        rows = await session.scalars(
+            select(model.day).where(model.user_id == user_id, model.day >= start, model.day <= end)
+        )
+        out |= set(rows)
+    return out
 
 
 async def by_days(

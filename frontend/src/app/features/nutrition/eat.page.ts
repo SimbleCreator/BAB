@@ -75,6 +75,8 @@ export class EatPage {
     return g !== null && g >= 1 && g <= 3000;
   });
   protected readonly openIdeas = signal<MealType | null>(null);
+  protected readonly plateTips = rxResource({ stream: () => this.api.plateTips() });
+  protected readonly showPlate = signal(false);
   protected readonly showHow = signal(false);
   protected readonly busy = signal(false);
 
