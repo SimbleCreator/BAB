@@ -24,6 +24,8 @@ class ExportOut(BaseModel):
     habits: list[dict[str, Any]] = Field(description="Each plan includes its logs")
     gym_profile: dict[str, Any] | None = None
     bounce_plans: list[dict[str, Any]] = Field(default_factory=list)
+    bounce_letters: list[dict[str, Any]] = Field(default_factory=list)
+    easy_days: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class DeleteAccountIn(BaseModel):

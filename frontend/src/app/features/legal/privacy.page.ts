@@ -74,7 +74,8 @@ import { publicConfigResource } from './legal';
         the owner (by default OpenRouter, which passes the request to the company running the chosen
         model, such as Google or NVIDIA; free models may keep requests to improve their services).
         Your name, email and account details are never sent. The plan that comes back is stored with
-        your data and is removed when you delete your account.
+        your data and is removed when you delete your account. The same applies to the "letter from
+        future you", which Bounce writes only when you ask; B.A.B adds your name afterwards.
         <!-- Placeholder for the owner: name the AI provider you use and link its privacy policy. -->
       </p>
 

@@ -104,6 +104,9 @@ endpoints.
 | GET | `/config/public` | none | App name, contact email, version |
 | GET | `/admin/stats` | bearer, admin | Aggregate numbers only |
 | GET | `/bounce/status` | bearer | Bounce state (`disabled`, `none`, `active`, `checkin_needed`, `update_ready`), message, immediate tips, plans left today, `can_generate`, and `notification` (`{id, kind: checkin/meals/activity, title, message, action_label}` or null; `id` is stable per day and reason so a client can remember a dismissal) |
+| GET | `/bounce/letter` | bearer | Letter from future you: state (none, sealed, ready, opened), dates, days left; text and then/now only once opened |
+| POST | `/bounce/letter` | bearer | Bounce writes and seals a new letter (one AI call); 409 `letter_sealed` while one is waiting |
+| POST | `/bounce/letter/open` | bearer | Open it on or after its day; 409 `letter_not_ready` before |
 | GET | `/bounce/plan` | bearer | Current weekly plan; 404 `no_plan` |
 | POST | `/bounce/plan` | bearer | New plan from the AI model. 409 `checkin_needed`, `gym_profile_needed` or `plan_current`; 429 daily limit; 502 model failure (`model_credits`, `model_timeout`, `model_bad_output` ...); 503 `bounce_disabled`. Can take up to a minute |
 | GET | `/bounce/gym-profile` | bearer | Gym experience, schedule, supplements; 404 when missing |

@@ -1040,3 +1040,39 @@ export interface MessPlateOut {
   calories_kcal: number;
   protein_g: number;
 }
+
+// letter from future you (bounce router) ---------------------------------------------
+
+export interface SnapshotOut {
+  weight_kg: number;
+  target_weight_kg: number | null;
+  waist_cm: number | null;
+  avg_steps_7d: number | null;
+  workouts_28d: number;
+  meal_days_28d: number;
+  step_goal: number;
+}
+
+export interface LetterOut {
+  written_on: string;
+  open_on: string;
+  greeting: string;
+  paragraphs: string[];
+  sign_off: string;
+  opened_at: string | null;
+}
+
+export interface LetterStatusOut {
+  enabled: boolean;
+  state: 'none' | 'sealed' | 'ready' | 'opened';
+  today: string;
+  written_on: string | null;
+  open_on: string | null;
+  /** Days until a sealed letter opens. */
+  days_left: number | null;
+  can_write: boolean;
+  /** Only once opened; sealed letters stay hidden. */
+  letter: LetterOut | null;
+  then: SnapshotOut | null;
+  now: SnapshotOut | null;
+}

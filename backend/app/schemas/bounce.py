@@ -223,3 +223,56 @@ class BounceStatusOut(BaseModel):
     notification: BounceNotificationOut | None = Field(
         default=None, description="The one thing Bounce wants the user to do now, if any"
     )
+
+
+# Letter from future you (M15) ----------------------------------------------------------
+
+
+def _paragraphs(v: Any) -> Any:
+    """A letter sent as one string becomes paragraphs split on blank lines."""
+    if isinstance(v, str):
+        v = [p.strip() for p in re.split(r"\n\s*\n", v)]
+    if isinstance(v, list):
+        v = [p.strip() for p in v if isinstance(p, str) and p.strip()]
+    return v
+
+
+class LetterBody(BaseModel):
+    """The model's reply: only the body of the letter."""
+
+    paragraphs: Annotated[list[str], BeforeValidator(_paragraphs)] = Field(min_length=1)
+
+
+class SnapshotOut(BaseModel):
+    weight_kg: float
+    target_weight_kg: float | None
+    waist_cm: float | None
+    avg_steps_7d: int | None
+    workouts_28d: int = Field(description="Workouts done in the 28 days before")
+    meal_days_28d: int = Field(description="Days with meals logged in the 28 days before")
+    step_goal: int
+
+
+class LetterOut(BaseModel):
+    written_on: date
+    open_on: date
+    greeting: str
+    paragraphs: list[str]
+    sign_off: str
+    opened_at: datetime | None
+
+
+class LetterStatusOut(BaseModel):
+    enabled: bool = Field(description="Bounce can write letters (an AI key is set)")
+    state: Literal["none", "sealed", "ready", "opened"] = Field(
+        description="none: no letter yet; sealed: waiting for its day; ready: can be opened; "
+        "opened: read (a new one can be written)"
+    )
+    today: date
+    written_on: date | None
+    open_on: date | None
+    days_left: int | None = Field(description="Days until a sealed letter opens")
+    can_write: bool
+    letter: LetterOut | None = Field(description="Only once opened; sealed letters stay hidden")
+    then: SnapshotOut | None = Field(description="Numbers on the day it was written (opened)")
+    now: SnapshotOut | None = Field(description="Numbers today (opened)")

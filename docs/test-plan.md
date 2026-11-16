@@ -245,3 +245,15 @@
   the device date inside Diwali week) Home shows the event tip; a Bounce plan made that
   week mentions it.
 
+### M15 (letter from future you)
+- Bounce page > "A letter from future you" > "Write my letter": after up to a minute it
+  shows a lock, "90 days to go" and the opening date; the text is not visible.
+- "Write" again is not offered while it is sealed.
+- To test opening without waiting, move the letter's dates back 90 days in a local
+  database; Home then shows "Your letter from 90 days ago is ready", and "Open my letter"
+  shows "Dear <name>," the letter, "You, 90 days from now" and the then/now table.
+- The letter never states a weight or promises a result, and uses real details (usual
+  dishes, step goal, wake time).
+- After opening, "Write a letter for the next 90 days" starts a new one.
+- With no AI key the card is hidden for new users; an existing letter can still be opened.
+

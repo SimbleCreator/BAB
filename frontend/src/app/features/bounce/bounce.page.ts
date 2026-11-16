@@ -13,6 +13,7 @@ import { BounceBallComponent } from '../../shared/components/bounce-ball.compone
 import { LoaderComponent } from '../../shared/components/loader.component';
 import { shortDay } from '../../shared/format/dates';
 import { GymFormComponent } from './gym-form.component';
+import { LetterCardComponent } from './letter-card.component';
 import { EXPERIENCE_OPTIONS, MODE_LABEL, SUPPLEMENT_OPTIONS } from './labels';
 
 const DAYS: BounceDay[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -39,6 +40,7 @@ function todayName(): BounceDay {
     MatIconModule,
     RouterLink,
     GymFormComponent,
+    LetterCardComponent,
   ],
   templateUrl: './bounce.page.html',
   styleUrl: './bounce.page.scss',

@@ -422,3 +422,15 @@ Tips for each usual food change the amount and the sides, never the dish.
 | Today | Home shows the first event on today (festivals and fasting before seasons) with its tip |
 | Dates | lunar festival dates are approximate, to be verified by the owner, and need adding for each new year |
 
+## Letter from future you (`app/services/bounce/letter.py`, `letter_rules.py`)
+
+| Rule | Value |
+| --- | --- |
+| Writing | one AI call (one retry); allowed when there is no letter or the last one was opened (`letter_sealed` otherwise); needs an AI key |
+| Sent to the model | goal, training, level, days and minutes, step goal, diet, direction to the target weight and the projected weeks range, the plan summary, average steps, and the "Know me" answers. Never the name, email or exact weights |
+| Shape | 3 or 4 paragraphs, 120-220 words, first person. The server adds "Dear <name>," and "You, 90 days from now". A key repeated in the reply (one "paragraphs" per item) is merged |
+| Safety | sentences naming a weight or size (number + kg, kilo, lb, pound, cm, inch), promising results (guarantee, promise, definitely, for sure, 100%, cure, diagnose, miracle, overnight) or naming steroids, SARMs, prohormones or fat burners are removed. After that it must keep 2+ paragraphs and 60+ words, or it is retried once and then refused |
+| Sealed | opens 90 days after it was written; until then the API returns no text, only the dates and days left (the data export still includes it, as everything stored) |
+| Opening | on or after its day; shows the letter with then (numbers on the day it was written) and now: weight, target, latest waist, average steps over 7 days, workouts and days with meals over 28 days |
+| Home | shows "Your letter from 90 days ago is ready" while it waits to be opened |
+

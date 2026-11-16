@@ -3,7 +3,7 @@
 from app.models.activity import DailyActivity, EasyDay
 from app.models.adjustment import WeeklyAdjustment
 from app.models.base import Base
-from app.models.bounce import BouncePlan, GymProfile
+from app.models.bounce import BounceLetter, BouncePlan, GymProfile
 from app.models.checkin import Checkin
 from app.models.habit import Habit, HabitLog
 from app.models.milestone import Milestone
@@ -19,6 +19,7 @@ __all__ = [
     "MealItem",
     "NutritionTarget",
     "Base",
+    "BounceLetter",
     "BouncePlan",
     "Checkin",
     "Milestone",

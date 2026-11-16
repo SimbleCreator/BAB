@@ -186,3 +186,63 @@ def build_messages(ctx: BounceContext, retry_reason: str | None = None) -> list[
             }
         )
     return messages
+
+
+# Letter from future you ----------------------------------------------------------------
+
+LETTER_SHAPE = {"paragraphs": ["...", "...", "..."]}
+
+LETTER_SYSTEM = f"""You are Bounce, the coach in the B.A.B fitness app. Write a short letter from \
+the user's future self, 90 days from now, to the user today. The app adds the greeting and \
+the sign-off; you write only the body.
+
+Rules:
+- Reply with ONE JSON object only, no prose and no code fences: {json.dumps(LETTER_SHAPE)}
+- 3 or 4 paragraphs, 120 to 220 words in all, first person ("I"), warm, honest and plain.
+- Talk about habits, effort and how days feel: the walks, the workouts, eating the usual \
+home food in better amounts, sleep, energy, the hard days and coming back after them.
+- Use 2 or 3 real details from the data (their usual dishes, step goal, wake time, kind of \
+work, how they train, their plan). Never invent facts about them.
+- Never state a weight, a size or a number of kilos, never promise or predict results, and \
+never say anything is guaranteed. The goal is a direction, not a deal.
+- No medical claims, no supplements or drugs, no quotes from films, books, songs, games or \
+famous people. Original wording only."""
+
+
+@dataclass
+class LetterContext:
+    goal: str
+    training: str
+    level: str
+    days_per_week: int
+    minutes_per_day: int
+    daily_step_goal: int
+    diet: str
+    target_direction: str | None  # "lower" | "higher" | None
+    weeks_estimate: str | None  # e.g. "11 to 16 weeks"
+    plan_summary: str | None
+    avg_steps_7d: int | None
+    life: Lifestyle = field(default_factory=Lifestyle)
+
+
+def build_letter_messages(
+    ctx: LetterContext, retry_reason: str | None = None
+) -> list[dict[str, str]]:
+    data = asdict(ctx)
+    data["goal"] = ctx.goal.replace("_", " ")
+    user = (
+        "About the user today (the app's own numbers):\n"
+        f"{json.dumps(data, indent=1)}\n"
+        "Write the letter body as the JSON object."
+    )
+    messages = [{"role": "user", "content": f"{LETTER_SYSTEM}\n\n{user}"}]
+    if retry_reason:
+        messages.append({"role": "assistant", "content": "(reply rejected)"})
+        messages.append(
+            {
+                "role": "user",
+                "content": f"Your last reply could not be used: {retry_reason}. "
+                "Reply again with the corrected JSON object only.",
+            }
+        )
+    return messages

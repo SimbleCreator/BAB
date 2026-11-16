@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -10,6 +11,7 @@ import { MilestonesApi } from '../../core/api/milestones.api';
 import { HabitType } from '../../core/api/models';
 import { NutritionApi } from '../../core/api/nutrition.api';
 import { ProgressApi } from '../../core/api/progress.api';
+import { BounceApi } from '../../core/api/bounce.api';
 import { TodayApi } from '../../core/api/today.api';
 import { TrainingApi } from '../../core/api/training.api';
 import { CaloriesChartComponent } from '../../shared/components/calories-chart.component';
@@ -63,6 +65,11 @@ export class HomePage {
   private readonly checkinsApi = inject(CheckinsApi);
   private readonly milestonesApi = inject(MilestonesApi);
   private readonly progressApi = inject(ProgressApi);
+  private readonly bounceApi = inject(BounceApi);
+  /** Only the state is used here, to say when the letter is ready to open. */
+  protected readonly letter = rxResource({
+    stream: () => this.bounceApi.letter().pipe(catchError(() => of(null))),
+  });
 
   protected readonly today = rxResource({ stream: () => this.todayApi.get() });
   protected readonly steps = rxResource({ stream: () => this.activityApi.summary(7) });

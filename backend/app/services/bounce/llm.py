@@ -108,10 +108,22 @@ def get_llm() -> LLMClient | None:
     )
 
 
+def _merge_repeated_lists(pairs: list[tuple[str, object]]) -> dict:
+    """JSON object hook: a key repeated with list values (some models write "paragraphs"
+    once per item) keeps all the items instead of only the last list."""
+    out: dict = {}
+    for key, value in pairs:
+        if key in out and isinstance(out[key], list) and isinstance(value, list):
+            out[key] = out[key] + value
+        else:
+            out[key] = value
+    return out
+
+
 def extract_json(text: str) -> dict:
     """The first JSON object in the reply (models sometimes add prose or code fences)."""
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
     start, end = text.find("{"), text.rfind("}")
     if start < 0 or end <= start:
         raise ValueError("no JSON object in reply")
-    return json.loads(text[start : end + 1])
+    return json.loads(text[start : end + 1], object_pairs_hook=_merge_repeated_lists)

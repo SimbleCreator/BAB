@@ -184,7 +184,7 @@ sweet_drinks_per_day, fasting_note, food_budget_inr, target_weight_kg; to
 `users`: google_sub UNIQUE nullable (password_hash nullable for Google-only
 accounts); to `meal_items` and `custom_foods`: grams / serving_g (nullable); to
 `checkins`: energy, sleep, stairs (1-5, nullable). New tables:
-`bounce_letters` (user_id, written_on, open_on, content, opened_at) and
+`bounce_letters` (user_id, written_on, open_on, content, snapshot, model, opened_at) and
 `easy_days` (user_id, day) UNIQUE (user_id, day).
 All schema changes go through Alembic migrations. Deleting a user cascades to all
 of their rows.

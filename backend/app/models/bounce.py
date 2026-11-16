@@ -40,3 +40,19 @@ class BouncePlan(Base):
     model: Mapped[str] = mapped_column(String(120))
     based_on_checkin_day: Mapped[date | None] = mapped_column(Date)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class BounceLetter(Base):
+    """A letter from the user's future self, written by Bounce and sealed for 90 days."""
+
+    __tablename__ = "bounce_letters"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    written_on: Mapped[date] = mapped_column(Date)
+    open_on: Mapped[date] = mapped_column(Date)
+    content: Mapped[dict] = mapped_column(JSONB)  # {"paragraphs": [...]}
+    snapshot: Mapped[dict] = mapped_column(JSONB)  # the user's numbers on the day it was written
+    model: Mapped[str] = mapped_column(String(120))
+    opened_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

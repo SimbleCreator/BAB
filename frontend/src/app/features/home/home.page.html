@@ -68,6 +68,13 @@
       </a>
     }
 
+    @if (letter.value()?.state === 'ready') {
+      <a class="alert win" routerLink="/bounce">
+        <span class="alert-icon"><mat-icon>mail</mat-icon></span>
+        <span><strong>Your letter from 90 days ago is ready.</strong> Open it in Bounce.</span>
+        <mat-icon class="go">chevron_right</mat-icon>
+      </a>
+    }
     @if (newCard(); as c) {
       <a class="alert win" routerLink="/progress">
         <span class="alert-icon"><mat-icon>auto_awesome</mat-icon></span>

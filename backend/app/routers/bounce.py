@@ -3,9 +3,15 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from app.core.deps import CurrentUser, SessionDep
-from app.schemas.bounce import BouncePlanOut, BounceStatusOut, GymProfileIn, GymProfileOut
+from app.schemas.bounce import (
+    BouncePlanOut,
+    BounceStatusOut,
+    GymProfileIn,
+    GymProfileOut,
+    LetterStatusOut,
+)
 from app.schemas.common import ErrorOut
-from app.services.bounce import service
+from app.services.bounce import letter, service
 from app.services.bounce.llm import LLMClient, get_llm
 
 router = APIRouter(prefix="/bounce", tags=["bounce"])
@@ -63,3 +69,34 @@ async def put_gym_profile(
     data: GymProfileIn, user: CurrentUser, session: SessionDep
 ) -> GymProfileOut:
     return await service.save_gym_profile(session, user, data)
+
+
+@router.get(
+    "/letter",
+    response_model=LetterStatusOut,
+    summary="The letter from future you: sealed, ready or opened (text only once opened)",
+)
+async def get_letter(user: CurrentUser, session: SessionDep, llm: LLMDep) -> LetterStatusOut:
+    return await letter.status(session, user, llm)
+
+
+@router.post(
+    "/letter",
+    response_model=LetterStatusOut,
+    responses={409: {"model": ErrorOut}, 502: {"model": ErrorOut}, 503: {"model": ErrorOut}},
+    summary="Bounce writes a letter from you in 90 days and seals it (one AI call)",
+    description="Allowed when there is no letter or the last one was opened; 409 "
+    "letter_sealed otherwise.",
+)
+async def write_letter(user: CurrentUser, session: SessionDep, llm: LLMDep) -> LetterStatusOut:
+    return await letter.write(session, user, llm)
+
+
+@router.post(
+    "/letter/open",
+    response_model=LetterStatusOut,
+    responses={404: {"model": ErrorOut}, 409: {"model": ErrorOut}},
+    summary="Open the letter on or after its day (409 letter_not_ready before)",
+)
+async def open_letter(user: CurrentUser, session: SessionDep, llm: LLMDep) -> LetterStatusOut:
+    return await letter.open_letter(session, user, llm)
