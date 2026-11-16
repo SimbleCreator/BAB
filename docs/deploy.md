@@ -238,7 +238,7 @@ Upload `frontend/dist/frontend/browser/`. On the static host:
   `connect-src`):
 
 ```
-Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self'; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://tile.openstreetmap.org; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: geolocation=(), camera=(), microphone=()
@@ -247,6 +247,10 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 `'unsafe-inline'` for styles is needed by Angular's component styles; scripts stay
 `'self'` only.
+
+`connect-src` must list the Google Fonts and OpenStreetMap hosts: once the service
+worker is active it fetches fonts and map tiles itself, and a worker's requests are
+checked against `connect-src`. With `'self'` alone the icons show as words.
 
 The service worker caches the app shell only. API responses are never cached. After a
 new deploy, users get the new version on their next visit (the old one is replaced in
